@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeiraFácil - Direto da Feira para sua Casa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hide { display: none !important; }
+        .store-card.destacada {
+            border: 2px solid #f59e0b !important;
+            background: linear-gradient(to bottom, #fffdf5, #ffffff);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-20">
+
+    <!-- ================= TELA DE LOGIN / CADASTRO ================= -->
+    <div id="telaAuth" class="max-w-md mx-auto min-h-screen flex flex-col justify-center p-6 bg-white shadow-sm">
+        <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800">FeiraFácil</h1>
+            <p class="text-slate-500 text-sm mt-1">Conectando você à feira livre do bairro</p>
+        </div>
+
+        <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
+            <button type="button" onclick="alternarModoAuth('login')" id="abaLoginBtn" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition">Entrar</button>
+            <button type="button" onclick="alternarModoAuth('cadastro')" id="abaCadastroBtn" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition">Cadastrar</button>
+        </div>
+
+        <form onsubmit="processarAuth(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Usuário</label>
+                <input type="text" id="authUsuario" placeholder="Seu nome de usuário" required class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Senha</label>
+                <input type="password" id="authSenha" placeholder="••••••••" required class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <!-- CAMPOS DE DADOS PESSOAIS -->
+            <div id="camposPessoaisCadastro" class="space-y-4 hide">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome Completo</label>
+                    <input type="text" id="authNomeCompleto" placeholder="Ex: João da Silva" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Data de Nascimento</label>
+                    <input type="date" id="authDataNascimento" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Número de WhatsApp</label>
+                    <input type="tel" id="authWhatsapp" placeholder="Ex: 5521999999999" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil</label>
+                    <input type="file" id="authFotoPerfilInput" accept="image/*" class="w-full p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                </div>
+            </div>
+
+            <!-- TIPO DE PERFIL -->
+            <div id="blocoTipoPerfilAuth" class="hide">
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tipo de Perfil</label>
+                <select id="authTipo" onchange="verificarTipoPerfilAuth()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="cliente">Cliente (Quero comprar na feira) 🛒</option>
+                    <option value="feirante">Feirante (Quero vender produtos) 📦</option>
+                </select>
+            </div>
+            
+            <!-- CAMPOS EXCLUSIVOS DO FEIRANTE -->
+            <div id="camposFeiranteContainer" class="space-y-4 hide">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome da Barraca</label>
+                    <input type="text" id="authNomeBarraca" placeholder="Ex: Barraca do João" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Categoria da Barraca</label>
+                    <select id="authCategoriaBarraca" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="alimentos">🥗 Alimentos</option>
+                        <option value="roupas">👕 Roupas</option>
+                        <option value="artesanatos">🎨 Artesanatos</option>
+                        <option value="plantas">🌱 Plantas</option>
+                        <option value="artes">🖼️ Artes</option>
+                        <option value="decoracoes">✨ Decorações</option>
+                    </select>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="authDestaque" class="w-5 h-5 mt-0.5 accent-amber-500 rounded">
+                        <div>
+                            <span class="text-xs font-bold text-amber-900 block">🌟 Quero destacar minha barraca</span>
+                            <span class="text-[11px] text-amber-700 block mt-0.5">Sua barraca ganhará maior visibilidade.</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" id="btnSubmitAuth" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 mt-2">
+                Entrar
+            </button>
+        </form>
+    </div>
+
+    <!-- ================= APLICATIVO PRINCIPAL ================= -->
+    <div id="appPrincipal" class="hide">
+        <header class="bg-emerald-600 text-white p-4 shadow-md sticky top-0 z-50">
+            <div class="max-w-md mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold tracking-wide"><i class="fa-solid fa-basket-shopping"></i> FeiraFácil</h1>
+                <div class="flex items-center gap-2">
+                    <button onclick="location.reload()" class="text-xs bg-emerald-700 px-3 py-1.5 rounded-full font-medium hover:bg-emerald-800 transition flex items-center gap-1" title="Atualizar Página">
+                        <i class="fa-solid fa-rotate"></i> Atualizar
+                    </button>
+                    <button onclick="fazerLogout()" class="text-xs bg-emerald-700 px-3 py-1.5 rounded-full font-medium hover:bg-emerald-800 transition flex items-center gap-1">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-md mx-auto p-4 mb-16">
+            <!-- TELA: INÍCIO & EXPLORAR -->
+            <div id="visãoUnificadaExplorar" class="hide space-y-4">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
+                    <input type="text" id="buscaProduto" oninput="filtrarProdutos()" placeholder="Buscar tomate, pastel, verdura..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                </div>
+
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-sm relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl"><i class="fa-solid fa-bullhorn"></i></div>
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">📢 Anúncio Local</span>
+                        <span id="anuncioIndicador" class="text-[10px] font-medium opacity-80">1/3</span>
+                    </div>
+                    <h3 id="tituloAnuncio" class="font-bold text-base mt-1">Feira de Orgânicos Especial neste Domingo!</h3>
+                    <p id="descAnuncio" class="text-xs text-amber-100 mt-1 leading-relaxed">Venha conferir as barracas com produtos 100% livres de agrotóxicos na Praça Central a partir das 07:00.</p>
+                </div>
+
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-fire text-amber-500"></i> BARRACAS EM DESTAQUE</h3>
+                        <span id="carrosselIndicador" class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold">1 / 15</span>
+                    </div>
+                    <div id="carrosselDestaquesContainer" class="relative overflow-hidden rounded-xl bg-slate-50 border border-slate-100 h-24 flex items-center p-3 cursor-pointer transition" onclick="clicarLojaCarrossel()"></div>
+                </div>
+
+                <div class="flex gap-2 overflow-x-auto pb-1">
+                    <button onclick="filtrarExplorar('todas')" id="filtrarTodasBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition">Todas</button>
+                    <button onclick="filtrarExplorar('alimentos')" id="filtrarAlimentosBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🥗 Alimentos</button>
+                    <button onclick="filtrarExplorar('roupas')" id="filtrarRoupasBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">👕 Roupas</button>
+                    <button onclick="filtrarExplorar('artesanatos')" id="filtrarArtesanatosBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🎨 Artesanatos</button>
+                    <button onclick="filtrarExplorar('plantas')" id="filtrarPlantasBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🌱 Plantas</button>
+                    <button onclick="filtrarExplorar('artes')" id="filtrarArtesBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🖼️ Artes</button>
+                    <button onclick="filtrarExplorar('decoracoes')" id="filtrarDecoracoesBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">✨ Decorações</button>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <h3 id="tituloSecaoExplorar" class="font-bold text-slate-700 text-sm mb-3">Todas as Barracas</h3>
+                    <div id="listaExplorarFeirantes" class="space-y-3"></div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-carrot text-emerald-600"></i> Produtos Disponíveis na Feira
+                    </h2>
+                    <div id="listaProdutosCliente" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- TELA: PRODUTOS GERAL -->
+            <div id="telaProdutosGeral" class="hide space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-carrot text-emerald-600"></i> Catálogo Completo de Produtos
+                    </h2>
+                    <div class="relative mb-3">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
+                        <input type="text" id="buscaProdutosGeralInput" oninput="renderizarTelaProdutosGeral()" placeholder="Pesquisar produto..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div id="listaProdutosGeralCompleta" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- TELA: BARRACAS GERAL -->
+            <div id="telaBarracasGeral" class="hide space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-store text-emerald-600"></i> Todas as Barracas Cadastradas
+                    </h2>
+                    <div class="relative mb-3">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
+                        <input type="text" id="buscaBarracasGeralInput" oninput="renderizarTelaBarracasGeral()" placeholder="Pesquisar barraca..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div id="listaBarracasGeralCompleta" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- TELA: PRODUTOS DA BARRACA -->
+            <div id="telaProdutosFeira" class="hide space-y-4">
+                <div class="flex items-center justify-between">
+                    <button onclick="voltarParaExplorar()" class="text-xs bg-slate-200 text-slate-700 px-3 py-2 rounded-xl font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+                    <h2 id="tituloPaginaProdutos" class="font-bold text-slate-800 text-sm">Produtos da Barraca</h2>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl font-bold overflow-hidden">
+                        <i class="fa-solid fa-store" id="iconePadraoBarraca"></i>
+                        <img id="fotoPerfilBarracaHeader" class="w-full h-full object-cover hide" src="" alt="">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 id="detalheNomeBarraca" class="font-bold text-slate-800 text-sm">Nome da Barraca</h3>
+                            <span id="detalheSeloDestaque" class="hide bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">⭐ DESTAQUE</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mt-0.5">Resp: <span id="detalheNomeDono" class="font-semibold"></span> | WhatsApp: <span id="detalheWhatsappDono" class="font-semibold"></span></p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Produtos Disponíveis</h3>
+                    <div id="listaProdutosDaBarracaSelecionada" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- TELA FEIRANTE -->
+            <div id="visãoFeirante" class="hide space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="font-bold text-emerald-700 mb-3"><i class="fa-solid fa-plus-circle"></i> Cadastrar Novo Produto</h2>
+                    <form id="formProduto" onsubmit="cadastrarProduto(event)" class="space-y-3">
+                        <input type="text" id="nomeProduto" placeholder="Nome do Produto (Ex: Tomate Orgânico)" required class="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <div class="flex gap-2">
+                            <input type="number" step="0.01" id="precoProduto" placeholder="Preço (R$) 0,00" required class="w-1/2 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" id="unidadeProduto" placeholder="Unid. (Ex: kg, un)" required class="w-1/2 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto do Produto</label>
+                            <input type="file" id="fotoProdutoInput" accept="image/*" required class="w-full p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-semibold py-3 rounded-xl hover:bg-emerald-700 transition shadow-sm">Salvar na Barraca</button>
+                    </form>
+                </div>
+                <h2 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wider">Meus Produtos Cadastrados</h2>
+                <div id="listaProdutosFeirante" class="space-y-3"></div>
+            </div>
+
+            <!-- TELA ADMINISTRADOR -->
+            <div id="visãoAdmin" class="hide space-y-5">
+                <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+                    <h2 class="font-bold text-lg"><i class="fa-solid fa-gear text-emerald-400"></i> Painel Master do Administrador</h2>
+                    <div class="grid grid-cols-4 gap-2 pt-1 border-t border-slate-700 text-center">
+                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statFeirantes" class="block font-bold text-sm text-emerald-400">0</span><span class="text-[9px] text-slate-400 uppercase">Barracas</span></div>
+                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statClientes" class="block font-bold text-sm text-sky-400">0</span><span class="text-[9px] text-slate-400 uppercase">Clientes</span></div>
+                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statProdutos" class="block font-bold text-sm text-amber-400">0</span><span class="text-[9px] text-slate-400 uppercase">Produtos</span></div>
+                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statAnuncios" class="block font-bold text-sm text-teal-400">0</span><span class="text-[9px] text-slate-400 uppercase">Anúncios</span></div>
+                    </div>
+                </div>
+
+                <div class="flex bg-slate-200 p-1 rounded-xl overflow-x-auto">
+                    <button type="button" onclick="mudarAbaAdminPainel('anuncios')" id="btnTabAdminAnuncios" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg bg-white text-slate-800 shadow-sm whitespace-nowrap">📢 Anúncios</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('barracas')" id="btnTabAdminBarracas" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🏪 Barracas</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('clientes')" id="btnTabAdminClientes" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🛒 Clientes</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('produtos')" id="btnTabAdminProdutos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🥕 Produtos</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('banidos')" id="btnTabAdminBanidos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🚫 Bans</button>
+                </div>
+
+                <!-- SEÇÃO ADMIN: ANÚNCIOS -->
+                <div id="secaoAdminAnuncios" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Anúncios e Avisos</h3>
+                    <form onsubmit="adicionarAnuncioAdmin(event)" class="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <input type="text" id="adminNovoTituloAnuncio" placeholder="Título do Anúncio" required class="w-full p-2.5 border border-slate-200 rounded-lg text-xs">
+                        <textarea id="adminNovoDescAnuncio" placeholder="Descrição detalhada..." required rows="2" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs"></textarea>
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg hover:bg-emerald-700 transition text-xs">Publicar Anúncio</button>
+                    </form>
+                    <div id="adminListaAnuncios" class="space-y-2 pt-1"></div>
+                </div>
+
+                <!-- SEÇÃO ADMIN: BARRACAS -->
+                <div id="secaoAdminBarracas" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Barracas e Feirantes</h3>
+                    </div>
+                    <div class="relative mb-2">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="buscaAdminFeirantesInput" oninput="renderizarAdminFeirantes()" placeholder="Buscar feirante ou barraca..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div id="adminListaFeirantes" class="space-y-3"></div>
+                </div>
+
+                <!-- SEÇÃO ADMIN: CLIENTES -->
+                <div id="secaoAdminClientes" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Contas de Clientes</h3>
+                    <div id="adminListaClientes" class="space-y-3"></div>
+                </div>
+
+                <!-- SEÇÃO ADMIN: PRODUTOS -->
+                <div id="secaoAdminProdutos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Catálogo Global de Produtos</h3>
+                    <div id="adminListaProdutos" class="space-y-2"></div>
+                </div>
+
+                <!-- SEÇÃO ADMIN: BANIMENTOS -->
+                <div id="secaoAdminBanidos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciamento de Banimentos (Números e Nomes)</h3>
+                    <div class="bg-slate-50 p-3 rounded-xl border space-y-2">
+                        <p class="text-[11px] text-slate-500">Bloquear novos cadastros ou acessos por correspondência exata.</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="inputBanTermo" placeholder="Nome ou WhatsApp a banir..." class="flex-1 p-2 border rounded-lg text-xs">
+                            <button onclick="adicionarBanimento()" class="bg-rose-600 text-white px-3 py-2 rounded-lg text-xs font-bold">Banir</button>
+                        </div>
+                    </div>
+                    <div id="adminListaBanidos" class="space-y-2 pt-1"></div>
+                </div>
+            </div>
+
+            <!-- TELA CARRINHO -->
+            <div id="telaCarrinho" class="hide space-y-4">
+                <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Seu Carrinho de Compras</h2>
+                <div id="itensCarrinho" class="space-y-3 mb-4"></div>
+                <div id="checkoutArea" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 hide">
+                    <div class="flex justify-between font-bold text-lg mb-4 text-slate-800">
+                        <span>Total:</span>
+                        <span id="totalCarrinho" class="text-emerald-600">R$ 0,00</span>
+                    </div>
+                    <button onclick="finalizarPedidoWhatsApp()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Concluir via WhatsApp 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- TELA PERFIL -->
+            <div id="telaPerfil" class="hide space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 overflow-hidden border-2 border-emerald-500 shadow-inner">
+                        <i class="fa-solid fa-user" id="perfilIconePadrao"></i>
+                        <img id="perfilFotoExibicao" class="w-full h-full object-cover hide" src="" alt="Foto">
+                    </div>
+                    <h2 id="perfilTitulo" class="font-bold text-lg text-slate-800"></h2>
+                    <p id="perfilSubtitulo" class="text-xs text-slate-400 mb-1"></p>
+                    <p id="perfilWhatsappInfo" class="text-xs text-slate-500 mb-2"></p>
+                    <p id="perfilTipo" class="text-emerald-600 text-sm font-semibold mb-4 uppercase tracking-wider"></p>
+                </div>
+
+                <div id="blocoEditarPerfil" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                    <h3 class="font-bold text-slate-700 text-sm mb-3">Atualizar Dados</h3>
+                    <form onsubmit="atualizarPerfilUsuario(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome Completo</label>
+                            <input type="text" id="editarNomeCompleto" class="w-full p-3 border border-slate-200 rounded-xl text-sm" required>
+                        </div>
+                        <div id="campoEditarBarracaDiv" class="hide space-y-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome da Barraca</label>
+                                <input type="text" id="editarNomeBarraca" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
+                            </div>
+                            <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs font-bold text-amber-900 block">🌟 Status de Destaque</span>
+                                    <span id="statusDestaquePerfilLabel" class="text-[11px] text-amber-700">Aguardando ativação</span>
+                                </div>
+                                <button type="button" onclick="solicitarDestaqueFeirante()" class="bg-amber-500 text-white text-xs font-bold px-3 py-2 rounded-lg">Solicitar Destaque</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">WhatsApp de Contato</label>
+                            <input type="tel" id="editarWhatsapp" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil</label>
+                            <input type="file" id="editarFotoPerfilInput" accept="image/*" class="w-full p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none">
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 rounded-xl text-sm">Salvar</button>
+                            <button type="button" onclick="deletarFotoPerfilAtual()" class="bg-amber-100 text-amber-800 px-3 py-2.5 rounded-xl text-xs font-bold" title="Remover Foto">Deletar Foto</button>
+                        </div>
+                    </form>
+                    <button type="button" onclick="confirmarExclusaoConta()" class="w-full bg-rose-50 text-rose-600 font-semibold py-2.5 rounded-xl text-xs border border-rose-200">Excluir conta permanentemente</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- NAV CLIENTE -->
+        <nav id="navCliente" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+            <div class="max-w-md mx-auto flex justify-around py-3">
+                <button onclick="mudarAbaCliente('produtos')" id="tabProdutosBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-carrot text-lg mb-1"></i> Produtos</button>
+                <button onclick="mudarAbaCliente('barracas')" id="tabBarracasBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-store text-lg mb-1"></i> Barracas</button>
+                <button onclick="mudarAbaCliente('explorar')" id="tabExplorarBtn" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
+                <button onclick="mudarAbaCliente('carrinho')" id="tabCarrinhoBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs relative"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho<span id="badgeCarrinho" class="absolute -top-1 right-2 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide">0</span></button>
+                <button onclick="mudarAbaCliente('perfil')" id="tabPerfilBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+            </div>
+        </nav>
+
+        <!-- NAV FEIRANTE -->
+        <nav id="navFeirante" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+            <div class="max-w-md mx-auto flex justify-around py-3">
+                <button onclick="mudarAbaFeirante('gerenciar')" id="tabFeiranteGerenciar" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-box-open text-lg mb-1"></i> Meus Itens</button>
+                <button onclick="mudarAbaFeirante('produtos')" id="tabFeiranteProdutos" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-carrot text-lg mb-1"></i> Produtos</button>
+                <button onclick="mudarAbaFeirante('barracas')" id="tabFeiranteBarracas" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-store text-lg mb-1"></i> Barracas</button>
+                <button onclick="mudarAbaFeirante('explorar')" id="tabFeiranteExplorar" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
+                <button onclick="mudarAbaFeirante('carrinho')" id="tabFeiranteCarrinho" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho</button>
+                <button onclick="mudarAbaFeirante('perfil')" id="tabFeirantePerfil" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+            </div>
+        </nav>
+
+        <!-- NAV ADMIN -->
+        <nav id="navAdmin" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+            <div class="max-w-md mx-auto flex justify-around py-3">
+                <button onclick="mudarAbaAdmin('admin')" id="tabAdminPainel" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-gear text-lg mb-1"></i> Painel Adm</button>
+                <button onclick="mudarAbaAdmin('perfil')" id="tabAdminPerfil" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- SCRIPT DA APLICAÇÃO -->
+    <script>
+        let modoAuthAtual = 'login'; 
+        let usuarioAtual = JSON.parse(localStorage.getItem('feira_usuario_logado')) || null;
+        let filtroExplorarAtual = 'todas';
+        let indiceCarrosselAtual = 0;
+        let timerCarrossel = null;
+        let indiceAnuncioAtual = 0;
+        let timerAnuncios = null;
+
+        let anunciosLocais = JSON.parse(localStorage.getItem('feira_anuncios')) || [];
+        let adminsCadastrados = JSON.parse(localStorage.getItem('feira_admins')) || [
+            { usuario: 'admin', senha: 'admin123', nomeCompleto: 'Administrador Geral', whatsapp: '', tipo: 'admin', fotoPerfil: '' }
+        ];
+        let feirantesCadastrados = JSON.parse(localStorage.getItem('feira_feirantes')) || [];
+        let clientesCadastrados = JSON.parse(localStorage.getItem('feira_clientes')) || [];
+        let produtos = JSON.parse(localStorage.getItem('feira_produtos')) || [];
+        let listaBanidos = JSON.parse(localStorage.getItem('feira_banidos')) || [];
+        let carrinho = [];
+
+        if (usuarioAtual) iniciarApp();
+
+        function alternarModoAuth(modo) {
+            modoAuthAtual = modo;
+            const btnLogin = document.getElementById('abaLoginBtn');
+            const btnCadastro = document.getElementById('abaCadastroBtn');
+            const btnSubmit = document.getElementById('btnSubmitAuth');
+            const camposFeirante = document.getElementById('camposFeiranteContainer');
+            const camposPessoais = document.getElementById('camposPessoaisCadastro');
+            const blocoTipoPerfil = document.getElementById('blocoTipoPerfilAuth');
+
+            if (modo === 'login') {
+                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
+                btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
+                btnSubmit.innerText = "Entrar";
+                camposFeirante.classList.add('hide');
+                camposPessoais.classList.add('hide');
+                blocoTipoPerfil.classList.add('hide');
+            } else {
+                btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
+                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
+                btnSubmit.innerText = "Cadastrar";
+                camposPessoais.classList.remove('hide');
+                blocoTipoPerfil.classList.remove('hide');
+                verificarTipoPerfilAuth();
+            }
+        }
+
+        function verificarTipoPerfilAuth() {
+            const tipo = document.getElementById('authTipo').value;
+            const camposFeirante = document.getElementById('camposFeiranteContainer');
+            if (modoAuthAtual === 'cadastro' && tipo === 'feirante') {
+                camposFeirante.classList.remove('hide');
+            } else {
+                camposFeirante.classList.add('hide');
+            }
+        }
+
+        function processarAuth(event) {
+            event.preventDefault();
+            const usuarioInput = document.getElementById('authUsuario').value.trim();
+            const senha = document.getElementById('authSenha').value.trim();
+
+            if (modoAuthAtual === 'login') {
+                let encontrado = null;
+                let tipoEncontrado = null;
+
+                for (let u of adminsCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'admin'; break; } }
+                if (!encontrado) { for (let u of feirantesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'feirante'; break; } } }
+                if (!encontrado) { for (let u of clientesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'cliente'; break; } } }
+
+                if (encontrado) {
+                    if (listaBanidos.includes(encontrado.usuario) || listaBanidos.includes(encontrado.whatsapp)) {
+                        alert('⛔ Esta conta ou número de WhatsApp está banido do sistema.');
+                        return;
+                    }
+                    usuarioAtual = { ...encontrado, tipo: tipoEncontrado };
+                    const inputFoto = document.getElementById('authFotoPerfilInput');
+                    if (inputFoto && inputFoto.files && inputFoto.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            usuarioAtual.fotoPerfil = e.target.result;
+                            atualizarBancoUsuario();
+                            salvarEIniciar();
+                        };
+                        reader.readAsDataURL(inputFoto.files[0]);
+                    } else {
+                        salvarEIniciar();
+                    }
+                } else {
+                    alert('⚠️ Usuário ou senha incorretos!');
+                }
+            } else {
+                const nomeCompleto = document.getElementById('authNomeCompleto').value.trim();
+                const whatsapp = document.getElementById('authWhatsapp').value.trim();
+                const tipo = document.getElementById('authTipo').value;
+                const nomeBarraca = document.getElementById('authNomeBarraca').value.trim();
+                const categoria = document.getElementById('authCategoriaBarraca').value;
+                const destacada = document.getElementById('authDestaque').checked;
+
+                if (listaBanidos.includes(usuarioInput) || (whatsapp && listaBanidos.includes(whatsapp)) || listaBanidos.includes(nomeCompleto)) {
+                    alert('⛔ Você está banido e não pode criar contas neste sistema.');
+                    return;
+                }
+
+                let base = tipo === 'admin' ? adminsCadastrados : (tipo === 'feirante' ? feirantesCadastrados : clientesCadastrados);
+                const arquivoFoto = document.getElementById('authFotoPerfilInput').files[0];
+                
+                if (arquivoFoto) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) { concluirCadastro(e.target.result); };
+                    reader.readAsDataURL(arquivoFoto);
+                } else {
+                    concluirCadastro('');
+                }
+
+                function concluirCadastro(fotoBase64) {
+                    const novoUsuario = { 
+                        usuario: usuarioInput, senha, nomeCompleto: nomeCompleto || usuarioInput, whatsapp, tipo, 
+                        nomeBarraca: tipo === 'feirante' ? nomeBarraca : null, 
+                        categoria: tipo === 'feirante' ? categoria : null,
+                        destacada: tipo === 'feirante' ? destacada : false,
+                        fotoPerfil: fotoBase64
+                    };
+                    base.push(novoUsuario);
+                    if (tipo === 'admin') localStorage.setItem('feira_admins', JSON.stringify(adminsCadastrados));
+                    else if (tipo === 'feirante') localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                    else localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+
+                    usuarioAtual = novoUsuario;
+                    salvarEIniciar();
+                }
+            }
+        }
+
+        function atualizarBancoUsuario() {
+            if (usuarioAtual.tipo === 'admin') {
+                let idx = adminsCadastrados.findIndex(u => u.usuario === usuarioAtual.usuario);
+                if(idx !== -1) { adminsCadastrados[idx] = usuarioAtual; localStorage.setItem('feira_admins', JSON.stringify(adminsCadastrados)); }
+            } else if (usuarioAtual.tipo === 'feirante') {
+                let idx = feirantesCadastrados.findIndex(u => u.usuario === usuarioAtual.usuario);
+                if(idx !== -1) { feirantesCadastrados[idx] = usuarioAtual; localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados)); }
+            } else {
+                let idx = clientesCadastrados.findIndex(u => u.usuario === usuarioAtual.usuario);
+                if(idx !== -1) { clientesCadastrados[idx] = usuarioAtual; localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados)); }
+            }
+        }
+
+        function salvarEIniciar() {
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            iniciarApp();
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem('feira_usuario_logado');
+            usuarioAtual = null;
+            pararTimers();
+            document.getElementById('appPrincipal').classList.add('hide');
+            document.getElementById('telaAuth').classList.remove('hide');
+            carrinho = [];
+        }
+
+        function confirmarExclusaoConta() {
+            if (confirm("Tem certeza que deseja excluir sua conta permanentemente?")) {
+                if (usuarioAtual.tipo === 'feirante') {
+                    feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuarioAtual.usuario);
+                    localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                    produtos = produtos.filter(p => p.feiranteUsuario !== usuarioAtual.usuario);
+                    localStorage.setItem('feira_produtos', JSON.stringify(produtos));
+                } else if (usuarioAtual.tipo === 'cliente') {
+                    clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuarioAtual.usuario);
+                    localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+                }
+                fazerLogout();
+            }
+        }
+
+        function pararTimers() {
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            if (timerAnuncios) clearInterval(timerAnuncios);
+        }
+
+        function iniciarApp() {
+            document.getElementById('telaAuth').classList.add('hide');
+            document.getElementById('appPrincipal').classList.remove('hide');
+
+            ['visãoFeirante', 'visãoUnificadaExplorar', 'telaProdutosGeral', 'telaBarracasGeral', 'telaProdutosFeira', 'visãoAdmin', 'telaCarrinho', 'telaPerfil', 'navCliente', 'navFeirante', 'navAdmin'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
+
+            if (usuarioAtual.tipo === 'admin') {
+                document.getElementById('navAdmin').classList.remove('hide');
+                mudarAbaAdmin('admin');
+            } else if (usuarioAtual.tipo === 'feirante') {
+                document.getElementById('visãoFeirante').classList.remove('hide');
+                document.getElementById('navFeirante').classList.remove('hide');
+                renderizarProdutosFeirante();
+            } else {
+                document.getElementById('navCliente').classList.remove('hide');
+                mudarAbaCliente('explorar');
+            }
+        }
+
+        function mudarAbaCliente(aba) {
+            ['visãoUnificadaExplorar', 'telaProdutosGeral', 'telaBarracasGeral', 'telaProdutosFeira', 'telaCarrinho', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
+            pararTimers();
+            ['tabExplorarBtn', 'tabCarrinhoBtn', 'tabProdutosBtn', 'tabBarracasBtn', 'tabPerfilBtn'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) el.className = "flex flex-col items-center text-slate-400 font-medium text-xs";
+            });
+
+            if (aba === 'explorar') {
+                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+                document.getElementById('tabExplorarBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                iniciarCarrosselDestaques();
+                iniciarAnunciosLocais();
+                filtrarExplorar('todas');
+                renderizarProdutosCliente();
+            } else if (aba === 'carrinho') {
+                document.getElementById('telaCarrinho').classList.remove('hide');
+                document.getElementById('tabCarrinhoBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarCarrinho();
+            } else if (aba === 'produtos') {
+                document.getElementById('telaProdutosGeral').classList.remove('hide');
+                document.getElementById('tabProdutosBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarTelaProdutosGeral();
+            } else if (aba === 'barracas') {
+                document.getElementById('telaBarracasGeral').classList.remove('hide');
+                document.getElementById('tabBarracasBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarTelaBarracasGeral();
+            } else if (aba === 'perfil') {
+                document.getElementById('telaPerfil').classList.remove('hide');
+                document.getElementById('tabPerfilBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                preencherPerfil();
+            }
+        }
+
+        function mudarAbaFeirante(aba) {
+            ['visãoFeirante', 'visãoUnificadaExplorar', 'telaProdutosGeral', 'telaBarracasGeral', 'telaProdutosFeira', 'telaCarrinho', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
+            pararTimers();
+            ['tabFeiranteGerenciar', 'tabFeiranteExplorar', 'tabFeiranteCarrinho', 'tabFeiranteProdutos', 'tabFeiranteBarracas', 'tabFeirantePerfil'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) el.className = "flex flex-col items-center text-slate-400 font-medium text-xs";
+            });
+
+            if (aba === 'gerenciar') {
+                document.getElementById('visãoFeirante').classList.remove('hide');
+                document.getElementById('tabFeiranteGerenciar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarProdutosFeirante();
+            } else if (aba === 'explorar') {
+                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+                document.getElementById('tabFeiranteExplorar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                iniciarCarrosselDestaques();
+                iniciarAnunciosLocais();
+                filtrarExplorar('todas');
+                renderizarProdutosCliente();
+            } else if (aba === 'carrinho') {
+                document.getElementById('telaCarrinho').classList.remove('hide');
+                document.getElementById('tabFeiranteCarrinho').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarCarrinho();
+            } else if (aba === 'produtos') {
+                document.getElementById('telaProdutosGeral').classList.remove('hide');
+                document.getElementById('tabFeiranteProdutos').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarTelaProdutosGeral();
+            } else if (aba === 'barracas') {
+                document.getElementById('telaBarracasGeral').classList.remove('hide');
+                document.getElementById('tabFeiranteBarracas').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                renderizarTelaBarracasGeral();
+            } else if (aba === 'perfil') {
+                document.getElementById('telaPerfil').classList.remove('hide');
+                document.getElementById('tabFeirantePerfil').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
+                preencherPerfil();
+            }
+        }
+
+        function mudarAbaAdmin(aba) {
+            ['visãoAdmin', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
+            if (aba === 'admin') {
+                document.getElementById('visãoAdmin').classList.remove('hide');
+                renderizarPainelAdmin();
+            } else if (aba === 'perfil') {
+                document.getElementById('telaPerfil').classList.remove('hide');
+                preencherPerfil();
+            }
+        }
+
+        function mudarAbaAdminPainel(secao) {
+            ['secaoAdminAnuncios', 'secaoAdminBarracas', 'secaoAdminClientes', 'secaoAdminProdutos', 'secaoAdminBanidos'].forEach(id => document.getElementById(id).classList.add('hide'));
+            if (secao === 'anuncios') { document.getElementById('secaoAdminAnuncios').classList.remove('hide'); renderizarAdminAnuncios(); }
+            else if (secao === 'barracas') { document.getElementById('secaoAdminBarracas').classList.remove('hide'); renderizarAdminFeirantes(); }
+            else if (secao === 'clientes') { document.getElementById('secaoAdminClientes').classList.remove('hide'); renderizarAdminClientes(); }
+            else if (secao === 'produtos') { document.getElementById('secaoAdminProdutos').classList.remove('hide'); renderizarAdminProdutos(); }
+            else if (secao === 'banidos') { document.getElementById('secaoAdminBanidos').classList.remove('hide'); renderizarAdminBanidos(); }
+        }
+
+        function renderizarPainelAdmin() {
+            document.getElementById('statFeirantes').innerText = feirantesCadastrados.length;
+            document.getElementById('statClientes').innerText = clientesCadastrados.length;
+            document.getElementById('statProdutos').innerText = produtos.length;
+            document.getElementById('statAnuncios').innerText = anunciosLocais.length;
+            renderizarAdminAnuncios();
+            renderizarAdminFeirantes();
+            renderizarAdminClientes();
+            renderizarAdminProdutos();
+            renderizarAdminBanidos();
+        }
+
+        // --- FUNÇÕES DO PAINEL ADMIN: ANÚNCIOS ---
+        function renderizarAdminAnuncios() {
+            const container = document.getElementById('adminListaAnuncios');
+            container.innerHTML = '';
+            if (anunciosLocais.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum anúncio.</p>`; return; }
+            anunciosLocais.forEach(a => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
+                        <div><b>${a.titulo}</b><p class="text-slate-500 text-[11px] truncate max-w-[200px]">${a.desc}</p></div>
+                        <button onclick="deletarAnuncioAdmin(${a.id})" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+        function deletarAnuncioAdmin(id) {
+            if (confirm("Apagar este anúncio?")) {
+                anunciosLocais = anunciosLocais.filter(a => a.id !== id);
+                localStorage.setItem('feira_anuncios', JSON.stringify(anunciosLocais));
+                renderizarPainelAdmin();
+            }
+        }
+        function adicionarAnuncioAdmin(event) {
+            event.preventDefault();
+            anunciosLocais.push({ id: Date.now(), titulo: document.getElementById('adminNovoTituloAnuncio').value, desc: document.getElementById('adminNovoDescAnuncio').value });
+            localStorage.setItem('feira_anuncios', JSON.stringify(anunciosLocais));
+            document.getElementById('adminNovoTituloAnuncio').value = '';
+            document.getElementById('adminNovoDescAnuncio').value = '';
+            renderizarPainelAdmin();
+        }
+
+        // --- FUNÇÕES DO PAINEL ADMIN: BARRACAS & FEIRANTES (COM BUSCA) ---
+        function renderizarAdminFeirantes() {
+            const container = document.getElementById('adminListaFeirantes');
+            const termoBusca = document.getElementById('buscaAdminFeirantesInput') ? document.getElementById('buscaAdminFeirantesInput').value.toLowerCase().trim() : '';
+            container.innerHTML = '';
+
+            let feirantesFiltrados = feirantesCadastrados.filter(f => 
+                f.nomeBarraca.toLowerCase().includes(termoBusca) || 
+                f.nomeCompleto.toLowerCase().includes(termoBusca) || 
+                (f.usuario && f.usuario.toLowerCase().includes(termoBusca))
+            );
+
+            if (feirantesFiltrados.length === 0) { 
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhuma barraca encontrada.</p>`; 
+                return; 
+            }
+
+            feirantesFiltrados.forEach(f => {
+                let statusDestaqueBtn = f.destacada 
+                    ? `<button onclick="alternarDestaqueAdmin('${f.usuario}', false)" class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-lg">Remover Destaque ⭐</button>`
+                    : `<button onclick="alternarDestaqueAdmin('${f.usuario}', true)" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded-lg">Colocar em Destaque 🌟</button>`;
+                
+                container.innerHTML += `
+                    <div class="p-3 bg-slate-50 rounded-xl border text-xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-slate-800 text-sm">${f.nomeBarraca}</span>
+                                <p class="text-slate-500 text-[11px]">Resp: ${f.nomeCompleto} | Tel: ${f.whatsapp || 'N/A'}</p>
+                            </div>
+                            <div class="flex gap-1">
+                                <button onclick="editarFeiranteAdmin('${f.usuario}')" class="text-sky-600 p-1.5" title="Editar Nome/Número"><i class="fa-solid fa-pen"></i></button>
+                                <button onclick="deletarFeiranteAdmin('${f.usuario}')" class="text-rose-500 p-1.5" title="Apagar Barraca"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-1 border-t border-slate-200">
+                            ${statusDestaqueBtn}
+                            <button onclick="banirUsuarioAdmin('${f.usuario}', '${f.whatsapp}')" class="text-rose-600 font-bold text-[10px]"><i class="fa-solid fa-ban"></i> Banir Feirante</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function alternarDestaqueAdmin(usuario, estado) {
+            let f = feirantesCadastrados.find(x => x.usuario === usuario);
+            if (f) {
+                f.destacada = estado;
+                localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                renderizarPainelAdmin();
+            }
+        }
+
+        function editarFeiranteAdmin(usuario) {
+            let f = feirantesCadastrados.find(x => x.usuario === usuario);
+            if (!f) return;
+            let novoNome = prompt("Novo nome completo do feirante:", f.nomeCompleto);
+            let novaBarraca = prompt("Novo nome da barraca:", f.nomeBarraca);
+            let novoTel = prompt("Novo WhatsApp:", f.whatsapp);
+            if (novoNome !== null) f.nomeCompleto = novoNome.trim();
+            if (novaBarraca !== null) f.nomeBarraca = novaBarraca.trim();
+            if (novoTel !== null) f.whatsapp = novoTel.trim();
+            localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+            renderizarPainelAdmin();
+        }
+
+        function deletarFeiranteAdmin(usuarioFeirante) {
+            if (confirm("Apagar esta barraca e seus produtos?")) {
+                feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuarioFeirante);
+                localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                produtos = produtos.filter(p => p.feiranteUsuario !== usuarioFeirante);
+                localStorage.setItem('feira_produtos', JSON.stringify(produtos));
+                renderizarPainelAdmin();
+            }
+        }
+
+        // --- FUNÇÕES DO PAINEL ADMIN: CLIENTES ---
+        function renderizarAdminClientes() {
+            const container = document.getElementById('adminListaClientes');
+            container.innerHTML = '';
+            if (clientesCadastrados.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum cliente cadastrado.</p>`; return; }
+            clientesCadastrados.forEach(c => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border text-xs">
+                        <div>
+                            <span class="font-bold text-slate-800">${c.nomeCompleto}</span>
+                            <p class="text-slate-500 text-[11px]">User: ${c.usuario} | Tel: ${c.whatsapp || 'N/A'}</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="editarClienteAdmin('${c.usuario}')" class="text-sky-600 p-1.5"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deletarClienteAdmin('${c.usuario}')" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="banirUsuarioAdmin('${c.usuario}', '${c.whatsapp}')" class="text-rose-700 p-1.5" title="Banir"><i class="fa-solid fa-ban"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function editarClienteAdmin(usuario) {
+            let c = clientesCadastrados.find(x => x.usuario === usuario);
+            if (!c) return;
+            let novoNome = prompt("Novo nome completo:", c.nomeCompleto);
+            let novoTel = prompt("Novo WhatsApp:", c.whatsapp);
+            if (novoNome !== null) c.nomeCompleto = novoNome.trim();
+            if (novoTel !== null) c.whatsapp = novoTel.trim();
+            localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+            renderizarPainelAdmin();
+        }
+
+        function deletarClienteAdmin(usuario) {
+            if (confirm("Apagar conta deste cliente?")) {
+                clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuario);
+                localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+                renderizarPainelAdmin();
+            }
+        }
+
+        // --- FUNÇÕES DO PAINEL ADMIN: PRODUTOS ---
+        function renderizarAdminProdutos() {
+            const container = document.getElementById('adminListaProdutos');
+            container.innerHTML = '';
+            if (produtos.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum produto.</p>`; return; }
+            produtos.forEach(p => {
+                let feirante = feirantesCadastrados.find(f => f.usuario === p.feiranteUsuario);
+                let nomeB = feirante ? feirante.nomeBarraca : 'Desconhecida';
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
+                        <div><b>${p.nome}</b> - R$ ${p.preco.toFixed(2)}<p class="text-slate-500 text-[11px]">Barraca: ${nomeB}</p></div>
+                        <button onclick="deletarProdutoAdmin(${p.id})" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+        function deletarProdutoAdmin(id) {
+            if (confirm("Apagar este produto?")) {
+                produtos = produtos.filter(p => p.id !== id);
+                localStorage.setItem('feira_produtos', JSON.stringify(produtos));
+                renderizarPainelAdmin();
+            }
+        }
+
+        // --- FUNÇÕES DO PAINEL ADMIN: BANIMENTOS ---
+        function renderizarAdminBanidos() {
+            const container = document.getElementById('adminListaBanidos');
+            container.innerHTML = '';
+            if (listaBanidos.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum termo ou número banido.</p>`; return; }
+            listaBanidos.forEach((termo, index) => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
+                        <span class="font-mono font-bold text-rose-600">${termo}</span>
+                        <button onclick="removerBanimento(${index})" class="text-slate-500 hover:text-slate-700 p-1"><i class="fa-solid fa-rotate-left"></i> Desbanir</button>
+                    </div>
+                `;
+            });
+        }
+
+        function adicionarBanimento() {
+            let termo = document.getElementById('inputBanTermo').value.trim();
+            if (!termo) return;
+            if (!listaBanidos.includes(termo)) {
+                listaBanidos.push(termo);
+                localStorage.setItem('feira_banidos', JSON.stringify(listaBanidos));
+                document.getElementById('inputBanTermo').value = '';
+                renderizarAdminBanidos();
+                alert(`✅ Termo/Número "${termo}" banido com sucesso.`);
+            }
+        }
+
+        function removerBanimento(index) {
+            listaBanidos.splice(index, 1);
+            localStorage.setItem('feira_banidos', JSON.stringify(listaBanidos));
+            renderizarAdminBanidos();
+        }
+
+        function banirUsuarioAdmin(usuario, whatsapp) {
+            if (confirm(`Deseja banir o usuário "${usuario}" e o número "${whatsapp || 'N/A'}"?`)) {
+                if (!listaBanidos.includes(usuario)) listaBanidos.push(usuario);
+                if (whatsapp && !listaBanidos.includes(whatsapp)) listaBanidos.push(whatsapp);
+                localStorage.setItem('feira_banidos', JSON.stringify(listaBanidos));
+
+                feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuario);
+                clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuario);
+                localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+
+                renderizarPainelAdmin();
+                alert("🚫 Usuário banido e removido.");
+            }
+        }
+
+        // --- CARROSSEL E ANÚNCIOS ---
+        function iniciarAnunciosLocais() {
+            if (timerAnuncios) clearInterval(timerAnuncios);
+            atualizarAnuncioVisual();
+            timerAnuncios = setInterval(() => {
+                if (anunciosLocais.length === 0) return;
+                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
+                atualizarAnuncioVisual();
+            }, 6000);
+        }
+
+        function atualizarAnuncioVisual() {
+            const tituloEl = document.getElementById('tituloAnuncio');
+            const descEl = document.getElementById('descAnuncio');
+            const indicadorEl = document.getElementById('anuncioIndicador');
+            if (anunciosLocais.length === 0) {
+                tituloEl.innerText = "Nenhum anúncio ativo";
+                descEl.innerText = "Fique ligado!";
+                indicadorEl.innerText = "0/0";
+                return;
+            }
+            if (indiceAnuncioAtual >= anunciosLocais.length) indiceAnuncioAtual = 0;
+            const a = anunciosLocais[indiceAnuncioAtual];
+            tituloEl.innerText = a.titulo;
+            descEl.innerText = a.desc;
+            indicadorEl.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
+        }
+
+        function iniciarCarrosselDestaques() {
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            atualizarItemCarrossel();
+            timerCarrossel = setInterval(() => {
+                indiceCarrosselAtual++;
+                atualizarItemCarrossel();
+            }, 10000);
+        }
+
+        function atualizarItemCarrossel() {
+            let lista = feirantesCadastrados.filter(f => f.destacada);
+            if (lista.length === 0) lista = feirantesCadastrados;
+            const container = document.getElementById('carrosselDestaquesContainer');
+            if(!container) return;
+
+            if (lista.length === 0) {
+                document.getElementById('carrosselIndicador').innerText = `0 / 0`;
+                container.innerHTML = `<div class="w-full text-center text-xs text-slate-400">Nenhuma barraca cadastrada</div>`;
+                container.dataset.usuarioFeirante = "";
+                return;
+            }
+            if (indiceCarrosselAtual >= lista.length) indiceCarrosselAtual = 0;
+            const f = lista[indiceCarrosselAtual];
+            document.getElementById('carrosselIndicador').innerText = `${indiceCarrosselAtual + 1} / ${lista.length}`;
+            container.innerHTML = `
+                <div class="flex items-center gap-3 w-full">
+                    <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 text-xl font-bold overflow-hidden">
+                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store"></i>'}
+                    </div>
+                    <div class="flex-1">
+                        <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">EM DESTAQUE</span>
+                        <h4 class="font-bold text-slate-800 text-sm mt-1">${f.nomeBarraca}</h4>
+                        <p class="text-xs text-slate-500">Clique para ver todos os produtos!</p>
+                    </div>
+                </div>
+            `;
+            container.dataset.usuarioFeirante = f.usuario;
+        }
+
+        function clicarLojaCarrossel() {
+            const container = document.getElementById('carrosselDestaquesContainer');
+            if(container && container.dataset.usuarioFeirante) abrirPaginaProdutosBarraca(container.dataset.usuarioFeirante);
+        }
+
+        function abrirPaginaProdutosBarraca(usuarioFeirante) {
+            const f = feirantesCadastrados.find(item => item.usuario === usuarioFeirante);
+            if (!f) return;
+
+            ['visãoUnificadaExplorar', 'telaProdutosGeral', 'telaBarracasGeral'].forEach(id => document.getElementById(id).classList.add('hide'));
+            document.getElementById('telaProdutosFeira').classList.remove('hide');
+
+            document.getElementById('tituloPaginaProdutos').innerText = `Produtos: ${f.nomeBarraca}`;
+            document.getElementById('detalheNomeBarraca').innerText = f.nomeBarraca;
+            document.getElementById('detalheNomeDono').innerText = f.nomeCompleto;
+            document.getElementById('detalheWhatsappDono').innerText = f.whatsapp || 'Não informado';
+
+            const selo = document.getElementById('detalheSeloDestaque');
+            if (f.destacada) selo.classList.remove('hide'); else selo.classList.add('hide');
+
+            const iconePadrao = document.getElementById('iconePadraoBarraca');
+            const fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
+            if (f.fotoPerfil) {
+                fotoHeader.src = f.fotoPerfil;
+                fotoHeader.classList.remove('hide');
+                iconePadrao.classList.add('hide');
+            } else {
+                fotoHeader.classList.add('hide');
+                iconePadrao.classList.remove('hide');
+            }
+
+            const containerProdutos = document.getElementById('listaProdutosDaBarracaSelecionada');
+            containerProdutos.innerHTML = '';
+            let prodsBarraca = produtos.filter(p => p.feiranteUsuario === usuarioFeirante);
+            
+            if (prodsBarraca.length === 0) {
+                containerProdutos.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhum produto cadastrado.</p>`;
+            } else {
+                prodsBarraca.forEach(p => {
+                    containerProdutos.innerHTML += `
+                        <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
+                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-slate-800 text-sm">${p.nome}</h4>
+                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
+                            </div>
+                            <button onclick="adicionarAoCarrinho(${p.id})" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function voltarParaExplorar() {
+            document.getElementById('telaProdutosFeira').classList.add('hide');
+            document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+        }
+
+        // --- PERFIL ---
+        function preencherPerfil() {
+            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto;
+            document.getElementById('perfilSubtitulo').innerText = `Usuário: ${usuarioAtual.usuario}`;
+            document.getElementById('perfilWhatsappInfo').innerText = `WhatsApp: ${usuarioAtual.whatsapp || 'Não informado'}`;
+            document.getElementById('perfilTipo').innerText = "Perfil: " + usuarioAtual.tipo.toUpperCase();
+
+            const iconePadrao = document.getElementById('perfilIconePadrao');
+            const fotoExibicao = document.getElementById('perfilFotoExibicao');
+            if (usuarioAtual.fotoPerfil) {
+                fotoExibicao.src = usuarioAtual.fotoPerfil;
+                fotoExibicao.classList.remove('hide');
+                iconePadrao.classList.add('hide');
+            } else {
+                fotoExibicao.classList.add('hide');
+                iconePadrao.classList.remove('hide');
+            }
+
+            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto || '';
+            document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
+
+            const blocoFeirante = document.getElementById('campoEditarBarracaDiv');
+            if (usuarioAtual.tipo === 'feirante') {
+                blocoFeirante.classList.remove('hide');
+                document.getElementById('editarNomeBarraca').value = usuarioAtual.nomeBarraca || '';
+                document.getElementById('statusDestaquePerfilLabel').innerText = usuarioAtual.destacada ? "Destaque Ativo ⭐" : "Aguardando ativação";
+            } else {
+                blocoFeirante.classList.add('hide');
+            }
+        }
+
+        function atualizarPerfilUsuario(event) {
+            event.preventDefault();
+            usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
+            usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
+            if (usuarioAtual.tipo === 'feirante') {
+                usuarioAtual.nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
+            }
+
+            const inputFoto = document.getElementById('editarFotoPerfilInput');
+            if (inputFoto && inputFoto.files && inputFoto.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    usuarioAtual.fotoPerfil = e.target.result;
+                    atualizarBancoUsuario();
+                    preencherPerfil();
+                    alert('✅ Perfil atualizado com sucesso!');
+                };
+                reader.readAsDataURL(inputFoto.files[0]);
+            } else {
+                atualizarBancoUsuario();
+                preencherPerfil();
+                alert('✅ Perfil atualizado com sucesso!');
+            }
+        }
+
+        function deletarFotoPerfilAtual() {
+            if (confirm("Deseja remover sua foto de perfil?")) {
+                usuarioAtual.fotoPerfil = "";
+                atualizarBancoUsuario();
+                preencherPerfil();
+                alert("🗑️ Foto removida.");
+            }
+        }
+
+        function solicitarDestaqueFeirante() {
+            let mensagem = `🌟 Solicitação de Destaque para a barraca ${usuarioAtual.nomeBarraca}`;
+            window.open(`https://wa.me/5521999999999?text=${encodeURIComponent(mensagem)}`, '_blank');
+        }
+
+        function filtrarExplorar(cat) {
+            filtroExplorarAtual = cat;
+            renderizarExplorarFeirantes();
+        }
+
+        function renderizarExplorarFeirantes() {
+            const lista = document.getElementById('listaExplorarFeirantes');
+            if(!lista) return;
+            lista.innerHTML = '';
+            let filtrados = feirantesCadastrados.filter(f => {
+                let catFiltro = filtroExplorarAtual.toLowerCase().trim();
+                return catFiltro === 'todas' || (f.categoria || 'alimentos').toLowerCase().trim() === catFiltro;
+            });
+
+            if (filtrados.length === 0) { lista.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhuma barraca encontrada.</p>`; return; }
+
+            filtrados.forEach(f => {
+                let iconeOuFoto = f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store"></i>';
+                lista.innerHTML += `
+                    <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition ${f.destacada ? 'border-amber-400 bg-amber-50/30' : ''}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 overflow-hidden">${iconeOuFoto}</div>
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-sm text-slate-800">${f.nomeBarraca}</h4>
+                                    ${f.destacada ? '<span class="text-[9px] bg-amber-500 text-white font-bold px-1.5 py-0.5 rounded">⭐ DESTAQUE</span>' : ''}
+                                </div>
+                                <span class="text-emerald-700 text-[10px] font-bold bg-emerald-100 px-2 py-0.5 rounded uppercase">${f.categoria || 'alimentos'}</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-chevron-right"></i></span>
+                    </div>
+                `;
+            });
+        }
+
+        function renderizarProdutosCliente(filtro = '') {
+            const lista = document.getElementById('listaProdutosCliente');
+            if(!lista) return;
+            lista.innerHTML = '';
+            let filtrados = produtos.filter(p => p.nome.toLowerCase().includes(filtro.toLowerCase()));
+            if (filtrados.length === 0) { lista.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhum produto disponível.</p>`; return; }
+            filtrados.forEach(p => {
+                let feirante = feirantesCadastrados.find(f => f.usuario === p.feiranteUsuario);
+                let nomeB = feirante ? feirante.nomeBarraca : 'Loja';
+                lista.innerHTML += `
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border flex items-center justify-between gap-3">
+                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800 text-sm">${p.nome}</h3>
+                            <p onclick="abrirPaginaProdutosBarraca('${p.feiranteUsuario}')" class="text-xs text-emerald-700 font-medium mb-1 cursor-pointer hover:underline"><i class="fa-solid fa-store"></i> ${nomeB}</p>
+                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)}</p>
+                        </div>
+                        <button onclick="adicionarAoCarrinho(${p.id})" class="bg-emerald-50 text-emerald-600 p-2.5 rounded-xl hover:bg-emerald-600 hover:text-white transition"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderizarTelaProdutosGeral() {
+            const container = document.getElementById('listaProdutosGeralCompleta');
+            const termo = document.getElementById('buscaProdutosGeralInput').value.toLowerCase();
+            container.innerHTML = '';
+            let filtrados = produtos.filter(p => p.nome.toLowerCase().includes(termo));
+            if (filtrados.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhum produto.</p>`; return; }
+            filtrados.forEach(p => {
+                let feirante = feirantesCadastrados.find(f => f.usuario === p.feiranteUsuario);
+                let nomeB = feirante ? feirante.nomeBarraca : 'Loja';
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
+                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-slate-800 text-sm">${p.nome}</h4>
+                            <p onclick="abrirPaginaProdutosBarraca('${p.feiranteUsuario}')" class="text-xs text-emerald-700 font-medium mb-1 cursor-pointer hover:underline"><i class="fa-solid fa-store"></i> ${nomeB}</p>
+                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
+                        </div>
+                        <button onclick="adicionarAoCarrinho(${p.id})" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderizarTelaBarracasGeral() {
+            const container = document.getElementById('listaBarracasGeralCompleta');
+            const termo = document.getElementById('buscaBarracasGeralInput').value.toLowerCase();
+            container.innerHTML = '';
+            let filtrados = feirantesCadastrados.filter(f => f.nomeBarraca.toLowerCase().includes(termo) || (f.categoria && f.categoria.toLowerCase().includes(termo)));
+            if (filtrados.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma barraca.</p>`; return; }
+            filtrados.forEach(f => {
+                let iconeOuFoto = f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store"></i>';
+                container.innerHTML += `
+                    <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition ${f.destacada ? 'border-amber-400 bg-amber-50/30' : ''}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 overflow-hidden">${iconeOuFoto}</div>
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-sm text-slate-800">${f.nomeBarraca}</h4>
+                                    ${f.destacada ? '<span class="text-[9px] bg-amber-500 text-white font-bold px-1.5 py-0.5 rounded">⭐ DESTAQUE</span>' : ''}
+                                </div>
+                                <span class="text-emerald-700 text-[10px] font-bold bg-emerald-100 px-2 py-0.5 rounded uppercase">${f.categoria || 'alimentos'}</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-chevron-right"></i></span>
+                    </div>
+                `;
+            });
+        }
+
+        function filtrarProdutos() { renderizarProdutosCliente(document.getElementById('buscaProduto').value); }
+
+        function cadastrarProduto(event) {
+            event.preventDefault();
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                produtos.push({ 
+                    id: Date.now(), 
+                    nome: document.getElementById('nomeProduto').value, 
+                    preco: parseFloat(document.getElementById('precoProduto').value), 
+                    unidade: document.getElementById('unidadeProduto').value, 
+                    foto: e.target.result, 
+                    feiranteUsuario: usuarioAtual.usuario 
+                });
+                localStorage.setItem('feira_produtos', JSON.stringify(produtos));
+                document.getElementById('formProduto').reset();
+                renderizarProdutosFeirante();
+                alert('✅ Produto cadastrado!');
+            };
+            reader.readAsDataURL(document.getElementById('fotoProdutoInput').files[0]);
+        }
+
+        function renderizarProdutosFeirante() {
+            const lista = document.getElementById('listaProdutosFeirante');
+            if(!lista) return;
+            lista.innerHTML = '';
+            let meusProds = produtos.filter(p => p.feiranteUsuario === usuarioAtual.usuario);
+            if(meusProds.length === 0) { lista.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou produtos.</p>`; return; }
+            meusProds.forEach(p => {
+                lista.innerHTML += `
+                    <div class="bg-white p-3 rounded-xl shadow-sm border flex items-center justify-between text-sm">
+                        <span class="font-semibold">${p.nome} (R$ ${p.preco.toFixed(2)})</span>
+                        <button onclick="produtos = produtos.filter(x => x.id !== ${p.id}); localStorage.setItem('feira_produtos', JSON.stringify(produtos)); renderizarProdutosFeirante();" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function adicionarAoCarrinho(id) {
+            const p = produtos.find(item => item.id === id);
+            if (p) {
+                carrinho.push(p);
+                let badge = document.getElementById('badgeCarrinho');
+                if(badge) { badge.innerText = carrinho.length; badge.classList.remove('hide'); }
+                alert(`🛒 "${p.nome}" adicionado!`);
+            }
+        }
+
+        function renderizarCarrinho() {
+            const lista = document.getElementById('itensCarrinho');
+            if(!lista) return;
+            lista.innerHTML = '';
+            let total = 0;
+            if(carrinho.length === 0) {
+                lista.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Carrinho vazio.</p>`;
+                document.getElementById('checkoutArea').classList.add('hide');
+                return;
+            }
+            carrinho.forEach((item, index) => {
+                total += item.preco;
+                lista.innerHTML += `
+                    <div class="bg-white p-3 rounded-xl border flex items-center justify-between text-sm">
+                        <span>${item.nome} - R$ ${item.preco.toFixed(2)}</span>
+                        <button onclick="carrinho.splice(${index},1); renderizarCarrinho();" class="text-rose-400"><i class="fa-solid fa-x"></i></button>
+                    </div>
+                `;
+            });
+            document.getElementById('totalCarrinho').innerText = `R$ ${total.toFixed(2)}`;
+            document.getElementById('checkoutArea').classList.remove('hide');
+        }
+
+        function finalizarPedidoWhatsApp() {
+            let pedidos = {};
+            carrinho.forEach(item => {
+                if (!pedidos[item.feiranteUsuario]) pedidos[item.feiranteUsuario] = [];
+                pedidos[item.feiranteUsuario].push(item);
+            });
+            for (let usuario in pedidos) {
+                let f = feirantesCadastrados.find(item => item.usuario === usuario);
+                let numero = f && f.whatsapp ? f.whatsapp : '5521999999999';
+                let msg = `🛒 *NOVO PEDIDO - FEIRAFÁCIL*\nCliente: ${usuarioAtual.nomeCompleto}\n\n`;
+                let total = 0;
+                pedidos[usuario].forEach((item, idx) => {
+                    msg += `${idx + 1}. ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
+                    total += item.preco;
+                });
+                msg += `\nTotal: R$ ${total.toFixed(2)}`;
+                window.open(`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, '_blank');
+            }
+            carrinho = [];
+            renderizarCarrinho();
+        }
+    </script>
+</body>
+</html>
