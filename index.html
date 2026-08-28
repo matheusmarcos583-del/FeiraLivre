@@ -26,19 +26,35 @@
             <p class="text-slate-500 text-sm mt-1">Conectando você à feira livre do bairro</p>
         </div>
 
-        <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
+        <div id="abasAuthContainer" class="flex bg-slate-100 p-1 rounded-xl mb-6">
             <button type="button" onclick="alternarModoAuth('login')" id="abaLoginBtn" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition">Entrar</button>
             <button type="button" onclick="alternarModoAuth('cadastro')" id="abaCadastroBtn" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition">Cadastrar</button>
+        </div>
+
+        <!-- MENSAGEM DE ERRO/ALERTA VISUAL DINÂMICA -->
+        <div id="authMensagemErro" class="hide mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation text-base"></i>
+            <span id="authTextoErro">Mensagem de erro aqui</span>
+        </div>
+
+        <!-- MENSAGEM DE SUCESSO VISUAL -->
+        <div id="authMensagemSucesso" class="hide mb-4 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-base"></i>
+            <span id="authTextoSucesso">Sucesso aqui</span>
         </div>
 
         <form onsubmit="processarAuth(event)" class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Usuário</label>
-                <input type="text" id="authUsuario" placeholder="Seu nome de usuário" required class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="text" id="authUsuario" placeholder="Seu nome de usuário" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
             </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Senha</label>
-                <input type="password" id="authSenha" placeholder="••••••••" required class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            
+            <div id="grupoSenhaAuth">
+                <div class="flex justify-between items-center mb-1">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Senha</label>
+                    <button type="button" onclick="abrirTelaEsqueciSenha()" class="text-[11px] text-emerald-600 font-bold hover:underline">Esqueceu a senha?</button>
+                </div>
+                <input type="password" id="authSenha" placeholder="••••••••" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
             </div>
 
             <!-- CAMPOS DE DADOS PESSOAIS -->
@@ -48,16 +64,8 @@
                     <input type="text" id="authNomeCompleto" placeholder="Ex: João da Silva" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Data de Nascimento</label>
-                    <input type="date" id="authDataNascimento" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Número de WhatsApp</label>
                     <input type="tel" id="authWhatsapp" placeholder="Ex: 5521999999999" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil</label>
-                    <input type="file" id="authFotoPerfilInput" accept="image/*" class="w-full p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
                 </div>
             </div>
 
@@ -96,6 +104,23 @@
                         </div>
                     </label>
                 </div>
+            </div>
+
+            <!-- FORMULÁRIO DE RECUPERAÇÃO DE SENHA (OCULTO POR PADRÃO) -->
+            <div id="blocoEsqueciSenhaForm" class="space-y-3 hide">
+                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800">
+                    Digite seu <b>nome de usuário</b> ou o <b>WhatsApp</b> cadastrado para recuperar o acesso à sua conta.
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Usuário ou WhatsApp</label>
+                    <input type="text" id="recuperarUsuarioInput" placeholder="Seu usuário ou WhatsApp" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <button type="button" onclick="executarRecuperacaoSenha()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md">
+                    Enviar Instruções / Redefinir Senha
+                </button>
+                <button type="button" onclick="voltarDoEsqueciSenha()" class="w-full bg-slate-100 text-slate-600 font-semibold py-2.5 rounded-xl hover:bg-slate-200 transition text-xs">
+                    Voltar para o Login
+                </button>
             </div>
 
             <button type="submit" id="btnSubmitAuth" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 mt-2">
@@ -416,7 +441,7 @@
 
     <!-- SCRIPT DA APLICAÇÃO -->
     <script>
-        let modoAuthAtual = 'login'; 
+        let modoAuthAtual = 'login'; // 'login', 'cadastro' ou 'esqueci'
         let usuarioAtual = JSON.parse(localStorage.getItem('feira_usuario_logado')) || null;
         let filtroExplorarAtual = 'todas';
         let indiceCarrosselAtual = 0;
@@ -436,29 +461,137 @@
 
         if (usuarioAtual) iniciarApp();
 
+        // Funções para gerenciar avisos visuais claros de erro ou sucesso
+        function mostrarErroAuth(mensagem) {
+            const caixaErro = document.getElementById('authMensagemErro');
+            const textoErro = document.getElementById('authTextoErro');
+            ocultarSucessoAuth();
+            if (mensagem) {
+                textoErro.innerText = mensagem;
+                caixaErro.classList.remove('hide');
+            } else {
+                caixaErro.classList.add('hide');
+            }
+        }
+
+        function mostrarSucessoAuth(mensagem) {
+            const caixaSucesso = document.getElementById('authMensagemSucesso');
+            const textoSucesso = document.getElementById('authTextoSucesso');
+            ocultarErroAuth();
+            if (mensagem) {
+                textoSucesso.innerText = mensagem;
+                caixaSucesso.classList.remove('hide');
+            } else {
+                caixaSucesso.classList.add('hide');
+            }
+        }
+
+        function ocultarErroAuth() {
+            document.getElementById('authMensagemErro').classList.add('hide');
+        }
+
+        function ocultarSucessoAuth() {
+            document.getElementById('authMensagemSucesso').classList.add('hide');
+        }
+
         function alternarModoAuth(modo) {
             modoAuthAtual = modo;
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+            
             const btnLogin = document.getElementById('abaLoginBtn');
             const btnCadastro = document.getElementById('abaCadastroBtn');
             const btnSubmit = document.getElementById('btnSubmitAuth');
             const camposFeirante = document.getElementById('camposFeiranteContainer');
             const camposPessoais = document.getElementById('camposPessoaisCadastro');
             const blocoTipoPerfil = document.getElementById('blocoTipoPerfilAuth');
+            const abasContainer = document.getElementById('abasAuthContainer');
+            const blocoEsqueci = document.getElementById('blocoEsqueciSenhaForm');
+            const grupoSenha = document.getElementById('grupoSenhaAuth');
+            const inputUsuario = document.getElementById('authUsuario');
+            const inputSenha = document.getElementById('authSenha');
+
+            blocoEsqueci.classList.add('hide');
+            abasContainer.classList.remove('hide');
+            grupoSenha.classList.remove('hide');
+            inputUsuario.required = true;
+            inputSenha.required = true;
 
             if (modo === 'login') {
                 btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
                 btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
+                btnSubmit.classList.remove('hide');
                 btnSubmit.innerText = "Entrar";
                 camposFeirante.classList.add('hide');
                 camposPessoais.classList.add('hide');
                 blocoTipoPerfil.classList.add('hide');
-            } else {
+            } else if (modo === 'cadastro') {
                 btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
                 btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
+                btnSubmit.classList.remove('hide');
                 btnSubmit.innerText = "Cadastrar";
                 camposPessoais.classList.remove('hide');
                 blocoTipoPerfil.classList.remove('hide');
                 verificarTipoPerfilAuth();
+            }
+        }
+
+        function abrirTelaEsqueciSenha() {
+            modoAuthAtual = 'esqueci';
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+
+            document.getElementById('abasAuthContainer').classList.add('hide');
+            document.getElementById('grupoSenhaAuth').classList.add('hide');
+            document.getElementById('camposPessoaisCadastro').classList.add('hide');
+            document.getElementById('blocoTipoPerfilAuth').classList.add('hide');
+            document.getElementById('camposFeiranteContainer').classList.add('hide');
+            document.getElementById('btnSubmitAuth').classList.add('hide');
+
+            document.getElementById('authUsuario').required = false;
+            document.getElementById('authSenha').required = false;
+
+            document.getElementById('blocoEsqueciSenhaForm').classList.remove('hide');
+        }
+
+        function voltarDoEsqueciSenha() {
+            alternarModoAuth('login');
+        }
+
+        function executarRecuperacaoSenha() {
+            const termo = document.getElementById('recuperarUsuarioInput').value.trim();
+            if (!termo) {
+                mostrarErroAuth("⚠️ Por favor, digite seu nome de usuário ou WhatsApp para recuperar a senha.");
+                return;
+            }
+
+            let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
+            let encontrado = todosUsuarios.find(u => u.usuario.toLowerCase() === termo.toLowerCase() || u.whatsapp === termo);
+
+            if (!encontrado) {
+                mostrarErroAuth(`⚠️ Não encontramos nenhuma conta associada a "${termo}". Verifique os dados digitados.`);
+                return;
+            }
+
+            let novaSenhaTemp = prompt(`Conta encontrada (${encontrado.nomeCompleto}). Digite sua nova senha de acesso:`);
+            if (novaSenhaTemp !== null && novaSenhaTemp.trim() !== '') {
+                encontrado.senha = novaSenhaTemp.trim();
+
+                // Atualiza na base de dados correta
+                if (encontrado.tipo === 'admin') {
+                    localStorage.setItem('feira_admins', JSON.stringify(adminsCadastrados));
+                } else if (encontrado.tipo === 'feirante') {
+                    localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                } else {
+                    localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+                }
+
+                mostrarSucessoAuth("✅ Senha redefinida com sucesso! Agora você pode entrar com sua nova senha.");
+                document.getElementById('recuperarUsuarioInput').value = '';
+                voltarDoEsqueciSenha();
+                document.getElementById('authUsuario').value = encontrado.usuario;
+            } else if (novaSenhaTemp !== null) {
+                mostrarErroAuth("⚠️ A senha não pode estar em branco.");
             }
         }
 
@@ -474,8 +607,22 @@
 
         function processarAuth(event) {
             event.preventDefault();
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+            
             const usuarioInput = document.getElementById('authUsuario').value.trim();
             const senha = document.getElementById('authSenha').value.trim();
+
+            if (!usuarioInput) {
+                mostrarErroAuth("⚠️ O campo de usuário é obrigatório.");
+                document.getElementById('authUsuario').focus();
+                return;
+            }
+            if (!senha) {
+                mostrarErroAuth("⚠️ O campo de senha é obrigatório.");
+                document.getElementById('authSenha').focus();
+                return;
+            }
 
             if (modoAuthAtual === 'login') {
                 let encontrado = null;
@@ -486,25 +633,22 @@
                 if (!encontrado) { for (let u of clientesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'cliente'; break; } } }
 
                 if (encontrado) {
-                    if (listaBanidos.includes(encontrado.usuario) || listaBanidos.includes(encontrado.whatsapp)) {
-                        alert('⛔ Esta conta ou número de WhatsApp está banido do sistema.');
+                    if (listaBanidos.includes(encontrado.usuario) || (encontrado.whatsapp && listaBanidos.includes(encontrado.whatsapp))) {
+                        mostrarErroAuth('⛔ Acesso negado: Esta conta ou número de WhatsApp está banido do sistema.');
                         return;
                     }
                     usuarioAtual = { ...encontrado, tipo: tipoEncontrado };
-                    const inputFoto = document.getElementById('authFotoPerfilInput');
-                    if (inputFoto && inputFoto.files && inputFoto.files[0]) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            usuarioAtual.fotoPerfil = e.target.result;
-                            atualizarBancoUsuario();
-                            salvarEIniciar();
-                        };
-                        reader.readAsDataURL(inputFoto.files[0]);
-                    } else {
-                        salvarEIniciar();
-                    }
+                    salvarEIniciar();
                 } else {
-                    alert('⚠️ Usuário ou senha incorretos!');
+                    // Validação detalhada para notificar exatamente o que falhou
+                    let usuarioExisteGeral = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados].some(u => u.usuario === usuarioInput);
+                    if (!usuarioExisteGeral) {
+                        mostrarErroAuth(`❌ O usuário "${usuarioInput}" não foi encontrado. Verifique se digitou corretamente ou clique em "Cadastrar".`);
+                        document.getElementById('authUsuario').focus();
+                    } else {
+                        mostrarErroAuth('❌ Senha incorreta. Verifique os caracteres digitados ou utilize a opção "Esqueceu a senha?".');
+                        document.getElementById('authSenha').focus();
+                    }
                 }
             } else {
                 const nomeCompleto = document.getElementById('authNomeCompleto').value.trim();
@@ -514,38 +658,75 @@
                 const categoria = document.getElementById('authCategoriaBarraca').value;
                 const destacada = document.getElementById('authDestaque').checked;
 
-                if (listaBanidos.includes(usuarioInput) || (whatsapp && listaBanidos.includes(whatsapp)) || listaBanidos.includes(nomeCompleto)) {
-                    alert('⛔ Você está banido e não pode criar contas neste sistema.');
+                if (!nomeCompleto) {
+                    mostrarErroAuth('⚠️ O campo "Nome Completo" é obrigatório.');
+                    document.getElementById('authNomeCompleto').focus();
+                    return;
+                }
+                if (!whatsapp) {
+                    mostrarErroAuth('⚠️ O campo "Número de WhatsApp" é obrigatório para notificações de pedidos.');
+                    document.getElementById('authWhatsapp').focus();
                     return;
                 }
 
-                let base = tipo === 'admin' ? adminsCadastrados : (tipo === 'feirante' ? feirantesCadastrados : clientesCadastrados);
-                const arquivoFoto = document.getElementById('authFotoPerfilInput').files[0];
+                if (listaBanidos.includes(usuarioInput) || (whatsapp && listaBanidos.includes(whatsapp)) || listaBanidos.includes(nomeCompleto)) {
+                    mostrarErroAuth('⛔ Você está banido e não pode criar contas neste sistema.');
+                    return;
+                }
+
+                let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
                 
-                if (arquivoFoto) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) { concluirCadastro(e.target.result); };
-                    reader.readAsDataURL(arquivoFoto);
-                } else {
-                    concluirCadastro('');
+                let usuarioExiste = todosUsuarios.some(u => u.usuario.toLowerCase() === usuarioInput.toLowerCase());
+                if (usuarioExiste) {
+                    mostrarErroAuth(`⚠️ O nome de usuário "${usuarioInput}" já está em uso por outra pessoa. Por favor, escolha outro.`);
+                    document.getElementById('authUsuario').focus();
+                    return;
                 }
 
-                function concluirCadastro(fotoBase64) {
-                    const novoUsuario = { 
-                        usuario: usuarioInput, senha, nomeCompleto: nomeCompleto || usuarioInput, whatsapp, tipo, 
-                        nomeBarraca: tipo === 'feirante' ? nomeBarraca : null, 
-                        categoria: tipo === 'feirante' ? categoria : null,
-                        destacada: tipo === 'feirante' ? destacada : false,
-                        fotoPerfil: fotoBase64
-                    };
-                    base.push(novoUsuario);
-                    if (tipo === 'admin') localStorage.setItem('feira_admins', JSON.stringify(adminsCadastrados));
-                    else if (tipo === 'feirante') localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
-                    else localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
-
-                    usuarioAtual = novoUsuario;
-                    salvarEIniciar();
+                if (whatsapp) {
+                    let whatsappExiste = todosUsuarios.some(u => u.whatsapp === whatsapp);
+                    if (whatsappExiste) {
+                        mostrarErroAuth(`⚠️ O número de WhatsApp "${whatsapp}" já está cadastrado em outra conta.`);
+                        document.getElementById('authWhatsapp').focus();
+                        return;
+                    }
                 }
+
+                if (tipo === 'feirante') {
+                    if (!nomeBarraca) {
+                        mostrarErroAuth('⚠️ O campo "Nome da Barraca" é obrigatório para feirantes.');
+                        document.getElementById('authNomeBarraca').focus();
+                        return;
+                    }
+                    let barracaExiste = feirantesCadastrados.some(f => f.nomeBarraca.toLowerCase() === nomeBarraca.toLowerCase());
+                    if (barracaExiste) {
+                        mostrarErroAuth(`⚠️ Já existe uma barraca cadastrada com o nome "${nomeBarraca}".`);
+                        document.getElementById('authNomeBarraca').focus();
+                        return;
+                    }
+                }
+
+                let base = tipo === 'admin' ? adminsCadastrados : (tipo === 'feirante' ? feirantesCadastrados : clientesCadastrados);
+
+                const novoUsuario = { 
+                    usuario: usuarioInput, 
+                    senha, 
+                    nomeCompleto, 
+                    whatsapp, 
+                    tipo, 
+                    nomeBarraca: tipo === 'feirante' ? nomeBarraca : null, 
+                    categoria: tipo === 'feirante' ? categoria : null,
+                    destacada: tipo === 'feirante' ? destacada : false,
+                    fotoPerfil: ''
+                };
+                
+                base.push(novoUsuario);
+                if (tipo === 'admin') localStorage.setItem('feira_admins', JSON.stringify(adminsCadastrados));
+                else if (tipo === 'feirante') localStorage.setItem('feira_feirantes', JSON.stringify(feirantesCadastrados));
+                else localStorage.setItem('feira_clientes', JSON.stringify(clientesCadastrados));
+
+                usuarioAtual = novoUsuario;
+                salvarEIniciar();
             }
         }
 
@@ -573,6 +754,7 @@
             pararTimers();
             document.getElementById('appPrincipal').classList.add('hide');
             document.getElementById('telaAuth').classList.remove('hide');
+            alternarModoAuth('login');
             carrinho = [];
         }
 
@@ -751,7 +933,7 @@
             renderizarPainelAdmin();
         }
 
-        // --- FUNÇÕES DO PAINEL ADMIN: BARRACAS & FEIRANTES (COM BUSCA) ---
+        // --- FUNÇÕES DO PAINEL ADMIN: BARRACAS & FEIRANTES ---
         function renderizarAdminFeirantes() {
             const container = document.getElementById('adminListaFeirantes');
             const termoBusca = document.getElementById('buscaAdminFeirantesInput') ? document.getElementById('buscaAdminFeirantesInput').value.toLowerCase().trim() : '';
@@ -1131,8 +1313,11 @@
         }
 
         function solicitarDestaqueFeirante() {
-            let mensagem = `🌟 Solicitação de Destaque para a barraca ${usuarioAtual.nomeBarraca}`;
-            window.open(`https://wa.me/5521999999999?text=${encodeURIComponent(mensagem)}`, '_blank');
+            let confirmacao = confirm("Para destacar-se é necessário efetuar o pagamento de R$ 7,99 e o destaque tem duração apenas de 24 horas. Deseja continuar?");
+            if (confirmacao) {
+                let mensagem = `🌟 Olá! Gostaria de solicitar o destaque para a barraca ${usuarioAtual.nomeBarraca} (Duração de 24h - R$ 7,99).`;
+                window.open(`https://wa.me/5521977523055?text=${encodeURIComponent(mensagem)}`, '_blank');
+            }
         }
 
         function filtrarExplorar(cat) {
@@ -1286,7 +1471,7 @@
             if (p) {
                 carrinho.push(p);
                 let badge = document.getElementById('badgeCarrinho');
-                if(badge) { badge.innerText = carrinho.length; badge.classList.remove('hide'); }
+                if(badge) { badge.innerText = carrinho.length; badge.classList.resmoove ? badge.classList.remove('hide') : badge.classList.remove('hide'); }
                 alert(`🛒 "${p.nome}" adicionado!`);
             }
         }
