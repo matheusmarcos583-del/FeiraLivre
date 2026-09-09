@@ -156,7 +156,7 @@
             <!-- TELA: INÍCIO & EXPLORAR UNIFICADA (COM FILTROS INTERNOS DE PRODUTOS/BARRACAS) -->
             <div id="visãoUnificadaExplorar" class="space-y-4">
                 
-                <!-- OTIMIZAÇÃO A: Busca Simultânea de Produtos e Barracas com Feedback Imediato -->
+                <!-- Busca Simultânea de Produtos e Barracas com Feedback Imediato -->
                 <div class="relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
                     <input type="text" id="buscaProduto" oninput="filtrarBuscaGeral()" placeholder="Buscar tomate, pastel, barracas..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
@@ -169,7 +169,7 @@
                     <button onclick="alternarFiltroSuperior('barracas')" id="filtroSuperiorBarracas" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🏪 Barracas</button>
                 </div>
 
-                <!-- MELHORIA 1: Banner de Anúncios Dinâmico, Clicável e Interativo (Com Botão Fechar) -->
+                <!-- Banner de Anúncios Dinâmico, Clicável e Interativo (Com Botão Fechar) -->
                 <div id="bannerAnuncioContainer" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-sm relative overflow-hidden cursor-pointer transition transform hover:scale-[1.01]" onclick="interagirBannerAnuncio(event)">
                     <button type="button" onclick="fecharBannerAnuncio(event)" class="absolute top-2 right-2 w-6 h-6 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center text-xs transition z-10" title="Fechar anúncio">
                         <i class="fa-solid fa-xmark"></i>
@@ -183,7 +183,7 @@
                     <p id="descAnuncio" class="text-xs text-amber-100 mt-1 leading-relaxed">Venha conferir as barracas com produtos 100% livres de agrotóxicos na Praça Central a partir das 07:00.</p>
                 </div>
 
-                <!-- MELHORIA 2: Carrossel de Destaques Inteligente (Borda Dourada Mais Evidente e Transições Suaves) -->
+                <!-- Carrossel de Destaques Inteligente (Borda Dourada Mais Evidente e Transições Suaves) -->
                 <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5">
@@ -191,7 +191,6 @@
                         </h3>
                         <span id="carrosselIndicador" class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">1 / 15</span>
                     </div>
-                    <!-- Carrossel atualizado com efeito visual suave e interativo -->
                     <div id="carrosselDestaquesContainer" class="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-50/60 via-white to-amber-50/60 border-2 border-amber-400/80 p-3.5 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-md flex items-center" onclick="clicarLojaCarrossel()"></div>
                 </div>
 
@@ -200,7 +199,6 @@
                     <div class="flex items-center justify-between">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-filter text-emerald-600"></i> Categorias da Feira</h3>
                     </div>
-                    <!-- Categorias Principais (Estilo Pílulas Deslizantes) -->
                     <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar" id="containerCategoriasDinamicas">
                         <button onclick="selecionarCategoriaDinamica('todas')" id="catBtn_todas" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition flex items-center gap-1.5">✨ Todas</button>
                         <button onclick="selecionarCategoriaDinamica('alimentos')" id="catBtn_alimentos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">🥗 Alimentos</button>
@@ -211,14 +209,13 @@
                         <button onclick="selecionarCategoriaDinamica('decoracoes')" id="catBtn_decoracoes" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">✨ Decorações</button>
                     </div>
 
-                    <!-- Subcategorias Dinâmicas -->
                     <div id="subcategoriasContainerWrapper" class="hide pt-2 border-t border-slate-100">
                         <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Subcategorias:</p>
                         <div class="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="listaSubcategoriasDinamicas"></div>
                     </div>
                 </div>
 
-                <!-- MELHORIA 3: Grade de Barracas Unificada com Responsividade Otimizada, Avaliações e Distância -->
+                <!-- Grade de Barracas Unificada -->
                 <div id="secaoBarracasExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                     <h3 id="tituloSecaoExplorar" class="font-bold text-slate-700 text-sm mb-3 flex items-center gap-1.5">
                         <i class="fa-solid fa-store text-emerald-600"></i> Barracas Patrocinadas e em Destaque
@@ -226,12 +223,11 @@
                     <div id="listaExplorarFeirantes" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- MELHORIA 3: Grade de Produtos Unificada com Responsividade Otimizada para Mobile -->
+                <!-- Grade de Produtos Unificada -->
                 <div id="secaoProdutosExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                     <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-carrot text-emerald-600"></i> Produtos Disponíveis na Feira
                     </h2>
-                    <!-- Layout em grade adaptado perfeitamente para dispositivos móveis e telas maiores -->
                     <div id="listaProdutosCliente" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
             </div>
@@ -265,7 +261,7 @@
                 </div>
             </div>
 
-            <!-- TELA FEIRANTE (FOCO UNIFICADO: Meus Produtos & Cadastro em Abas Internas) -->
+            <!-- TELA FEIRANTE -->
             <div id="visãoFeirante" class="hide space-y-4">
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                     <div class="flex bg-slate-100 p-1 rounded-xl mb-4">
@@ -273,7 +269,6 @@
                         <button type="button" onclick="mudarAbaInternaFeirante('cadastrar')" id="btnAbaFeiranteCadastrar" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition">➕ Cadastrar Novo</button>
                     </div>
 
-                    <!-- SEÇÃO INTERNA: CADASTRAR -->
                     <div id="painelInternoCadastrar" class="hide space-y-3">
                         <h2 class="font-bold text-emerald-700 mb-2 text-sm"><i class="fa-solid fa-plus-circle"></i> Cadastrar Novo Produto</h2>
                         <form id="formProduto" onsubmit="cadastrarproduto(event)" class="space-y-3">
@@ -290,7 +285,6 @@
                         </form>
                     </div>
 
-                    <!-- SEÇÃO INTERNA: LISTAR -->
                     <div id="painelInternoListar" class="space-y-3">
                         <h2 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wider">Meus Produtos Cadastrados</h2>
                         <div id="listaProdutosFeirante" class="space-y-3"></div>
@@ -320,7 +314,6 @@
                     <button type="button" onclick="mudarAbaAdminPainel('banidos')" id="btnTabAdminBanidos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🚫 Bans</button>
                 </div>
 
-                <!-- SEÇÃO ADMIN: ANÚNCIOS -->
                 <div id="secaoAdminAnuncios" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Anúncios e Avisos</h3>
                     <form onsubmit="adicionarAnuncioAdmin(event)" class="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
@@ -331,7 +324,6 @@
                     <div id="adminListaAnuncios" class="space-y-2 pt-1"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: BARRACAS -->
                 <div id="secaoAdminBarracas" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <div class="flex justify-between items-center mb-1">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Barracas e Feirantes</h3>
@@ -343,25 +335,21 @@
                     <div id="adminListaFeirantes" class="space-y-3"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: SOLICITAÇÕES DE DESTAQUE -->
                 <div id="secaoAdminSolicitacoesDestaque" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">⭐ Solicitações de Destaque Pendentes (R$ 6,99 / 24h)</h3>
                     <div id="adminListaSolicitacoesDestaque" class="space-y-3"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: CLIENTES -->
                 <div id="secaoAdminClientes" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Contas de Clientes</h3>
                     <div id="adminListaClientes" class="space-y-3"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: PRODUTOS -->
                 <div id="secaoAdminProdutos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Catálogo Global de Produtos</h3>
                     <div id="adminListaProdutos" class="space-y-2"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: USUÁRIOS -->
                 <div id="secaoAdminUsuarios" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-user-plus text-emerald-600"></i> Criar Novo Usuário</h3>
                     <form onsubmit="adminCriarUsuarioSimples(event)" class="space-y-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
@@ -380,7 +368,6 @@
                     <div id="adminListaAlterarUsuarios" class="space-y-2"></div>
                 </div>
 
-                <!-- SEÇÃO ADMIN: BANIMENTOS -->
                 <div id="secaoAdminBanidos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciamento de Banimentos (Números e Nomes)</h3>
                     <div class="bg-slate-50 p-3 rounded-xl border space-y-2">
@@ -429,9 +416,8 @@
                 </div>
             </div>
 
-            <!-- TELA PERFIL (REORGANIZADA EM BLOCOS LÓGICOS E VISUAIS) -->
+            <!-- TELA PERFIL -->
             <div id="telaPerfil" class="hide space-y-4">
-                <!-- BLOCO 1: FOTO / IDENTIFICAÇÃO -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 text-center flex flex-col items-center relative">
                     <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 overflow-hidden border-2 border-emerald-500 shadow-inner">
                         <i class="fa-solid fa-user" id="perfilIconePadrao"></i>
@@ -442,7 +428,6 @@
                     <span id="perfilTipo" class="mt-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"></span>
                 </div>
 
-                <!-- BLOCO 2: INFORMAÇÕES PESSOAIS -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
                         <i class="fa-solid fa-id-card text-emerald-600"></i> Informações Pessoais
@@ -467,7 +452,6 @@
                     </form>
                 </div>
 
-                <!-- BLOCO 3: DADOS DA BARRACA (EXCLUSIVO PARA FEIRANTES) -->
                 <div id="campoEditarBarracaDiv" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
                         <i class="fa-solid fa-store text-emerald-600"></i> Dados da Barraca
@@ -501,7 +485,6 @@
                     </div>
                 </div>
 
-                <!-- BLOCO 4: AÇÕES DA CONTA -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
                         <i class="fa-solid fa-shield-halved text-rose-600"></i> Ações da Conta
@@ -622,7 +605,6 @@
 
         carregarDadosSupabase();
 
-        // Funções de Interação e Fechamento do Banner de Anúncios
         function fecharBannerAnuncio(event) {
             event.stopPropagation();
             const banner = document.getElementById('bannerAnuncioContainer');
@@ -636,11 +618,9 @@
             }
         }
 
-        // Busca Simultânea Otimizada (Produtos e Barracas) com Feedback Imediato
         function filtrarBuscaGeral() {
             const termo = document.getElementById('buscaProduto').value.toLowerCase().trim();
             
-            // Renderiza barracas filtradas
             const containerBarracas = document.getElementById('listaExplorarFeirantes');
             let barracasFiltradas = feirantesCadastrados.filter(f => 
                 f.nomeBarraca.toLowerCase().includes(termo) || 
@@ -679,7 +659,6 @@
                 });
             }
 
-            // Renderiza produtos filtrados na grade unificada
             const containerProdutos = document.getElementById('listaProdutosCliente');
             let prodsFiltrados = produtos.filter(p => 
                 p.nome.toLowerCase().includes(termo) || 
@@ -1659,7 +1638,7 @@
         }
 
         async function banirUsuarioAdmin(usuario, whatsapp) {
-            if (confirm(`Deseja banir o usuário "${usuario}" e o número "${whatsapp || 'N/A'}"?`)) {
+            if (confirm(`Deseja banir o usuário "${usuario}" e seu WhatsApp/termo correspondente?`)) {
                 if (!listaBanidos.includes(usuario)) {
                     await supabaseClient.from('banidos').insert([{ termo: usuario }]);
                     listaBanidos.push(usuario);
@@ -1668,116 +1647,110 @@
                     await supabaseClient.from('banidos').insert([{ termo: whatsapp }]);
                     listaBanidos.push(whatsapp);
                 }
-
-                await supabaseClient.from('feirantes').delete().eq('usuario', usuario);
-                await supabaseClient.from('clientes').delete().eq('usuario', usuario);
-
-                feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuario);
-                clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuario);
-
+                let fIndex = feirantesCadastrados.findIndex(f => f.usuario === usuario);
+                if (fIndex !== -1) {
+                    await supabaseClient.from('feirantes').delete().eq('usuario', usuario);
+                    await supabaseClient.from('produtos').delete().eq('feirante_usuario', usuario);
+                    feirantesCadastrados.splice(fIndex, 1);
+                    produtos = produtos.filter(p => p.feirante_usuario !== usuario);
+                }
+                let cIndex = clientesCadastrados.findIndex(c => c.usuario === usuario);
+                if (cIndex !== -1) {
+                    await supabaseClient.from('clientes').delete().eq('usuario', usuario);
+                    clientesCadastrados.splice(cIndex, 1);
+                }
                 renderizarPainelAdmin();
-                alert("🚫 Usuário banido e removido.");
+                alert(`Usuário ${usuario} banido com sucesso.`);
             }
+        }
+
+        function iniciarCarrosselDestaques() {
+            const container = document.getElementById('carrosselDestaquesContainer');
+            const indicador = document.getElementById('carrosselIndicador');
+            if(!container) return;
+
+            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
+            if (destaquesLista = feirantesCadastrados.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center w-full py-2">Nenhuma barraca em destaque no momento.</p>`;
+                if(indicador) indicador.innerText = "0 / 0";
+                return;
+            }
+
+            let listaParaExibir = destaqueList.length > 0 ? destaqueList : feirantesCadastrados;
+            if (indiceCarrosselAtual >= listaParaExibir.length) indiceCarrosselAtual = 0;
+
+            let f = listaParaExibir[indiceCarrosselAtual];
+            if(indicador) indicador.innerText = `${indiceCarrosselAtual + 1} / ${listaParaExibir.length}`;
+
+            container.innerHTML = `
+                <div class="flex items-center gap-3 w-full">
+                    <div class="w-16 h-16 rounded-xl bg-amber-200 flex items-center justify-center text-amber-800 font-bold overflow-hidden shrink-0 shadow-inner">
+                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-2xl"></i>'}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mb-1 inline-block">⭐ BARRACA EM DESTAQUE</span>
+                        <h4 class="font-bold text-slate-800 text-sm truncate">${f.nomeBarraca}</h4>
+                        <p class="text-xs text-slate-500 truncate">Resp: ${f.nomeCompleto} | Categoria: ${f.categoria || 'Geral'}</p>
+                    </div>
+                    <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition shrink-0">Ver</button>
+                </div>
+            `;
+
+            container.onclick = () => abrirPaginaProdutosBarraca(f.usuario);
+
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            timerCarrossel = setInterval(() => {
+                indiceCarrosselAtual = (indiceCarrosselAtual + 1) % listaParaExibir.length;
+                iniciarCarrosselDestaques();
+            }, 4000);
         }
 
         function iniciarAnunciosLocais() {
-            if (timerAnuncios) clearInterval(timerAnuncios);
-            atualizarAnuncioVisual();
-            timerAnuncios = setInterval(() => {
-                if (anunciosLocais.length === 0) return;
-                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
-                atualizarAnuncioVisual();
-            }, 6000);
-        }
+            const titulo = document.getElementById('tituloAnuncio');
+            const desc = document.getElementById('descAnuncio');
+            const indicador = document.getElementById('anuncioIndicador');
+            if(!titulo || !desc) return;
 
-        function atualizarAnuncioVisual() {
-            const tituloEl = document.getElementById('tituloAnuncio');
-            const descEl = document.getElementById('descAnuncio');
-            const indicadorEl = document.getElementById('anuncioIndicador');
             if (anunciosLocais.length === 0) {
-                tituloEl.innerText = "Nenhum anúncio ativo";
-                descEl.innerText = "Fique ligado!";
-                indicadorEl.innerText = "0/0";
+                titulo.innerText = "FeiraFácil - Direto da Feira";
+                desc.innerText = "Cadastre-se e aproveite os melhores produtos frescos do seu bairro!";
+                if(indicador) indicador.innerText = "1/1";
                 return;
             }
+
             if (indiceAnuncioAtual >= anunciosLocais.length) indiceAnuncioAtual = 0;
-            const a = anunciosLocais[indiceAnuncioAtual];
-            tituloEl.innerText = a.titulo;
-            descEl.innerText = a.desc;
-            indicadorEl.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
-        }
+            let a = anunciosLocais[indiceAnuncioAtual];
+            titulo.innerText = a.titulo;
+            desc.innerText = a.desc;
+            if(indicador) indicador.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
 
-        // Carrossel Inteligente com transições suaves e destaque aprimorado
-        function iniciarCarrosselDestaques() {
-            if (timerCarrossel) clearInterval(timerCarrossel);
-            atualizarItemCarrossel();
-            timerCarrossel = setInterval(() => {
-                indiceCarrosselAtual++;
-                atualizarItemCarrossel();
-            }, 8000);
-        }
-
-        function atualizarItemCarrossel() {
-            let lista = feirantesCadastrados.filter(f => f.destacada);
-            if (lista.length === 0) lista = feirantesCadastrados;
-            const container = document.getElementById('carrosselDestaquesContainer');
-            if(!container) return;
-
-            if (lista.length === 0) {
-                document.getElementById('carrosselIndicador').innerText = `0 / 0`;
-                container.innerHTML = `<div class="w-full text-center text-xs text-slate-400">Nenhuma barraca cadastrada</div>`;
-                container.dataset.usuarioFeirante = "";
-                return;
-            }
-            if (indiceCarrosselAtual >= lista.length) indiceCarrosselAtual = 0;
-            const f = lista[indiceCarrosselAtual];
-            document.getElementById('carrosselIndicador').innerText = `${indiceCarrosselAtual + 1} / ${lista.length}`;
-            
-            container.innerHTML = `
-                <div class="flex items-center gap-3 w-full transition-opacity duration-500">
-                    <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 text-xl font-bold overflow-hidden shadow-inner shrink-0">
-                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store"></i>'}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <span class="text-[9px] bg-amber-500 text-white font-bold px-2 py-0.5 rounded shadow-sm">⭐ PARCEIRO DESTAQUE</span>
-                        <h4 class="font-bold text-slate-800 text-sm mt-1 truncate">${f.nomeBarraca}</h4>
-                        <p class="text-xs text-slate-500 truncate">Toque para ver produtos e ofertas!</p>
-                    </div>
-                    <div class="text-amber-500 font-bold text-sm pr-1">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-            `;
-            container.dataset.usuarioFeirante = f.usuario;
-        }
-
-        function clicarLojaCarrossel() {
-            const container = document.getElementById('carrosselDestaquesContainer');
-            if(container && container.dataset.usuarioFeirante) {
-                const usuarioFeirante = container.dataset.usuarioFeirante;
-                abrirPaginaProdutosBarraca(usuarioFeirante);
-            }
+            if (timerAnuncios) clearInterval(timerAnuncios);
+            timerAnuncios = setInterval(() => {
+                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
+                iniciarAnunciosLocais();
+            }, 5000);
         }
 
         function abrirPaginaProdutosBarraca(usuarioFeirante) {
-            const f = feirantesCadastrados.find(item => item.usuario === usuarioFeirante);
-            if (!f) return;
-
-            document.getElementById('visãoUnificadaExplorar').classList.add('hide');
+            pararTimers();
+            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaChatInterno', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
             document.getElementById('telaProdutosFeira').classList.remove('hide');
 
-            document.getElementById('tituloPaginaProdutos').innerText = `Produtos: ${f.nomeBarraca}`;
-            document.getElementById('detalheNomeBarraca').innerText = f.nomeBarraca;
-            document.getElementById('detalheNomeDono').innerText = f.nomeCompleto;
-            document.getElementById('detalheWhatsappDono').innerText = f.whatsapp || 'Não informado';
+            let feirante = feirantesCadastrados.find(f => f.usuario === usuarioFeirante);
+            if (!feirante) return;
 
-            const selo = document.getElementById('detalheSeloDestaque');
-            if (f.destacada) selo.classList.remove('hide'); else selo.classList.add('hide');
+            document.getElementById('detalheNomeBarraca').innerText = feirante.nomeBarraca;
+            document.getElementById('detalheNomeDono').innerText = feirante.nomeCompleto;
+            document.getElementById('detalheWhatsappDono').innerText = feirante.whatsapp || 'N/A';
 
-            const iconePadrao = document.getElementById('iconePadraoBarraca');
-            const fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
-            if (f.fotoPerfil) {
-                fotoHeader.src = f.fotoPerfil;
+            let selo = document.getElementById('detalheSeloDestaque');
+            if (feirante.destacada) selo.classList.remove('hide');
+            else selo.classList.add('hide');
+
+            let iconePadrao = document.getElementById('iconePadraoBarraca');
+            let fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
+            if (feirante.fotoPerfil) {
+                fotoHeader.src = feirante.fotoPerfil;
                 fotoHeader.classList.remove('hide');
                 iconePadrao.classList.add('hide');
             } else {
@@ -1785,144 +1758,77 @@
                 iconePadrao.classList.remove('hide');
             }
 
-            const containerProdutos = document.getElementById('listaProdutosDaBarracaSelecionada');
-            containerProdutos.innerHTML = '';
-            let prodsBarraca = produtos.filter(p => p.feirante_usuario === usuarioFeirante);
-            
-            if (prodsBarraca.length === 0) {
-                containerProdutos.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhum produto cadastrado.</p>`;
-            } else {
-                prodsBarraca.forEach(p => {
-                    containerProdutos.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
-                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
-                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
-                            </div>
-                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    `;
-                });
+            const container = document.getElementById('listaProdutosDaBarracaSelecionada');
+            container.innerHTML = '';
+
+            let prodsDaBarraca = produtos.filter(p => p.feirante_usuario === usuarioFeirante);
+            if (prodsDaBarraca.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Esta barraca ainda não cadastrou produtos.</p>`;
+                return;
             }
+
+            prodsDaBarraca.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
+                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
+                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
+                        </div>
+                        <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                `;
+            });
         }
 
         function voltarParaExplorar() {
             document.getElementById('telaProdutosFeira').classList.add('hide');
             document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+            iniciarCarrosselDestaques();
+            iniciarAnunciosLocais();
         }
 
-        function preencherPerfil() {
-            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto;
-            document.getElementById('perfilSubtitulo').innerText = `@${usuarioAtual.usuario}`;
-            document.getElementById('perfilTipo').innerText = `Perfil: ${usuarioAtual.tipo.toUpperCase()}`;
-
-            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto || '';
-            document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
-
-            const blocoBarraca = document.getElementById('campoEditarBarracaDiv');
-            if (usuarioAtual.tipo === 'feirante') {
-                blocoBarraca.classList.remove('hide');
-                document.getElementById('editarNomeBarraca').value = usuarioAtual.nomeBarraca || '';
-                document.getElementById('editarCategoriaBarraca').value = usuarioAtual.categoria || 'alimentos';
-                document.getElementById('statusDestaquePerfilLabel').innerText = usuarioAtual.destacada ? '⭐ Sua barraca está em destaque!' : 'Aguardando ativação';
-            } else {
-                blocoBarraca.classList.add('hide');
-            }
-
-            const iconePadrao = document.getElementById('perfilIconePadrao');
-            const fotoPerfil = document.getElementById('perfilFotoExibicao');
-            if (usuarioAtual.fotoPerfil) {
-                fotoPerfil.src = usuarioAtual.fotoPerfil;
-                fotoPerfil.classList.remove('hide');
-                iconePadrao.classList.add('hide');
-            } else {
-                fotoPerfil.classList.add('hide');
-                iconePadrao.classList.remove('hide');
-            }
-        }
-
-        async function atualizarPerfilUsuario(event) {
+        async function cadastrarproduto(event) {
             event.preventDefault();
-            usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
-            usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
+            let nome = document.getElementById('nomeProduto').value.trim();
+            let preco = parseFloat(document.getElementById('precoProduto').value);
+            let unidade = document.getElementById('unidadeProduto').value.trim();
+            let fileInput = document.getElementById('fotoProdutoInput');
 
-            const inputFoto = document.getElementById('editarFotoPerfilInput');
-            if (inputFoto.files && inputFoto.files[0]) {
-                const reader = new FileReader();
-                reader.onload = async function(e) {
-                    usuarioAtual.fotoPerfil = e.target.result;
-                    await salvarAlteracoesPerfilBanco();
-                };
-                reader.readAsDataURL(inputFoto.files[0]);
-            } else {
-                await salvarAlteracoesPerfilBanco();
-            }
-        }
-
-        async function salvarAlteracoesPerfilBanco() {
-            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
-            let payload = { nomeCompleto: usuarioAtual.nomeCompleto, whatsapp: usuarioAtual.whatsapp, fotoPerfil: usuarioAtual.fotoPerfil };
-            await supabaseClient.from(tabela).update(payload).eq('usuario', usuarioAtual.usuario);
-
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            preencherPerfil();
-            alert("✅ Perfil atualizado com sucesso!");
-        }
-
-        async function deletarFotoPerfilAtual() {
-            usuarioAtual.fotoPerfil = '';
-            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
-            await supabaseClient.from(tabela).update({ fotoPerfil: '' }).eq('usuario', usuarioAtual.usuario);
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            preencherPerfil();
-            alert("🗑️ Foto de perfil removida.");
-        }
-
-        async function cadastrarOuAtualizarBarracaPerfil(event) {
-            event.preventDefault();
-            if (usuarioAtual.tipo !== 'feirante') return;
-            usuarioAtual.nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
-            usuarioAtual.categoria = document.getElementById('editarCategoriaBarraca').value;
-
-            await supabaseClient.from('feirantes').update({ nomeBarraca: usuarioAtual.nomeBarraca, categoria: usuarioAtual.categoria }).eq('usuario', usuarioAtual.usuario);
-            
-            let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
-            if (f) {
-                f.nomeBarraca = usuarioAtual.nomeBarraca;
-                f.categoria = usuarioAtual.categoria;
-            }
-
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            alert("✅ Dados da barraca atualizados com sucesso!");
-        }
-
-        async function solicitarDestaqueFeirante() {
-            if (usuarioAtual.tipo !== 'feirante') return;
-            let jaExiste = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
-            if (jaExiste) {
-                alert("⚠️ Você já possui uma solicitação de destaque pendente de aprovação.");
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert("Selecione uma imagem para o produto.");
                 return;
             }
 
-            let novaSol = {
-                usuario: usuarioAtual.usuario,
-                nomeBarraca: usuarioAtual.nomeBarraca,
-                status: 'pendente'
-            };
+            let reader = new FileReader();
+            reader.onload = async function(e) {
+                let fotoBase64 = e.target.result;
+                let novoProduto = {
+                    id: Date.now().toString(),
+                    feirante_usuario: usuarioAtual.usuario,
+                    nome,
+                    preco,
+                    unidade,
+                    foto: fotoBase64
+                };
 
-            await supabaseClient.from('solicitacoes_destaque').insert([novaSol]);
-            solicitacoesDestaqueList.push(novaSol);
-            alert("⭐ Solicitação enviada! O administrador avaliará o pagamento da taxa de R$ 6,99 para ativação.");
+                await supabaseClient.from('produtos').insert([novoProduto]);
+                produtos.push(novoProduto);
+
+                document.getElementById('formProduto').reset();
+                mudarAbaInternaFeirante('listar');
+                alert("✅ Produto cadastrado com sucesso!");
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
 
         function renderizarProdutosFeirante() {
             const container = document.getElementById('listaProdutosFeirante');
             container.innerHTML = '';
-            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
 
+            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
             if (meusProds.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou produtos em sua barraca.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou nenhum produto.</p>`;
                 return;
             }
 
@@ -1932,50 +1838,16 @@
                         <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
                         <div class="flex-1 min-w-0">
                             <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
-                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
+                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
                         </div>
-                        <button onclick="deletarProdutoFeirante(${p.id})" class="text-rose-500 p-2 hover:bg-rose-50 rounded-xl transition"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="deletarMeuProduto('${p.id}')" class="text-rose-500 p-2 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
             });
         }
 
-        async function cadastrarproduto(event) {
-            event.preventDefault();
-            const nome = document.getElementById('nomeProduto').value.trim();
-            const preco = parseFloat(document.getElementById('precoProduto').value);
-            const unidade = document.getElementById('unidadeProduto').value.trim();
-            const inputFoto = document.getElementById('fotoProdutoInput');
-
-            if (!inputFoto.files || !inputFoto.files[0]) {
-                alert("⚠️ Por favor, selecione uma foto para o produto.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const fotoBase64 = e.target.result;
-                const novoProd = {
-                    id: Date.now(),
-                    feirante_usuario: usuarioAtual.usuario,
-                    nome,
-                    preco,
-                    unidade,
-                    foto: fotoBase64
-                };
-
-                await supabaseClient.from('produtos').insert([novoProd]);
-                produtos.push(novoProd);
-
-                document.getElementById('formProduto').reset();
-                mudarAbaInternaFeirante('listar');
-                alert("✅ Produto cadastrado com sucesso!");
-            };
-            reader.readAsDataURL(inputFoto.files[0]);
-        }
-
-        async function deletarProdutoFeirante(id) {
-            if (confirm("Deseja apagar este produto?")) {
+        async function deletarMeuProduto(id) {
+            if (confirm("Deseja remover este produto?")) {
                 await supabaseClient.from('produtos').delete().eq('id', id);
                 produtos = produtos.filter(p => p.id !== id);
                 renderizarProdutosFeirante();
@@ -1983,22 +1855,22 @@
         }
 
         function adicionarAoCarrinho(idProduto) {
-            const p = produtos.find(item => item.id == idProduto || item.id === Number(idProduto));
+            let p = produtos.find(item => item.id === idProduto);
             if (!p) return;
 
-            let itemExistente = carrinho.find(item => item.produto.id === p.id);
-            if (itemExistente) {
-                itemExistente.quantidade++;
+            let itemCarrinho = carrinho.find(item => item.id === idProduto);
+            if (itemCarrinho) {
+                itemCarrinho.qtd += 1;
             } else {
-                carrinho.push({ produto: p, quantidade: 1 });
+                carrinho.push({ ...p, qtd: 1 });
             }
 
             atualizarBadgeCarrinho();
-            alert(`🛒 "${p.nome}" adicionado ao carrinho!`);
+            alert(`🛒 ${p.nome} adicionado ao carrinho!`);
         }
 
         function atualizarBadgeCarrinho() {
-            let totalQtd = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+            let totalQtd = carrinho.reduce((sum, item) => sum + item.qtd, 0);
             ['badgeCarrinho', 'badgeCarrinhoFeirante', 'badgeCarrinhoAdmin'].forEach(id => {
                 let badge = document.getElementById(id);
                 if (badge) {
@@ -2027,23 +1899,18 @@
             let totalGeral = 0;
 
             carrinho.forEach((item, index) => {
-                let subtotal = item.produto.preco * item.quantidade;
+                let subtotal = item.preco * item.qtd;
                 totalGeral += subtotal;
-
-                let feirante = feirantesCadastrados.find(f => f.usuario === item.produto.feirante_usuario);
-                let nomeB = feirante ? feirante.nomeBarraca : 'Feira';
-
                 container.innerHTML += `
                     <div class="bg-white p-3 rounded-2xl border flex items-center justify-between gap-3 shadow-sm">
-                        <img src="${item.produto.foto}" class="w-14 h-14 rounded-xl object-cover border shrink-0">
+                        <img src="${item.foto}" class="w-14 h-14 rounded-xl object-cover border shrink-0">
                         <div class="flex-1 min-w-0">
-                            <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">${nomeB}</span>
-                            <h4 class="font-semibold text-slate-800 text-sm truncate mt-0.5">${item.produto.nome}</h4>
-                            <p class="text-emerald-600 font-bold text-xs">R$ ${item.produto.preco.toFixed(2)} x ${item.quantidade} = R$ ${subtotal.toFixed(2)}</p>
+                            <h4 class="font-semibold text-slate-800 text-sm truncate">${item.nome}</h4>
+                            <p class="text-emerald-600 font-bold text-xs">R$ ${item.preco.toFixed(2)} x ${item.qtd}</p>
                         </div>
-                        <div class="flex items-center gap-1 shrink-0">
-                            <button onclick="alterarQtdCarrinho(${index}, 1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs hover:bg-slate-200">+</button>
-                            <button onclick="alterarQtdCarrinho(${index}, -1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs hover:bg-slate-200">-</button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="alterarQtdCarrinho(${index}, 1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs">+</button>
+                            <button onclick="alterarQtdCarrinho(${index}, -1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs">-</button>
                         </div>
                     </div>
                 `;
@@ -2053,8 +1920,8 @@
         }
 
         function alterarQtdCarrinho(index, delta) {
-            carrinho[index].quantidade += delta;
-            if (carrinho[index].quantidade <= 0) {
+            carrinho[index].qtd += delta;
+            if (carrinho[index].qtd <= 0) {
                 carrinho.splice(index, 1);
             }
             atualizarBadgeCarrinho();
@@ -2062,35 +1929,29 @@
         }
 
         function abrirChatInterno() {
-            if (carrinho.length === 0) return;
             ['telaCarrinho'].forEach(id => document.getElementById(id).classList.add('hide'));
             document.getElementById('telaChatInterno').classList.remove('hide');
-
-            if (historicoChatInterno.length === 0) {
-                let resumo = carrinho.map(i => `${i.quantidade}x ${i.produto.nome} (${i.produto.unidade})`).join(', ');
-                historicoChatInterno.push({
-                    remetente: 'Sistema',
-                    texto: `🛒 Novo pedido gerado por @${usuarioAtual.usuario}:\nItems: ${resumo}\nTotal: R$ ${carrinho.reduce((a, b) => a + (b.produto.preco * b.quantidade), 0).toFixed(2)}`
-                });
-            }
             renderizarMensagensChat();
         }
 
         function voltarDoChatInterno() {
             document.getElementById('telaChatInterno').classList.add('hide');
             document.getElementById('telaCarrinho').classList.remove('hide');
-            renderizarCarrinho();
         }
 
         function renderizarMensagensChat() {
             const container = document.getElementById('containerMensagensChat');
             container.innerHTML = '';
+            if (historicoChatInterno.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 text-xs py-4">Inicie a conversa sobre o seu pedido...</p>`;
+                return;
+            }
             historicoChatInterno.forEach(m => {
-                let alinhamento = m.remetente === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-700 border';
+                let alinhamento = m.remetente === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-800 border';
                 container.innerHTML += `
-                    <div class="p-2.5 rounded-xl text-xs max-w-[80%] ${alinhamento} shadow-sm">
-                        <b class="block text-[10px] opacity-75">${m.remetente}</b>
-                        <span>${m.texto}</span>
+                    <div class="max-w-[80%] p-3 rounded-2xl text-xs ${alinhamento}">
+                        <b class="block text-[10px] opacity-80">${m.remetente}</b>
+                        <p class="mt-0.5">${m.texto}</p>
                     </div>
                 `;
             });
@@ -2099,15 +1960,140 @@
 
         function enviarMensagemChat() {
             const input = document.getElementById('inputMensagemChat');
-            const texto = input.value.trim();
+            let texto = input.value.trim();
             if (!texto) return;
 
             historicoChatInterno.push({
                 remetente: usuarioAtual.usuario,
                 texto
             });
+
             input.value = '';
             renderizarMensagensChat();
+        }
+
+        function preencherPerfil() {
+            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto || usuarioAtual.usuario;
+            document.getElementById('perfilSubtitulo').innerText = `@${usuarioAtual.usuario}`;
+            document.getElementById('perfilTipo').innerText = usuarioAtual.tipo.toUpperCase();
+
+            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto || '';
+            document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
+
+            let icone = document.getElementById('perfilIconePadrao');
+            let foto = document.getElementById('perfilFotoExibicao');
+            if (usuarioAtual.fotoPerfil) {
+                foto.src = usuarioAtual.fotoPerfil;
+                foto.classList.remove('hide');
+                icone.classList.add('hide');
+            } else {
+                foto.classList.add('hide');
+                icone.classList.remove('hide');
+            }
+
+            let blocoBarraca = document.getElementById('campoEditarBarracaDiv');
+            if (usuarioAtual.tipo === 'feirante') {
+                blocoBarraca.classList.remove('hide');
+                document.getElementById('editarNomeBarraca').value = usuarioAtual.nomeBarraca || '';
+                document.getElementById('editarCategoriaBarraca').value = usuarioAtual.categoria || 'alimentos';
+                
+                let labelDestaque = document.getElementById('statusDestaquePerfilLabel');
+                if (usuarioAtual.destacada) {
+                    labelDestaque.innerText = "🌟 Sua barraca está em destaque!";
+                    labelDestaque.className = "text-[11px] text-emerald-700 font-bold";
+                } else {
+                    let solicitada = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
+                    if (solicitada) {
+                        labelDestaque.innerText = "⏳ Solicitação de destaque em análise.";
+                        labelDestaque.className = "text-[11px] text-amber-700 font-bold";
+                    } else {
+                        labelDestaque.innerText = "Aguardando ativação (R$ 6,99 / 24h)";
+                        labelDestaque.className = "text-[11px] text-slate-500";
+                    }
+                }
+            } else {
+                blocoBarraca.classList.add('hide');
+            }
+        }
+
+        async function atualizarPerfilUsuario(event) {
+            event.preventDefault();
+            usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
+            usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
+
+            let fileInput = document.getElementById('editarFotoPerfilInput');
+            if (fileInput.files && fileInput.files.length > 0) {
+                let reader = new FileReader();
+                reader.onload = async function(e) {
+                    usuarioAtual.fotoPerfil = e.target.result;
+                    await salvarAlteracoesPerfilNoSupabase();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                await salvarAlteracoesPerfilNoSupabase();
+            }
+        }
+
+        async function salvarAlteracoesPerfilNoSupabase() {
+            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
+            await supabaseClient.from(tabela).update({
+                nomeCompleto: usuarioAtual.nomeCompleto,
+                whatsapp: usuarioAtual.whatsapp,
+                fotoPerfil: usuarioAtual.fotoPerfil
+            }).eq('usuario', usuarioAtual.usuario);
+
+            salvarEIniciar();
+            alert("✅ Perfil atualizado com sucesso!");
+        }
+
+        async function deletarFotoPerfilAtual() {
+            usuarioAtual.fotoPerfil = '';
+            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
+            await supabaseClient.from(tabela).update({ fotoPerfil: '' }).eq('usuario', usuarioAtual.usuario);
+            salvarEIniciar();
+            alert("🗑️ Foto de perfil removida.");
+        }
+
+        async function cadastrarOuAtualizarBarracaPerfil(event) {
+            event.preventDefault();
+            if (usuarioAtual.tipo !== 'feirante') return;
+
+            usuarioAtual.nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
+            usuarioAtual.categoria = document.getElementById('editarCategoriaBarraca').value;
+
+            await supabaseClient.from('feirantes').update({
+                nomeBarraca: usuarioAtual.nomeBarraca,
+                categoria: usuarioAtual.categoria
+            }).eq('usuario', usuarioAtual.usuario);
+
+            let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
+            if (f) {
+                f.nomeBarraca = usuarioAtual.nomeBarraca;
+                f.categoria = usuarioAtual.categoria;
+            }
+
+            salvarEIniciar();
+            alert("✅ Dados da barraca atualizados com sucesso!");
+        }
+
+        async function solicitarDestaqueFeirante() {
+            if (usuarioAtual.tipo !== 'feirante') return;
+            let jaSolicitou = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
+            if (jaSolicitou || usuarioAtual.destacada) {
+                alert("Sua barraca já está em destaque ou já possui uma solicitação pendente.");
+                return;
+            }
+
+            let novaSol = {
+                usuario: usuarioAtual.usuario,
+                nomeBarraca: usuarioAtual.nomeBarraca,
+                status: 'pendente'
+            };
+
+            await supabaseClient.from('solicitacoes_destaque').insert([novaSol]);
+            solicitacoesDestaqueList.push(novaSol);
+            preencherPerfil();
+            alert("⭐ Solicitação de destaque enviada para o administrador! Taxa de ativação: R$ 6,99 por 24 horas.");
         }
     </script>
 </body>
