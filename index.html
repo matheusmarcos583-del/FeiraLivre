@@ -153,23 +153,20 @@
         </header>
 
         <main class="max-w-md mx-auto p-4 mb-16">
-            <!-- TELA: INÍCIO & EXPLORAR UNIFICADA (COM FILTROS INTERNOS DE PRODUTOS/BARRACAS) -->
+            <!-- TELA: INÍCIO & EXPLORAR UNIFICADA -->
             <div id="visãoUnificadaExplorar" class="space-y-4">
                 
-                <!-- Busca Simultânea de Produtos e Barracas com Feedback Imediato -->
                 <div class="relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
                     <input type="text" id="buscaProduto" oninput="filtrarBuscaGeral()" placeholder="Buscar tomate, pastel, barracas..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
                 </div>
 
-                <!-- BARRA DE NAVEGAÇÃO SUPERIOR SECUNDÁRIA (Filtros Deslizantes Dinâmicos) -->
                 <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
                     <button onclick="alternarFiltroSuperior('tudo')" id="filtroSuperiorTudo" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition">✨ Tudo</button>
                     <button onclick="alternarFiltroSuperior('produtos')" id="filtroSuperiorProdutos" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🥕 Produtos</button>
                     <button onclick="alternarFiltroSuperior('barracas')" id="filtroSuperiorBarracas" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🏪 Barracas</button>
                 </div>
 
-                <!-- Banner de Anúncios Dinâmico, Clicável e Interativo (Com Botão Fechar) -->
                 <div id="bannerAnuncioContainer" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-sm relative overflow-hidden cursor-pointer transition transform hover:scale-[1.01]" onclick="interagirBannerAnuncio(event)">
                     <button type="button" onclick="fecharBannerAnuncio(event)" class="absolute top-2 right-2 w-6 h-6 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center text-xs transition z-10" title="Fechar anúncio">
                         <i class="fa-solid fa-xmark"></i>
@@ -183,18 +180,16 @@
                     <p id="descAnuncio" class="text-xs text-amber-100 mt-1 leading-relaxed">Venha conferir as barracas com produtos 100% livres de agrotóxicos na Praça Central a partir das 07:00.</p>
                 </div>
 
-                <!-- Carrossel de Destaques Inteligente (Borda Dourada Mais Evidente e Transições Suaves) -->
                 <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5">
                             <i class="fa-solid fa-fire text-amber-500 animate-pulse"></i> BARRACAS EM DESTAQUE
                         </h3>
-                        <span id="carrosselIndicador" class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">1 / 15</span>
+                        <span id="carrosselIndicador" class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">1 / 1</span>
                     </div>
                     <div id="carrosselDestaquesContainer" class="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-50/60 via-white to-amber-50/60 border-2 border-amber-400/80 p-3.5 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-md flex items-center" onclick="clicarLojaCarrossel()"></div>
                 </div>
 
-                <!-- SISTEMA DE FILTRO DINÂMICO E FLUIDO (TAGS/PÍLULAS DESLIZANTES) -->
                 <div class="space-y-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
                     <div class="flex items-center justify-between">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-filter text-emerald-600"></i> Categorias da Feira</h3>
@@ -215,7 +210,6 @@
                     </div>
                 </div>
 
-                <!-- Grade de Barracas Unificada -->
                 <div id="secaoBarracasExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                     <h3 id="tituloSecaoExplorar" class="font-bold text-slate-700 text-sm mb-3 flex items-center gap-1.5">
                         <i class="fa-solid fa-store text-emerald-600"></i> Barracas Patrocinadas e em Destaque
@@ -223,7 +217,6 @@
                     <div id="listaExplorarFeirantes" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- Grade de Produtos Unificada -->
                 <div id="secaoProdutosExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                     <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-carrot text-emerald-600"></i> Produtos Disponíveis na Feira
@@ -278,8 +271,8 @@
                                 <input type="text" id="unidadeProduto" placeholder="Unid. (Ex: kg, un)" required class="w-1/2 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto do Produto (Arquivo do Dispositivo)</label>
-                                <input type="file" id="fotoProdutoInput" accept="image/*" required class="w-full p-2 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto do Produto (Link URL)</label>
+                                <input type="text" id="fotoProdutoInput" placeholder="https://exemplo.com/imagem.jpg" required class="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                             </div>
                             <button type="submit" class="w-full bg-emerald-600 text-white font-semibold py-3 rounded-xl hover:bg-emerald-700 transition shadow-sm">Salvar na Barraca</button>
                         </form>
@@ -442,8 +435,8 @@
                             <input type="tel" id="editarWhatsapp" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil (Arquivo do Dispositivo)</label>
-                            <input type="file" id="editarFotoPerfilInput" accept="image/*" class="w-full p-2 border border-slate-200 rounded-xl text-sm bg-white file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil (Link URL)</label>
+                            <input type="text" id="editarFotoPerfilInput" placeholder="https://exemplo.com/foto.jpg" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
                         </div>
                         <div class="flex gap-2 pt-1">
                             <button type="submit" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-emerald-700 transition">Salvar Informações</button>
@@ -615,6 +608,77 @@
             if (anunciosLocais.length > 0) {
                 const a = anunciosLocais[indiceAnuncioAtual];
                 alert(`📢 Detalhes do Anúncio:\n\n${a.titulo}\n\n${a.desc}`);
+            }
+        }
+
+        function iniciarAnunciosLocais() {
+            if (anunciosLocais.length === 0) return;
+            atualizarExibicaoAnuncio();
+            if (timerAnuncios) clearInterval(timerAnuncios);
+            timerAnuncios = setInterval(() => {
+                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
+                atualizarExibicaoAnuncio();
+            }, 6000);
+        }
+
+        function atualizarExibicaoAnuncio() {
+            if (anunciosLocais.length === 0) return;
+            const a = anunciosLocais[indiceAnuncioAtual];
+            const tituloEl = document.getElementById('tituloAnuncio');
+            const descEl = document.getElementById('descAnuncio');
+            const indEl = document.getElementById('anuncioIndicador');
+            if (tituloEl) tituloEl.innerText = a.titulo;
+            if (descEl) descEl.innerText = a.desc;
+            if (indEl) indEl.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
+        }
+
+        function iniciarCarrosselDestaques() {
+            const container = document.getElementById('carrosselDestaquesContainer');
+            const indicador = document.getElementById('carrosselIndicador');
+            if(!container) return;
+
+            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
+            if (destaqueList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-2 w-full">Nenhuma barraca em destaque no momento. Seja um parceiro destaque!</p>`;
+                if (indicador) indicador.innerText = "0 / 0";
+                return;
+            }
+
+            if (indiceCarrosselAtual >= destaqueList.length) indiceCarrosselAtual = 0;
+            let f = destaqueList[indiceCarrosselAtual];
+            if (indicador) indicador.innerText = `${indiceCarrosselAtual + 1} / ${destaqueList.length}`;
+
+            container.innerHTML = `
+                <div class="flex items-center gap-3 w-full">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold overflow-hidden shrink-0">
+                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-lg"></i>'}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <h4 class="font-bold text-slate-800 text-sm truncate">${f.nomeBarraca}</h4>
+                            <span class="bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.2 rounded shrink-0">⭐ DESTAQUE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 truncate">Categoria: ${f.categoria || 'Geral'} • Resp: ${f.nomeCompleto}</p>
+                    </div>
+                    <span class="text-xs bg-amber-500 text-white font-bold px-2.5 py-1.5 rounded-xl shadow-sm shrink-0">Ver Loja</span>
+                </div>
+            `;
+
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            timerCarrossel = setInterval(() => {
+                let listaAtualizada = feirantesCadastrados.filter(x => x.destacada);
+                if (listaAtualizada.length > 0) {
+                    indiceCarrosselAtual = (indiceCarrosselAtual + 1) % listaAtualizada.length;
+                    iniciarCarrosselDestaques();
+                }
+            }, 4500);
+        }
+
+        function clicarLojaCarrossel() {
+            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
+            if (destaqueList.length > 0) {
+                let f = destaqueList[indiceCarrosselAtual];
+                if (f) abrirPaginaProdutosBarraca(f.usuario);
             }
         }
 
@@ -811,946 +875,27 @@
             }
         }
 
-        function mostrarErroAuth(mensagem) {
-            const caixaErro = document.getElementById('authMensagemErro');
-            const textoErro = document.getElementById('authTextoErro');
-            ocultarSucessoAuth();
-            if (mensagem) {
-                textoErro.innerText = mensagem;
-                caixaErro.classList.remove('hide');
-            } else {
-                caixaErro.classList.add('hide');
-            }
-        }
+        function abrirPaginaProdutosBarraca(usuarioFeirante) {
+            let f = feirantesCadastrados.find(x => x.usuario === usuarioFeirante);
+            if (!f) return;
 
-        function mostrarSucessoAuth(mensagem) {
-            const caixaSucesso = document.getElementById('authMensagemSucesso');
-            const textoSucesso = document.getElementById('authTextoSucesso');
-            ocultarErroAuth();
-            if (mensagem) {
-                textoSucesso.innerText = mensagem;
-                caixaSucesso.classList.remove('hide');
-            } else {
-                caixaSucesso.classList.add('hide');
-            }
-        }
-
-        function ocultarErroAuth() {
-            document.getElementById('authMensagemErro').classList.add('hide');
-        }
-
-        function ocultarSucessoAuth() {
-            document.getElementById('authMensagemSucesso').classList.add('hide');
-        }
-
-        function alternarModoAuth(modo) {
-            modoAuthAtual = modo;
-            ocultarErroAuth();
-            ocultarSucessoAuth();
-            
-            const btnLogin = document.getElementById('abaLoginBtn');
-            const btnCadastro = document.getElementById('abaCadastroBtn');
-            const btnSubmit = document.getElementById('btnSubmitAuth');
-            const camposPessoais = document.getElementById('camposPessoaisCadastro');
-            const blocoTipoPerfil = document.getElementById('blocoTipoPerfilAuth');
-            const abasContainer = document.getElementById('abasAuthContainer');
-            const blocoEsqueci = document.getElementById('blocoEsqueciSenhaForm');
-            const grupoSenha = document.getElementById('grupoSenhaAuth');
-            const inputUsuario = document.getElementById('authUsuario');
-            const inputSenha = document.getElementById('authSenha');
-
-            blocoEsqueci.classList.add('hide');
-            abasContainer.classList.remove('hide');
-            grupoSenha.classList.remove('hide');
-            inputUsuario.required = true;
-            inputSenha.required = true;
-
-            if (modo === 'login') {
-                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
-                btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
-                btnSubmit.classList.remove('hide');
-                btnSubmit.innerText = "Entrar";
-                camposPessoais.classList.add('hide');
-                blocoTipoPerfil.classList.add('hide');
-            } else if (modo === 'cadastro') {
-                btnCadastro.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
-                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
-                btnSubmit.classList.remove('hide');
-                btnSubmit.innerText = "Cadastrar";
-                camposPessoais.classList.remove('hide');
-                blocoTipoPerfil.classList.remove('hide');
-                atualizarCamposPerfilAuth();
-            }
-        }
-
-        function atualizarCamposPerfilAuth() {
-            const tipoPerfil = document.getElementById('authTipo').value;
-            const camposExtrasFeirante = document.getElementById('camposExtrasFeirante');
-            if (tipoPerfil === 'feirante') {
-                camposExtrasFeirante.classList.remove('hide');
-            } else {
-                camposExtrasFeirante.classList.add('hide');
-            }
-        }
-
-        function abrirTelaEsqueciSenha() {
-            modoAuthAtual = 'esqueci';
-            ocultarErroAuth();
-            ocultarSucessoAuth();
-
-            document.getElementById('abasAuthContainer').classList.add('hide');
-            document.getElementById('grupoSenhaAuth').classList.add('hide');
-            document.getElementById('camposPessoaisCadastro').classList.add('hide');
-            document.getElementById('blocoTipoPerfilAuth').classList.add('hide');
-            document.getElementById('btnSubmitAuth').classList.add('hide');
-
-            document.getElementById('authUsuario').required = false;
-            document.getElementById('authSenha').required = false;
-
-            document.getElementById('blocoEsqueciSenhaForm').classList.remove('hide');
-        }
-
-        function voltarDoEsqueciSenha() {
-            alternarModoAuth('login');
-        }
-
-        async function executarRecuperacaoSenha() {
-            const termo = document.getElementById('recuperarUsuarioInput').value.trim();
-            if (!termo) {
-                mostrarErroAuth("⚠️ Por favor, digite seu nome de usuário ou WhatsApp para recuperar a senha.");
-                return;
-            }
-
-            let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
-            let encontrado = todosUsuarios.find(u => u.usuario.toLowerCase() === termo.toLowerCase() || u.whatsapp === termo);
-
-            if (!encontrado) {
-                mostrarErroAuth(`⚠️ Não encontramos nenhuma conta associada a "${termo}". Verifique os dados digitados.`);
-                return;
-            }
-
-            let novaSenhaTemp = prompt(`Conta encontrada (${encontrado.nomeCompleto}). Digite sua nova senha de acesso:`);
-            if (novaSenhaTemp !== null && novaSenhaTemp.trim() !== '') {
-                encontrado.senha = novaSenhaTemp.trim();
-
-                let tabela = encontrado.tipo === 'admin' ? 'admins' : (encontrado.tipo === 'feirante' ? 'feirantes' : 'clientes');
-                await supabaseClient.from(tabela).update({ senha: encontrado.senha }).eq('usuario', encontrado.usuario);
-
-                mostrarSucessoAuth("✅ Senha redefinida com sucesso! Agora você pode entrar com sua nova senha.");
-                document.getElementById('recuperarUsuarioInput').value = '';
-                voltarDoEsqueciSenha();
-                document.getElementById('authUsuario').value = encontrado.usuario;
-            } else if (novaSenhaTemp !== null) {
-                mostrarErroAuth("⚠️ A senha não pode estar em branco.");
-            }
-        }
-
-        async function processarAuth(event) {
-            event.preventDefault();
-            ocultarErroAuth();
-            ocultarSucessoAuth();
-            
-            const usuarioInput = document.getElementById('authUsuario').value.trim();
-            const senha = document.getElementById('authSenha').value.trim();
-
-            if (!usuarioInput) {
-                mostrarErroAuth("⚠️ O campo de usuário é obrigatório.");
-                document.getElementById('authUsuario').focus();
-                return;
-            }
-            if (!senha) {
-                mostrarErroAuth("⚠️ O campo de senha é obrigatório.");
-                document.getElementById('authSenha').focus();
-                return;
-            }
-
-            if (modoAuthAtual === 'login') {
-                let encontrado = null;
-                let tipoEncontrado = null;
-
-                for (let u of adminsCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'admin'; break; } }
-                if (!encontrado) { for (let u of feirantesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'feirante'; break; } } }
-                if (!encontrado) { for (let u of clientesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'cliente'; break; } } }
-
-                if (encontrado) {
-                    if (listaBanidos.includes(encontrado.usuario) || (encontrado.whatsapp && listaBanidos.includes(encontrado.whatsapp))) {
-                        mostrarErroAuth('⛔ Acesso negado: Esta conta ou número de WhatsApp está banido do sistema.');
-                        return;
-                    }
-                    usuarioAtual = { ...encontrado, tipo: tipoEncontrado };
-                    salvarEIniciar();
-                } else {
-                    let usuarioExisteGeral = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados].some(u => u.usuario === usuarioInput);
-                    if (!usuarioExisteGeral) {
-                        mostrarErroAuth(`❌ O usuário "${usuarioInput}" não foi encontrado. Verifique se digitou corretamente ou clique em "Cadastrar".`);
-                        document.getElementById('authUsuario').focus();
-                    } else {
-                        mostrarErroAuth('❌ Senha incorreta. Verifique os caracteres digitados ou utilize a opção "Esqueceu a senha?".');
-                        document.getElementById('authSenha').focus();
-                    }
-                }
-            } else {
-                const nomeCompleto = document.getElementById('authNomeCompleto').value.trim();
-                const whatsapp = document.getElementById('authWhatsapp').value.trim();
-                const tipo = document.getElementById('authTipo').value;
-
-                if (!nomeCompleto) {
-                    mostrarErroAuth('⚠️ O campo "Nome Completo" é obrigatório.');
-                    document.getElementById('authNomeCompleto').focus();
-                    return;
-                }
-                if (!whatsapp) {
-                    mostrarErroAuth('⚠️ O campo "Número de WhatsApp" é obrigatório.');
-                    document.getElementById('authWhatsapp').focus();
-                    return;
-                }
-
-                let nomeBarraca = "";
-                let categoria = "alimentos";
-                if (tipo === 'feirante') {
-                    nomeBarraca = document.getElementById('authNomeBarraca').value.trim();
-                    categoria = document.getElementById('authCategoriaBarraca').value;
-                    if (!nomeBarraca) {
-                        mostrarErroAuth('⚠️ O campo "Nome da Barraca" é obrigatório para feirantes.');
-                        document.getElementById('authNomeBarraca').focus();
-                        return;
-                    }
-                }
-
-                if (listaBanidos.includes(usuarioInput) || (whatsapp && listaBanidos.includes(whatsapp)) || listaBanidos.includes(nomeCompleto)) {
-                    mostrarErroAuth('⛔ Você está banido e não pode criar contas neste sistema.');
-                    return;
-                }
-
-                let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
-                let usuarioExiste = todosUsuarios.some(u => u.usuario.toLowerCase() === usuarioInput.toLowerCase());
-                if (usuarioExiste) {
-                    mostrarErroAuth(`⚠️ O nome de usuário "${usuarioInput}" já está em uso. Por favor, escolha outro.`);
-                    document.getElementById('authUsuario').focus();
-                    return;
-                }
-
-                if (whatsapp) {
-                    let whatsappExiste = todosUsuarios.some(u => u.whatsapp === whatsapp);
-                    if (whatsappExiste) {
-                        mostrarErroAuth(`⚠️ O número de WhatsApp "${whatsapp}" já está cadastrado em outra conta.`);
-                        document.getElementById('authWhatsapp').focus();
-                        return;
-                    }
-                }
-
-                const novoUsuario = { 
-                    usuario: usuarioInput, 
-                    senha, 
-                    nomeCompleto, 
-                    whatsapp, 
-                    tipo, 
-                    nomeBarraca: tipo === 'feirante' ? nomeBarraca : null,
-                    categoria: tipo === 'feirante' ? categoria : null,
-                    destacada: false,
-                    fotoPerfil: ''
-                };
-                
-                let tabela = tipo === 'feirante' ? 'feirantes' : 'clientes';
-                let payloadSupabase = { ...novoUsuario };
-
-                await supabaseClient.from(tabela).insert([payloadSupabase]);
-
-                if (tipo === 'feirante') {
-                    feirantesCadastrados.push(novoUsuario);
-                } else {
-                    clientesCadastrados.push(novoUsuario);
-                }
-
-                usuarioAtual = novoUsuario;
-                salvarEIniciar();
-            }
-        }
-
-        function salvarEIniciar() {
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            iniciarApp();
-        }
-
-        function fazerLogout() {
-            localStorage.removeItem('feira_usuario_logado');
-            usuarioAtual = null;
-            pararTimers();
-            document.getElementById('appPrincipal').classList.add('hide');
-            document.getElementById('telaAuth').classList.remove('hide');
-            alternarModoAuth('login');
-            carrinho = [];
-            atualizarBadgeCarrinho();
-        }
-
-        async function confirmarExclusaoConta() {
-            if (confirm("Tem certeza que deseja excluir sua conta permanentemente?")) {
-                if (usuarioAtual.tipo === 'feirante') {
-                    await supabaseClient.from('feirantes').delete().eq('usuario', usuarioAtual.usuario);
-                    await supabaseClient.from('produtos').delete().eq('feirante_usuario', usuarioAtual.usuario);
-                    feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuarioAtual.usuario);
-                    produtos = produtos.filter(p => p.feirante_usuario !== usuarioAtual.usuario);
-                } else if (usuarioAtual.tipo === 'cliente') {
-                    await supabaseClient.from('clientes').delete().eq('usuario', usuarioAtual.usuario);
-                    clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuarioAtual.usuario);
-                }
-                fazerLogout();
-            }
-        }
-
-        function pararTimers() {
-            if (timerCarrossel) clearInterval(timerCarrossel);
-            if (timerAnuncios) clearInterval(timerAnuncios);
-        }
-
-        function iniciarApp() {
-            document.getElementById('telaAuth').classList.add('hide');
-            document.getElementById('appPrincipal').classList.remove('hide');
-
-            ['visãoFeirante', 'visãoUnificadaExplorar', 'telaProdutosFeira', 'visãoAdmin', 'telaCarrinho', 'telaChatInterno', 'telaPerfil', 'navCliente', 'navFeirante', 'navAdmin'].forEach(id => {
+            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaChatInterno', 'telaPerfil', 'visãoFeirante', 'visãoAdmin'].forEach(id => {
                 document.getElementById(id).classList.add('hide');
             });
-
-            if (usuarioAtual.tipo === 'admin') {
-                document.getElementById('navAdmin').classList.remove('hide');
-                mudarAbaAdmin('admin');
-            } else if (usuarioAtual.tipo === 'feirante') {
-                document.getElementById('navFeirante').classList.remove('hide');
-                mudarAbaFeirante('gerenciar');
-            } else {
-                document.getElementById('navCliente').classList.remove('hide');
-                mudarAbaCliente('explorar');
-            }
-            atualizarBadgeCarrinho();
-        }
-
-        function mudarAbaCliente(aba) {
-            ['visãoUnificadaExplorar', 'telaProdutosFeira', 'telaCarrinho', 'telaChatInterno', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
-            pararTimers();
-            ['tabExplorarBtn', 'tabCarrinhoBtn', 'tabPerfilBtn'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) el.className = "flex flex-col items-center text-slate-400 font-medium text-xs";
-            });
-
-            if (aba === 'explorar') {
-                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
-                document.getElementById('tabExplorarBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                iniciarCarrosselDestaques();
-                iniciarAnunciosLocais();
-                selecionarCategoriaDinamica('todas');
-                renderizarProdutosCliente();
-            } else if (aba === 'carrinho') {
-                document.getElementById('telaCarrinho').classList.remove('hide');
-                document.getElementById('tabCarrinhoBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarCarrinho();
-            } else if (aba === 'perfil') {
-                document.getElementById('telaPerfil').classList.remove('hide');
-                document.getElementById('tabPerfilBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                preencherPerfil();
-            }
-        }
-
-        function mudarAbaFeirante(aba) {
-            ['visãoFeirante', 'visãoUnificadaExplorar', 'telaProdutosFeira', 'telaCarrinho', 'telaChatInterno', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
-            pararTimers();
-            ['tabFeiranteGerenciar', 'tabFeiranteExplorar', 'tabFeiranteCarrinho', 'tabFeirantePerfil'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) el.className = "flex flex-col items-center text-slate-400 font-medium text-xs";
-            });
-
-            if (aba === 'gerenciar') {
-                document.getElementById('visãoFeirante').classList.remove('hide');
-                document.getElementById('tabFeiranteGerenciar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarProdutosFeirante();
-            } else if (aba === 'explorar') {
-                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
-                document.getElementById('tabFeiranteExplorar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                iniciarCarrosselDestaques();
-                iniciarAnunciosLocais();
-                selecionarCategoriaDinamica('todas');
-                renderizarProdutosCliente();
-            } else if (aba === 'carrinho') {
-                document.getElementById('telaCarrinho').classList.remove('hide');
-                document.getElementById('tabFeiranteCarrinho').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarCarrinho();
-            } else if (aba === 'perfil') {
-                document.getElementById('telaPerfil').classList.remove('hide');
-                document.getElementById('tabFeirantePerfil').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                preencherPerfil();
-            }
-        }
-
-        function mudarAbaAdmin(aba) {
-            ['visãoAdmin', 'visãoUnificadaExplorar', 'visãoFeirante', 'telaCarrinho', 'telaChatInterno', 'telaPerfil', 'telaProdutosFeira'].forEach(id => document.getElementById(id).classList.add('hide'));
-            pararTimers();
-            ['tabAdminPainel', 'tabAdminExplorar', 'tabAdminVender', 'tabAdminCarrinho', 'tabAdminPerfil'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) el.className = "flex flex-col items-center text-slate-400 font-medium text-xs";
-            });
-
-            if (aba === 'admin') {
-                document.getElementById('visãoAdmin').classList.remove('hide');
-                document.getElementById('tabAdminPainel').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarPainelAdmin();
-            } else if (aba === 'explorar') {
-                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
-                document.getElementById('tabAdminExplorar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                iniciarCarrosselDestaques();
-                iniciarAnunciosLocais();
-                selecionarCategoriaDinamica('todas');
-                renderizarProdutosCliente();
-            } else if (aba === 'vender') {
-                document.getElementById('visãoFeirante').classList.remove('hide');
-                document.getElementById('tabAdminVender').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarProdutosFeirante();
-            } else if (aba === 'carrinho') {
-                document.getElementById('telaCarrinho').classList.remove('hide');
-                document.getElementById('tabAdminCarrinho').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                renderizarCarrinho();
-            } else if (aba === 'perfil') {
-                document.getElementById('telaPerfil').classList.remove('hide');
-                document.getElementById('tabAdminPerfil').className = "flex flex-col items-center text-emerald-600 font-medium text-xs";
-                preencherPerfil();
-            }
-        }
-
-        function mudarAbaInternaFeirante(secao) {
-            const btnListar = document.getElementById('btnAbaFeiranteListar');
-            const btnCadastrar = document.getElementById('btnAbaFeiranteCadastrar');
-            const painelListar = document.getElementById('painelInternoListar');
-            const painelCadastrar = document.getElementById('painelInternoCadastrar');
-
-            if (secao === 'listar') {
-                btnListar.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
-                btnCadastrar.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
-                painelListar.classList.remove('hide');
-                painelCadastrar.classList.add('hide');
-                renderizarProdutosFeirante();
-            } else {
-                btnCadastrar.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition";
-                btnListar.className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition";
-                painelCadastrar.classList.remove('hide');
-                painelListar.classList.add('hide');
-            }
-        }
-
-        function alternarFiltroSuperior(tipo) {
-            filtroSuperiorAtual = tipo;
-            ['tudo', 'produtos', 'barracas'].forEach(t => {
-                let btn = document.getElementById(`filtroSuperior${t.charAt(0).toUpperCase() + t.slice(1)}`);
-                if (btn) {
-                    if (t === tipo) {
-                        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition";
-                    } else {
-                        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition";
-                    }
-                }
-            });
-
-            const wrapBarracas = document.getElementById('secaoBarracasExplorarWrapper');
-            const wrapProdutos = document.getElementById('secaoProdutosExplorarWrapper');
-
-            if (tipo === 'tudo') {
-                wrapBarracas.classList.remove('hide');
-                wrapProdutos.classList.remove('hide');
-            } else if (tipo === 'produtos') {
-                wrapBarracas.classList.add('hide');
-                wrapProdutos.classList.remove('hide');
-            } else if (tipo === 'barracas') {
-                wrapBarracas.classList.remove('hide');
-                wrapProdutos.classList.add('hide');
-            }
-        }
-
-        function mudarAbaAdminPainel(secao) {
-            ['secaoAdminAnuncios', 'secaoAdminBarracas', 'secaoAdminSolicitacoesDestaque', 'secaoAdminClientes', 'secaoAdminProdutos', 'secaoAdminUsuarios', 'secaoAdminBanidos'].forEach(id => document.getElementById(id).classList.add('hide'));
-            if (secao === 'anuncios') { document.getElementById('secaoAdminAnuncios').classList.remove('hide'); renderizarAdminAnuncios(); }
-            else if (secao === 'barracas') { document.getElementById('secaoAdminBarracas').classList.remove('hide'); renderizarAdminFeirantes(); }
-            else if (secao === 'solicitacoesDestaque') { document.getElementById('secaoAdminSolicitacoesDestaque').classList.remove('hide'); renderizarAdminDestaques(); }
-            else if (secao === 'clientes') { document.getElementById('secaoAdminClientes').classList.remove('hide'); renderizarAdminClientes(); }
-            else if (secao === 'produtos') { document.getElementById('secaoAdminProdutos').classList.remove('hide'); renderizarAdminProdutos(); }
-            else if (secao === 'usuarios') { document.getElementById('secaoAdminUsuarios').classList.remove('hide'); renderizarAdminGerenciarUsuarios(); }
-            else if (secao === 'banidos') { document.getElementById('secaoAdminBanidos').classList.remove('hide'); renderizarAdminBanidos(); }
-        }
-
-        function renderizarPainelAdmin() {
-            document.getElementById('statFeirantes').innerText = feirantesCadastrados.length;
-            document.getElementById('statClientes').innerText = clientesCadastrados.length;
-            document.getElementById('statProdutos').innerText = produtos.length;
-            document.getElementById('statAnuncios').innerText = anunciosLocais.length;
-            renderizarAdminAnuncios();
-            renderizarAdminFeirantes();
-            renderizarAdminDestaques();
-            renderizarAdminClientes();
-            renderizarAdminProdutos();
-            renderizarAdminGerenciarUsuarios();
-            renderizarAdminBanidos();
-        }
-
-        function renderizarAdminAnuncios() {
-            const container = document.getElementById('adminListaAnuncios');
-            container.innerHTML = '';
-            if (anunciosLocais.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum anúncio.</p>`; return; }
-            anunciosLocais.forEach(a => {
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
-                        <div><b>${a.titulo}</b><p class="text-slate-500 text-[11px] truncate max-w-[200px]">${a.desc}</p></div>
-                        <button onclick="deletarAnuncioAdmin(${a.id})" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
-
-        async function deletarAnuncioAdmin(id) {
-            if (confirm("Apagar este anúncio?")) {
-                await supabaseClient.from('anuncios').delete().eq('id', id);
-                anunciosLocais = anunciosLocais.filter(a => a.id !== id);
-                renderizarPainelAdmin();
-            }
-        }
-
-        async function adicionarAnuncioAdmin(event) {
-            event.preventDefault();
-            const novoAnuncio = { id: Date.now(), titulo: document.getElementById('adminNovoTituloAnuncio').value, desc: document.getElementById('adminNovoDescAnuncio').value };
-            await supabaseClient.from('anuncios').insert([novoAnuncio]);
-            anunciosLocais.push(novoAnuncio);
-            document.getElementById('adminNovoTituloAnuncio').value = '';
-            document.getElementById('adminNovoDescAnuncio').value = '';
-            renderizarPainelAdmin();
-        }
-
-        function renderizarAdminFeirantes() {
-            const container = document.getElementById('adminListaFeirantes');
-            const termoBusca = document.getElementById('buscaAdminFeirantesInput') ? document.getElementById('buscaAdminFeirantesInput').value.toLowerCase().trim() : '';
-            container.innerHTML = '';
-
-            let feirantesFiltrados = feirantesCadastrados.filter(f => 
-                f.nomeBarraca.toLowerCase().includes(termoBusca) || 
-                f.nomeCompleto.toLowerCase().includes(termoBusca) || 
-                (f.usuario && f.usuario.toLowerCase().includes(termoBusca))
-            );
-
-            if (feirantesFiltrados.length === 0) { 
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhuma barraca encontrada.</p>`; 
-                return; 
-            }
-
-            feirantesFiltrados.forEach(f => {
-                let statusDestaqueBtn = f.destacada 
-                    ? `<button onclick="alternarDestaqueAdmin('${f.usuario}', false)" class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-lg">Remover Destaque ⭐</button>`
-                    : `<button onclick="alternarDestaqueAdmin('${f.usuario}', true)" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded-lg">Colocar em Destaque 🌟</button>`;
-                
-                container.innerHTML += `
-                    <div class="p-3 bg-slate-50 rounded-xl border text-xs space-y-2">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="font-bold text-slate-800 text-sm">${f.nomeBarraca}</span>
-                                <p class="text-slate-500 text-[11px]">Resp: ${f.nomeCompleto} | Tel: ${f.whatsapp || 'N/A'}</p>
-                            </div>
-                            <div class="flex gap-1">
-                                <button onclick="editarFeiranteAdmin('${f.usuario}')" class="text-sky-600 p-1.5" title="Editar Nome/Número"><i class="fa-solid fa-pen"></i></button>
-                                <button onclick="deletarFeiranteAdmin('${f.usuario}')" class="text-rose-500 p-1.5" title="Apagar Barraca"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center pt-1 border-t border-slate-200">
-                            ${statusDestaqueBtn}
-                            <button onclick="banirUsuarioAdmin('${f.usuario}', '${f.whatsapp}')" class="text-rose-600 font-bold text-[10px]"><i class="fa-solid fa-ban"></i> Banir Feirante</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function renderizarAdminDestaques() {
-            const container = document.getElementById('adminListaSolicitacoesDestaque');
-            if(!container) return;
-            container.innerHTML = '';
-            
-            if (solicitacoesDestaqueList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhuma solicitação de destaque pendente.</p>`;
-                return;
-            }
-
-            solicitacoesDestaqueList.forEach(sol => {
-                container.innerHTML += `
-                    <div class="p-3 bg-slate-50 rounded-xl border text-xs flex items-center justify-between">
-                        <div>
-                            <b class="text-slate-800">${sol.nomeBarraca}</b> (Usuário: ${sol.usuario})
-                            <p class="text-slate-500 text-[11px]">Valor taxa: R$ 6,99 (24h)</p>
-                        </div>
-                        <button onclick="aprovarDestaqueAdmin('${sol.usuario}')" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-700">Aprovar Destaque ⭐</button>
-                    </div>
-                `;
-            });
-        }
-
-        async function aprovarDestaqueAdmin(usuarioFeirante) {
-            let f = feirantesCadastrados.find(x => x.usuario === usuarioFeirante);
-            if (f) {
-                f.destacada = true;
-                await supabaseClient.from('feirantes').update({ destacada: true }).eq('usuario', usuarioFeirante);
-            }
-            await supabaseClient.from('solicitacoes_destaque').delete().eq('usuario', usuarioFeirante);
-            solicitacoesDestaqueList = solicitacoesDestaqueList.filter(s => s.usuario !== usuarioFeirante);
-            renderizarPainelAdmin();
-            alert(`✅ Destaque aprovado para a barraca!`);
-        }
-
-        async function alternarDestaqueAdmin(usuario, estado) {
-            let f = feirantesCadastrados.find(x => x.usuario === usuario);
-            if (f) {
-                f.destacada = estado;
-                await supabaseClient.from('feirantes').update({ destacada: estado }).eq('usuario', usuario);
-                renderizarPainelAdmin();
-            }
-        }
-
-        async function editarFeiranteAdmin(usuario) {
-            let f = feirantesCadastrados.find(x => x.usuario === usuario);
-            if (!f) return;
-            let novoNome = prompt("Novo nome completo do feirante:", f.nomeCompleto);
-            let novaBarraca = prompt("Novo nome da barraca:", f.nomeBarraca);
-            let novoTel = prompt("Novo WhatsApp:", f.whatsapp);
-            if (novoNome !== null) f.nomeCompleto = novoNome.trim();
-            if (novaBarraca !== null) f.nomeBarraca = novaBarraca.trim();
-            if (novoTel !== null) f.whatsapp = novoTel.trim();
-            await supabaseClient.from('feirantes').update({ nomeCompleto: f.nomeCompleto, nomeBarraca: f.nomeBarraca, whatsapp: f.whatsapp }).eq('usuario', usuario);
-            renderizarPainelAdmin();
-        }
-
-        async function deletarFeiranteAdmin(usuarioFeirante) {
-            if (confirm("Apagar esta barraca e seus produtos?")) {
-                await supabaseClient.from('feirantes').delete().eq('usuario', usuarioFeirante);
-                await supabaseClient.from('produtos').delete().eq('feirante_usuario', usuarioFeirante);
-                feirantesCadastrados = feirantesCadastrados.filter(f => f.usuario !== usuarioFeirante);
-                produtos = produtos.filter(p => p.feirante_usuario !== usuarioFeirante);
-                renderizarPainelAdmin();
-            }
-        }
-
-        function renderizarAdminClientes() {
-            const container = document.getElementById('adminListaClientes');
-            container.innerHTML = '';
-            if (clientesCadastrados.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum cliente cadastrado.</p>`; return; }
-            clientesCadastrados.forEach(c => {
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border text-xs">
-                        <div>
-                            <span class="font-bold text-slate-800">${c.nomeCompleto}</span>
-                            <p class="text-slate-500 text-[11px]">User: ${c.usuario} | Tel: ${c.whatsapp || 'N/A'}</p>
-                        </div>
-                        <div class="flex gap-1">
-                            <button onclick="editarClienteAdmin('${c.usuario}')" class="text-sky-600 p-1.5"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deletarClienteAdmin('${c.usuario}')" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
-                            <button onclick="banirUsuarioAdmin('${c.usuario}', '${c.whatsapp}')" class="text-rose-700 p-1.5" title="Banir"><i class="fa-solid fa-ban"></i></button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        async function editarClienteAdmin(usuario) {
-            let c = clientesCadastrados.find(x => x.usuario === usuario);
-            if (!c) return;
-            let novoNome = prompt("Novo nome completo:", c.nomeCompleto);
-            let novoTel = prompt("Novo WhatsApp:", c.whatsapp);
-            if (novoNome !== null) c.nomeCompleto = novoNome.trim();
-            if (novoTel !== null) c.whatsapp = novoTel.trim();
-            await supabaseClient.from('clientes').update({ nomeCompleto: c.nomeCompleto, whatsapp: c.whatsapp }).eq('usuario', usuario);
-            renderizarPainelAdmin();
-        }
-
-        async function deletarClienteAdmin(usuario) {
-            if (confirm("Apagar conta deste cliente?")) {
-                await supabaseClient.from('clientes').delete().eq('usuario', usuario);
-                clientesCadastrados = clientesCadastrados.filter(c => c.usuario !== usuario);
-                renderizarPainelAdmin();
-            }
-        }
-
-        function renderizarAdminProdutos() {
-            const container = document.getElementById('adminListaProdutos');
-            container.innerHTML = '';
-            if (produtos.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum produto.</p>`; return; }
-            produtos.forEach(p => {
-                let feirante = feirantesCadastrados.find(f => f.usuario === p.feirante_usuario);
-                let nomeB = feirante ? feirante.nomeBarraca : 'Desconhecida';
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
-                        <div><b>${p.nome}</b> - R$ ${p.preco.toFixed(2)}<p class="text-slate-500 text-[11px]">Barraca: ${nomeB}</p></div>
-                        <button onclick="deletarProdutoAdmin(${p.id})" class="text-rose-500 p-1.5"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
-
-        async function deletarProdutoAdmin(id) {
-            if (confirm("Apagar este produto?")) {
-                await supabaseClient.from('produtos').delete().eq('id', id);
-                produtos = produtos.filter(p => p.id !== id);
-                renderizarPainelAdmin();
-            }
-        }
-
-        function renderizarAdminGerenciarUsuarios() {
-            const container = document.getElementById('adminListaAlterarUsuarios');
-            container.innerHTML = '';
-            
-            let todos = [
-                ...adminsCadastrados.map(u => ({...u, tipoLista: 'admin'})),
-                ...feirantesCadastrados.map(u => ({...u, tipoLista: 'feirante'})),
-                ...clientesCadastrados.map(u => ({...u, tipoLista: 'cliente'}))
-            ];
-
-            if (todos.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">Nenhum usuário cadastrado.</p>`;
-                return;
-            }
-
-            todos.forEach(u => {
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
-                        <div>
-                            <b>${u.usuario}</b> <span class="text-[10px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-bold uppercase">${u.tipoLista}</span>
-                            <p class="text-slate-500 text-[11px]">Nome: ${u.nomeCompleto || 'N/A'}</p>
-                        </div>
-                        <div class="flex gap-1">
-                            <button onclick="adminModificarUsuarioCompleto('${u.usuario}', '${u.tipoLista}')" class="bg-sky-100 text-sky-800 font-bold px-2 py-1.5 rounded-lg"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
-                            <button onclick="adminDeletarUsuarioCompleto('${u.usuario}', '${u.tipoLista}')" class="bg-rose-100 text-rose-800 font-bold px-2 py-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        async function adminCriarUsuarioSimples(event) {
-            event.preventDefault();
-            let novoUser = document.getElementById('admNovoUsuarioNome').value.trim();
-            let novoNomeCompleto = document.getElementById('admNovoNomeCompleto').value.trim();
-            let novaSenha = document.getElementById('admNovoUsuarioSenha').value.trim();
-            let tipo = document.getElementById('admNovoUsuarioTipo').value;
-
-            let objNovo = {
-                usuario: novoUser,
-                senha: novaSenha,
-                nomeCompleto: novoNomeCompleto,
-                whatsapp: "",
-                tipo: tipo,
-                fotoPerfil: ""
-            };
-
-            let tabela = tipo === 'admin' ? 'admins' : (tipo === 'feirante' ? 'feirantes' : 'clientes');
-            let payloadSupabase = { ...objNovo };
-
-            if (tipo === 'feirante') {
-                objNovo.nomeBarraca = "Barraca de " + novoNomeCompleto;
-                objNovo.categoria = "alimentos";
-                objNovo.destacada = false;
-                payloadSupabase.nomeBarraca = objNovo.nomeBarraca;
-                payloadSupabase.categoria = objNovo.categoria;
-                payloadSupabase.destacada = objNovo.destacada;
-            }
-
-            await supabaseClient.from(tabela).insert([payloadSupabase]);
-
-            if (tipo === 'admin') adminsCadastrados.push(objNovo);
-            else if (tipo === 'feirante') feirantesCadastrados.push(objNovo);
-            else clientesCadastrados.push(objNovo);
-
-            document.getElementById('admNovoUsuarioNome').value = '';
-            document.getElementById('admNovoNomeCompleto').value = '';
-            document.getElementById('admNovoUsuarioSenha').value = '';
-            renderizarPainelAdmin();
-            alert(`✅ Usuário "${novoUser}" criado com sucesso!`);
-        }
-
-        async function adminModificarUsuarioCompleto(usuarioAntigo, tipoLista) {
-            let base = tipoLista === 'admin' ? adminsCadastrados : (tipoLista === 'feirante' ? feirantesCadastrados : clientesCadastrados);
-            let u = base.find(x => x.usuario === usuarioAntigo);
-            if (!u) return;
-
-            let novoNomeCompleto = prompt("Modificar Nome Completo:", u.nomeCompleto || "");
-            if (novoNomeCompleto === null) return;
-
-            let novaSenha = prompt("Modificar Senha (deixe em branco para manter a atual):", "");
-            if (novaSenha !== null && novaSenha.trim() !== "") {
-                u.senha = novaSenha.trim();
-            }
-
-            if (novoNomeCompleto.trim() !== "") {
-                u.nomeCompleto = novoNomeCompleto.trim();
-            }
-
-            let tabela = tipoLista === 'admin' ? 'admins' : (tipoLista === 'feirante' ? 'feirantes' : 'clientes');
-            await supabaseClient.from(tabela).update({ nomeCompleto: u.nomeCompleto, senha: u.senha }).eq('usuario', usuarioAntigo);
-
-            renderizarPainelAdmin();
-            alert("✅ Dados de usuário modificados com sucesso!");
-        }
-
-        async function adminDeletarUsuarioCompleto(usuario, tipoLista) {
-            if (confirm(`Tem certeza que deseja excluir permanentemente a conta de "${usuario}"?`)) {
-                let tabela = tipoLista === 'admin' ? 'admins' : (tipoLista === 'feirante' ? 'feirantes' : 'clientes');
-                await supabaseClient.from(tabela).delete().eq('usuario', usuario);
-                
-                if (tipoLista === 'admin') adminsCadastrados = adminsCadastrados.filter(x => x.usuario !== usuario);
-                else if (tipoLista === 'feirante') {
-                    feirantesCadastrados = feirantesCadastrados.filter(x => x.usuario !== usuario);
-                    await supabaseClient.from('produtos').delete().eq('feirante_usuario', usuario);
-                    produtos = produtos.filter(p => p.feirante_usuario !== usuario);
-                } else clientesCadastrados = clientesCadastrados.filter(x => x.usuario !== usuario);
-
-                renderizarPainelAdmin();
-                alert("🗑️ Conta excluída com sucesso.");
-            }
-        }
-
-        function renderizarAdminBanidos() {
-            const container = document.getElementById('adminListaBanidos');
-            container.innerHTML = '';
-            if (listaBanidos.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum termo ou número banido.</p>`; return; }
-            listaBanidos.forEach((termo, index) => {
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border text-xs">
-                        <span class="font-mono font-bold text-rose-600">${termo}</span>
-                        <button onclick="removerBanimento('${termo}')" class="text-slate-500 hover:text-slate-700 p-1"><i class="fa-solid fa-rotate-left"></i> Desbanir</button>
-                    </div>
-                `;
-            });
-        }
-
-        async function adicionarBanimento() {
-            let termo = document.getElementById('inputBanTermo').value.trim();
-            if (!termo) return;
-            if (!listaBanidos.includes(termo)) {
-                await supabaseClient.from('banidos').insert([{ termo }]);
-                listaBanidos.push(termo);
-                document.getElementById('inputBanTermo').value = '';
-                renderizarAdminBanidos();
-                alert(`✅ Termo/Número "${termo}" banido com sucesso.`);
-            }
-        }
-
-        async function removerBanimento(termo) {
-            await supabaseClient.from('banidos').delete().eq('termo', termo);
-            listaBanidos = listaBanidos.filter(t => t !== termo);
-            renderizarAdminBanidos();
-        }
-
-        async function banirUsuarioAdmin(usuario, whatsapp) {
-            if (confirm(`Deseja banir o usuário "${usuario}" e seu WhatsApp/termo correspondente?`)) {
-                if (!listaBanidos.includes(usuario)) {
-                    await supabaseClient.from('banidos').insert([{ termo: usuario }]);
-                    listaBanidos.push(usuario);
-                }
-                if (whatsapp && !listaBanidos.includes(whatsapp)) {
-                    await supabaseClient.from('banidos').insert([{ termo: whatsapp }]);
-                    listaBanidos.push(whatsapp);
-                }
-                let fIndex = feirantesCadastrados.findIndex(f => f.usuario === usuario);
-                if (fIndex !== -1) {
-                    await supabaseClient.from('feirantes').delete().eq('usuario', usuario);
-                    await supabaseClient.from('produtos').delete().eq('feirante_usuario', usuario);
-                    feirantesCadastrados.splice(fIndex, 1);
-                    produtos = produtos.filter(p => p.feirante_usuario !== usuario);
-                }
-                let cIndex = clientesCadastrados.findIndex(c => c.usuario === usuario);
-                if (cIndex !== -1) {
-                    await supabaseClient.from('clientes').delete().eq('usuario', usuario);
-                    clientesCadastrados.splice(cIndex, 1);
-                }
-                renderizarPainelAdmin();
-                alert(`Usuário ${usuario} banido com sucesso.`);
-            }
-        }
-
-        function iniciarCarrosselDestaques() {
-            const container = document.getElementById('carrosselDestaquesContainer');
-            const indicador = document.getElementById('carrosselIndicador');
-            if(!container) return;
-
-            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
-            if (destaquesLista = feirantesCadastrados.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center w-full py-2">Nenhuma barraca em destaque no momento.</p>`;
-                if(indicador) indicador.innerText = "0 / 0";
-                return;
-            }
-
-            let listaParaExibir = destaqueList.length > 0 ? destaqueList : feirantesCadastrados;
-            if (indiceCarrosselAtual >= listaParaExibir.length) indiceCarrosselAtual = 0;
-
-            let f = listaParaExibir[indiceCarrosselAtual];
-            if(indicador) indicador.innerText = `${indiceCarrosselAtual + 1} / ${listaParaExibir.length}`;
-
-            container.innerHTML = `
-                <div class="flex items-center gap-3 w-full">
-                    <div class="w-16 h-16 rounded-xl bg-amber-200 flex items-center justify-center text-amber-800 font-bold overflow-hidden shrink-0 shadow-inner">
-                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-2xl"></i>'}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mb-1 inline-block">⭐ BARRACA EM DESTAQUE</span>
-                        <h4 class="font-bold text-slate-800 text-sm truncate">${f.nomeBarraca}</h4>
-                        <p class="text-xs text-slate-500 truncate">Resp: ${f.nomeCompleto} | Categoria: ${f.categoria || 'Geral'}</p>
-                    </div>
-                    <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-xl transition shrink-0">Ver</button>
-                </div>
-            `;
-
-            container.onclick = () => abrirPaginaProdutosBarraca(f.usuario);
-
-            if (timerCarrossel) clearInterval(timerCarrossel);
-            timerCarrossel = setInterval(() => {
-                indiceCarrosselAtual = (indiceCarrosselAtual + 1) % listaParaExibir.length;
-                iniciarCarrosselDestaques();
-            }, 4000);
-        }
-
-        function iniciarAnunciosLocais() {
-            const titulo = document.getElementById('tituloAnuncio');
-            const desc = document.getElementById('descAnuncio');
-            const indicador = document.getElementById('anuncioIndicador');
-            if(!titulo || !desc) return;
-
-            if (anunciosLocais.length === 0) {
-                titulo.innerText = "FeiraFácil - Direto da Feira";
-                desc.innerText = "Cadastre-se e aproveite os melhores produtos frescos do seu bairro!";
-                if(indicador) indicador.innerText = "1/1";
-                return;
-            }
-
-            if (indiceAnuncioAtual >= anunciosLocais.length) indiceAnuncioAtual = 0;
-            let a = anunciosLocais[indiceAnuncioAtual];
-            titulo.innerText = a.titulo;
-            desc.innerText = a.desc;
-            if(indicador) indicador.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
-
-            if (timerAnuncios) clearInterval(timerAnuncios);
-            timerAnuncios = setInterval(() => {
-                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
-                iniciarAnunciosLocais();
-            }, 5000);
-        }
-
-        function abrirPaginaProdutosBarraca(usuarioFeirante) {
-            pararTimers();
-            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaChatInterno', 'telaPerfil'].forEach(id => document.getElementById(id).classList.add('hide'));
             document.getElementById('telaProdutosFeira').classList.remove('hide');
 
-            let feirante = feirantesCadastrados.find(f => f.usuario === usuarioFeirante);
-            if (!feirante) return;
-
-            document.getElementById('detalheNomeBarraca').innerText = feirante.nomeBarraca;
-            document.getElementById('detalheNomeDono').innerText = feirante.nomeCompleto;
-            document.getElementById('detalheWhatsappDono').innerText = feirante.whatsapp || 'N/A';
-
-            let selo = document.getElementById('detalheSeloDestaque');
-            if (feirante.destacada) selo.classList.remove('hide');
+            document.getElementById('detalheNomeBarraca').innerText = f.nomeBarraca;
+            document.getElementById('detalheNomeDono').innerText = f.nomeCompleto;
+            document.getElementById('detalheWhatsappDono').innerText = f.whatsapp || 'Não informado';
+            
+            const selo = document.getElementById('detalheSeloDestaque');
+            if (f.destacada) selo.classList.remove('hide');
             else selo.classList.add('hide');
 
-            let iconePadrao = document.getElementById('iconePadraoBarraca');
-            let fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
-            if (feirante.fotoPerfil) {
-                fotoHeader.src = feirante.fotoPerfil;
+            const iconePadrao = document.getElementById('iconePadraoBarraca');
+            const fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
+            if (f.fotoPerfil) {
+                fotoHeader.src = f.fotoPerfil;
                 fotoHeader.classList.remove('hide');
                 iconePadrao.classList.add('hide');
             } else {
@@ -1758,115 +903,47 @@
                 iconePadrao.classList.remove('hide');
             }
 
-            const container = document.getElementById('listaProdutosDaBarracaSelecionada');
-            container.innerHTML = '';
+            const containerProds = document.getElementById('listaProdutosDaBarracaSelecionada');
+            containerProds.innerHTML = '';
 
             let prodsDaBarraca = produtos.filter(p => p.feirante_usuario === usuarioFeirante);
             if (prodsDaBarraca.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Esta barraca ainda não cadastrou produtos.</p>`;
-                return;
-            }
-
-            prodsDaBarraca.forEach(p => {
-                container.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
-                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
-                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
+                containerProds.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Esta barraca ainda não cadastrou produtos.</p>`;
+            } else {
+                prodsDaBarraca.forEach(p => {
+                    containerProds.innerHTML += `
+                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
+                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
+                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
+                            </div>
+                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
                         </div>
-                        <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
         }
 
         function voltarParaExplorar() {
             document.getElementById('telaProdutosFeira').classList.add('hide');
-            document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
-            iniciarCarrosselDestaques();
-            iniciarAnunciosLocais();
-        }
-
-        async function cadastrarproduto(event) {
-            event.preventDefault();
-            let nome = document.getElementById('nomeProduto').value.trim();
-            let preco = parseFloat(document.getElementById('precoProduto').value);
-            let unidade = document.getElementById('unidadeProduto').value.trim();
-            let fileInput = document.getElementById('fotoProdutoInput');
-
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert("Selecione uma imagem para o produto.");
-                return;
-            }
-
-            let reader = new FileReader();
-            reader.onload = async function(e) {
-                let fotoBase64 = e.target.result;
-                let novoProduto = {
-                    id: Date.now().toString(),
-                    feirante_usuario: usuarioAtual.usuario,
-                    nome,
-                    preco,
-                    unidade,
-                    foto: fotoBase64
-                };
-
-                await supabaseClient.from('produtos').insert([novoProduto]);
-                produtos.push(novoProduto);
-
-                document.getElementById('formProduto').reset();
-                mudarAbaInternaFeirante('listar');
-                alert("✅ Produto cadastrado com sucesso!");
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-
-        function renderizarProdutosFeirante() {
-            const container = document.getElementById('listaProdutosFeirante');
-            container.innerHTML = '';
-
-            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
-            if (meusProds.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou nenhum produto.</p>`;
-                return;
-            }
-
-            meusProds.forEach(p => {
-                container.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3">
-                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
-                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
-                        </div>
-                        <button onclick="deletarMeuProduto('${p.id}')" class="text-rose-500 p-2 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
-
-        async function deletarMeuProduto(id) {
-            if (confirm("Deseja remover este produto?")) {
-                await supabaseClient.from('produtos').delete().eq('id', id);
-                produtos = produtos.filter(p => p.id !== id);
-                renderizarProdutosFeirante();
-            }
+            if (usuarioAtual.tipo === 'cliente') mudarAbaCliente('explorar');
+            else if (usuarioAtual.tipo === 'feirante') mudarAbaFeirante('explorar');
+            else mudarAbaAdmin('explorar');
         }
 
         function adicionarAoCarrinho(idProduto) {
-            let p = produtos.find(item => item.id === idProduto);
+            let p = produtos.find(x => x.id == idProduto);
             if (!p) return;
 
-            let itemCarrinho = carrinho.find(item => item.id === idProduto);
-            if (itemCarrinho) {
-                itemCarrinho.qtd += 1;
+            let itemExistente = carrinho.find(i => i.id == idProduto);
+            if (itemExistente) {
+                itemExistente.qtd++;
             } else {
                 carrinho.push({ ...p, qtd: 1 });
             }
-
             atualizarBadgeCarrinho();
-            alert(`🛒 ${p.nome} adicionado ao carrinho!`);
+            alert(`✅ ${p.nome} adicionado ao carrinho!`);
         }
 
         function atualizarBadgeCarrinho() {
@@ -1887,10 +964,11 @@
         function renderizarCarrinho() {
             const container = document.getElementById('itensCarrinho');
             const checkoutArea = document.getElementById('checkoutArea');
+            const totalEl = document.getElementById('totalCarrinho');
             container.innerHTML = '';
 
             if (carrinho.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Seu carrinho está vazio.</p>`;
+                container.innerHTML = `<div class="bg-white p-6 rounded-2xl text-center border text-slate-400 text-xs">Seu carrinho está vazio.</div>`;
                 checkoutArea.classList.add('hide');
                 return;
             }
@@ -1902,56 +980,57 @@
                 let subtotal = item.preco * item.qtd;
                 totalGeral += subtotal;
                 container.innerHTML += `
-                    <div class="bg-white p-3 rounded-2xl border flex items-center justify-between gap-3 shadow-sm">
-                        <img src="${item.foto}" class="w-14 h-14 rounded-xl object-cover border shrink-0">
+                    <div class="bg-white p-3 rounded-2xl border flex items-center justify-between gap-3 text-xs">
+                        <img src="${item.foto}" class="w-12 h-12 rounded-lg object-cover shrink-0">
                         <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-slate-800 text-sm truncate">${item.nome}</h4>
-                            <p class="text-emerald-600 font-bold text-xs">R$ ${item.preco.toFixed(2)} x ${item.qtd}</p>
+                            <h4 class="font-bold text-slate-800 truncate">${item.nome}</h4>
+                            <p class="text-slate-500">R$ ${item.preco.toFixed(2)} x ${item.qtd}</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="alterarQtdCarrinho(${index}, 1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs">+</button>
-                            <button onclick="alterarQtdCarrinho(${index}, -1)" class="w-7 h-7 bg-slate-100 rounded-lg font-bold text-xs">-</button>
+                            <span class="font-bold text-emerald-600">R$ ${subtotal.toFixed(2)}</span>
+                            <button onclick="removerItemCarrinho(${index})" class="text-rose-500 p-1"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 `;
             });
 
-            document.getElementById('totalCarrinho').innerText = `R$ ${totalGeral.toFixed(2)}`;
+            totalEl.innerText = `R$ ${totalGeral.toFixed(2)}`;
         }
 
-        function alterarQtdCarrinho(index, delta) {
-            carrinho[index].qtd += delta;
-            if (carrinho[index].qtd <= 0) {
-                carrinho.splice(index, 1);
-            }
+        function removerItemCarrinho(index) {
+            carrinho.splice(index, 1);
             atualizarBadgeCarrinho();
             renderizarCarrinho();
         }
 
         function abrirChatInterno() {
-            ['telaCarrinho'].forEach(id => document.getElementById(id).classList.add('hide'));
+            ['telaCarrinho', 'visãoUnificadaExplorar', 'telaProdutosFeira', 'visãoFeirante', 'visãoAdmin', 'telaPerfil'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
             document.getElementById('telaChatInterno').classList.remove('hide');
             renderizarMensagensChat();
         }
 
         function voltarDoChatInterno() {
             document.getElementById('telaChatInterno').classList.add('hide');
-            document.getElementById('telaCarrinho').classList.remove('hide');
+            if (usuarioAtual.tipo === 'cliente') mudarAbaCliente('carrinho');
+            else if (usuarioAtual.tipo === 'feirante') mudarAbaFeirante('carrinho');
+            else mudarAbaAdmin('carrinho');
         }
 
         function renderizarMensagensChat() {
             const container = document.getElementById('containerMensagensChat');
             container.innerHTML = '';
             if (historicoChatInterno.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-400 text-xs py-4">Inicie a conversa sobre o seu pedido...</p>`;
+                container.innerHTML = `<p class="text-[11px] text-slate-400 text-center py-4">Nenhuma mensagem enviada ainda. Inicie a conversa!</p>`;
                 return;
             }
-            historicoChatInterno.forEach(m => {
-                let alinhamento = m.remetente === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-800 border';
+            historicoChatInterno.forEach(msg => {
+                let alinhamento = msg.autor === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-800 border';
                 container.innerHTML += `
-                    <div class="max-w-[80%] p-3 rounded-2xl text-xs ${alinhamento}">
-                        <b class="block text-[10px] opacity-80">${m.remetente}</b>
-                        <p class="mt-0.5">${m.texto}</p>
+                    <div class="max-w-[80%] p-2.5 rounded-xl text-xs ${alinhamento}">
+                        <b class="text-[10px] opacity-80 block">${msg.autor}</b>
+                        <p class="mt-0.5">${msg.texto}</p>
                     </div>
                 `;
             });
@@ -1960,56 +1039,105 @@
 
         function enviarMensagemChat() {
             const input = document.getElementById('inputMensagemChat');
-            let texto = input.value.trim();
+            const texto = input.value.trim();
             if (!texto) return;
 
-            historicoChatInterno.push({
-                remetente: usuarioAtual.usuario,
-                texto
-            });
-
+            historicoChatInterno.push({ autor: usuarioAtual.usuario, texto });
             input.value = '';
             renderizarMensagensChat();
         }
 
+        async function cadastrarproduto(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nomeProduto').value.trim();
+            const preco = parseFloat(document.getElementById('precoProduto').value);
+            const unidade = document.getElementById('unidadeProduto').value.trim();
+            const foto = document.getElementById('fotoProdutoInput').value.trim();
+
+            if (!nome || isNaN(preco) || !unidade || !foto) {
+                alert("⚠️ Preencha todos os campos corretamente.");
+                return;
+            }
+
+            const novoProd = {
+                id: Date.now(),
+                feirante_usuario: usuarioAtual.usuario,
+                nome,
+                preco,
+                unidade,
+                foto
+            };
+
+            await supabaseClient.from('produtos').insert([novoProd]);
+            produtos.push(novoProd);
+
+            document.getElementById('formProduto').reset();
+            mudarAbaInternaFeirante('listar');
+            alert("✅ Produto cadastrado com sucesso!");
+        }
+
+        function renderizarProdutosFeirante() {
+            const container = document.getElementById('listaProdutosFeirante');
+            container.innerHTML = '';
+
+            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
+            if (meusProds.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou nenhum produto.</p>`;
+                return;
+            }
+
+            meusProds.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3 text-xs">
+                        <img src="${p.foto}" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-slate-800 truncate">${p.nome}</h4>
+                            <p class="text-emerald-600 font-bold">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
+                        </div>
+                        <button onclick="deletarProdutoFeirante(${p.id})" class="text-rose-500 p-2"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        async function deletarProdutoFeirante(id) {
+            if (confirm("Deseja apagar este produto?")) {
+                await supabaseClient.from('produtos').delete().eq('id', id);
+                produtos = produtos.filter(p => p.id !== id);
+                renderizarProdutosFeirante();
+            }
+        }
+
         function preencherPerfil() {
-            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto || usuarioAtual.usuario;
+            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto;
             document.getElementById('perfilSubtitulo').innerText = `@${usuarioAtual.usuario}`;
             document.getElementById('perfilTipo').innerText = usuarioAtual.tipo.toUpperCase();
 
-            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto || '';
+            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto;
             document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
+            document.getElementById('editarFotoPerfilInput').value = usuarioAtual.fotoPerfil || '';
 
-            let icone = document.getElementById('perfilIconePadrao');
-            let foto = document.getElementById('perfilFotoExibicao');
+            const iconePadrao = document.getElementById('perfilIconePadrao');
+            const fotoExibicao = document.getElementById('perfilFotoExibicao');
             if (usuarioAtual.fotoPerfil) {
-                foto.src = usuarioAtual.fotoPerfil;
-                foto.classList.remove('hide');
-                icone.classList.add('hide');
+                fotoExibicao.src = usuarioAtual.fotoPerfil;
+                fotoExibicao.classList.remove('hide');
+                iconePadrao.classList.add('hide');
             } else {
-                foto.classList.add('hide');
-                icone.classList.remove('hide');
+                fotoExibicao.classList.add('hide');
+                iconePadrao.classList.remove('hide');
             }
 
-            let blocoBarraca = document.getElementById('campoEditarBarracaDiv');
+            const blocoBarraca = document.getElementById('campoEditarBarracaDiv');
             if (usuarioAtual.tipo === 'feirante') {
                 blocoBarraca.classList.remove('hide');
-                document.getElementById('editarNomeBarraca').value = usuarioAtual.nomeBarraca || '';
-                document.getElementById('editarCategoriaBarraca').value = usuarioAtual.categoria || 'alimentos';
-                
-                let labelDestaque = document.getElementById('statusDestaquePerfilLabel');
-                if (usuarioAtual.destacada) {
-                    labelDestaque.innerText = "🌟 Sua barraca está em destaque!";
-                    labelDestaque.className = "text-[11px] text-emerald-700 font-bold";
-                } else {
-                    let solicitada = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
-                    if (solicitada) {
-                        labelDestaque.innerText = "⏳ Solicitação de destaque em análise.";
-                        labelDestaque.className = "text-[11px] text-amber-700 font-bold";
-                    } else {
-                        labelDestaque.innerText = "Aguardando ativação (R$ 6,99 / 24h)";
-                        labelDestaque.className = "text-[11px] text-slate-500";
-                    }
+                let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
+                if (f) {
+                    document.getElementById('editarNomeBarraca').value = f.nomeBarraca;
+                    document.getElementById('editarCategoriaBarraca').value = f.categoria || 'alimentos';
+                    const statusLabel = document.getElementById('statusDestaquePerfilLabel');
+                    if (f.destacada) statusLabel.innerText = "⭐ Ativo (Destaque Ativo)";
+                    else statusLabel.innerText = "Aguardando ativação";
                 }
             } else {
                 blocoBarraca.classList.add('hide');
@@ -2020,21 +1148,8 @@
             event.preventDefault();
             usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
             usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
+            usuarioAtual.fotoPerfil = document.getElementById('editarFotoPerfilInput').value.trim();
 
-            let fileInput = document.getElementById('editarFotoPerfilInput');
-            if (fileInput.files && fileInput.files.length > 0) {
-                let reader = new FileReader();
-                reader.onload = async function(e) {
-                    usuarioAtual.fotoPerfil = e.target.result;
-                    await salvarAlteracoesPerfilNoSupabase();
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                await salvarAlteracoesPerfilNoSupabase();
-            }
-        }
-
-        async function salvarAlteracoesPerfilNoSupabase() {
             let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
             await supabaseClient.from(tabela).update({
                 nomeCompleto: usuarioAtual.nomeCompleto,
@@ -2042,7 +1157,8 @@
                 fotoPerfil: usuarioAtual.fotoPerfil
             }).eq('usuario', usuarioAtual.usuario);
 
-            salvarEIniciar();
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            preencherPerfil();
             alert("✅ Perfil atualizado com sucesso!");
         }
 
@@ -2050,50 +1166,55 @@
             usuarioAtual.fotoPerfil = '';
             let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
             await supabaseClient.from(tabela).update({ fotoPerfil: '' }).eq('usuario', usuarioAtual.usuario);
-            salvarEIniciar();
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            preencherPerfil();
             alert("🗑️ Foto de perfil removida.");
         }
 
         async function cadastrarOuAtualizarBarracaPerfil(event) {
             event.preventDefault();
-            if (usuarioAtual.tipo !== 'feirante') return;
+            let nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
+            let categoria = document.getElementById('editarCategoriaBarraca').value;
 
-            usuarioAtual.nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
-            usuarioAtual.categoria = document.getElementById('editarCategoriaBarraca').value;
+            if (!nomeBarraca) {
+                alert("⚠️ O nome da barraca é obrigatório.");
+                return;
+            }
 
-            await supabaseClient.from('feirantes').update({
-                nomeBarraca: usuarioAtual.nomeBarraca,
-                categoria: usuarioAtual.categoria
-            }).eq('usuario', usuarioAtual.usuario);
+            usuarioAtual.nomeBarraca = nomeBarraca;
+            usuarioAtual.categoria = categoria;
 
             let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
             if (f) {
-                f.nomeBarraca = usuarioAtual.nomeBarraca;
-                f.categoria = usuarioAtual.categoria;
+                f.nomeBarraca = nomeBarraca;
+                f.categoria = categoria;
             }
 
-            salvarEIniciar();
+            await supabaseClient.from('feirantes').update({ nomeBarraca, categoria }).eq('usuario', usuarioAtual.usuario);
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
             alert("✅ Dados da barraca atualizados com sucesso!");
         }
 
         async function solicitarDestaqueFeirante() {
-            if (usuarioAtual.tipo !== 'feirante') return;
-            let jaSolicitou = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
-            if (jaSolicitou || usuarioAtual.destacada) {
-                alert("Sua barraca já está em destaque ou já possui uma solicitação pendente.");
+            let existente = solicitacoesDestaqueList.find(s => s.usuario === usuarioAtual.usuario);
+            if (existente) {
+                alert("⚠️ Você já possui uma solicitação de destaque pendente de aprovação.");
                 return;
             }
 
             let novaSol = {
                 usuario: usuarioAtual.usuario,
-                nomeBarraca: usuarioAtual.nomeBarraca,
-                status: 'pendente'
+                nomeBarraca: usuarioAtual.nomeBarraca || 'Minha Barraca'
             };
 
             await supabaseClient.from('solicitacoes_destaque').insert([novaSol]);
             solicitacoesDestaqueList.push(novaSol);
-            preencherPerfil();
-            alert("⭐ Solicitação de destaque enviada para o administrador! Taxa de ativação: R$ 6,99 por 24 horas.");
+            alert("🌟 Solicitação de destaque enviada ao administrador! Taxa de ativação: R$ 6,99 / 24h.");
+        }
+
+        function pararTimers() {
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            if (timerAnuncios) clearInterval(timerAnuncios);
         }
     </script>
 </body>
