@@ -13,14 +13,16 @@
     <style>
         .hide { display: none !important; }
         
-        /* Efeito visual refinado para Barracas Parceiras/Destaque */
         .store-card.destacada {
             border: 2px solid #f59e0b !important;
             background: linear-gradient(135deg, #fffdf5, #ffffff);
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.12);
         }
 
-        /* Otimização da barra de rolagem horizontal para pílulas e carrosséis */
+        button, a, .transition-custom {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -30,69 +32,65 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans pb-20">
+<body class="bg-slate-50/80 text-slate-800 font-sans pb-24 selection:bg-emerald-500 selection:text-white">
 
     <!-- ================= TELA DE LOGIN / CADASTRO ================= -->
-    <div id="telaAuth" class="max-w-md mx-auto min-h-screen flex flex-col justify-center p-6 bg-white shadow-sm">
+    <div id="telaAuth" class="max-w-md mx-auto min-h-screen flex flex-col justify-center p-6 bg-white/95 backdrop-blur-sm shadow-xl sm:my-6 sm:rounded-3xl sm:min-h-fit">
         <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+            <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-sm border border-emerald-100 animate-pulse">
                 <i class="fa-solid fa-basket-shopping"></i>
             </div>
-            <h1 class="text-2xl font-bold text-slate-800">FeiraFácil</h1>
-            <p class="text-slate-500 text-sm mt-1">Conectando você à feira livre do bairro</p>
+            <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">FeiraFácil</h1>
+            <p class="text-slate-400 text-xs mt-1">Conectando você à feira livre do bairro</p>
         </div>
 
-        <div id="abasAuthContainer" class="flex bg-slate-100 p-1 rounded-xl mb-6">
-            <button type="button" onclick="alternarModoAuth('login')" id="abaLoginBtn" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition">Entrar</button>
-            <button type="button" onclick="alternarModoAuth('cadastro')" id="abaCadastroBtn" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition">Cadastrar</button>
+        <div id="abasAuthContainer" class="flex bg-slate-100/80 p-1.5 rounded-2xl mb-6 border border-slate-200/60">
+            <button type="button" onclick="alternarModoAuth('login')" id="abaLoginBtn" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition">Entrar</button>
+            <button type="button" onclick="alternarModoAuth('cadastro')" id="abaCadastroBtn" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition">Cadastrar</button>
         </div>
 
-        <!-- MENSAGEM DE ERRO/ALERTA VISUAL DINÂMICA -->
-        <div id="authMensagemErro" class="hide mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-2">
-            <i class="fa-solid fa-triangle-exclamation text-base"></i>
+        <div id="authMensagemErro" class="hide mb-4 p-3.5 rounded-2xl text-xs font-semibold bg-rose-50/90 text-rose-700 border border-rose-200 flex items-center gap-2.5 shadow-sm">
+            <i class="fa-solid fa-triangle-exclamation text-base shrink-0"></i>
             <span id="authTextoErro">Mensagem de erro aqui</span>
         </div>
 
-        <!-- MENSAGEM DE SUCESSO VISUAL -->
-        <div id="authMensagemSucesso" class="hide mb-4 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-2">
-            <i class="fa-solid fa-circle-check text-base"></i>
+        <div id="authMensagemSucesso" class="hide mb-4 p-3.5 rounded-2xl text-xs font-semibold bg-emerald-50/90 text-emerald-700 border border-emerald-200 flex items-center gap-2.5 shadow-sm">
+            <i class="fa-solid fa-circle-check text-base shrink-0"></i>
             <span id="authTextoSucesso">Sucesso aqui</span>
         </div>
 
         <form onsubmit="processarAuth(event)" class="space-y-4">
             <div>
-                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Usuário</label>
-                <input type="text" id="authUsuario" placeholder="Seu nome de usuário" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Usuário</label>
+                <input type="text" id="authUsuario" placeholder="Seu nome de usuário" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition">
             </div>
             
             <div id="grupoSenhaAuth">
-                <div class="flex justify-between items-center mb-1">
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Senha</label>
-                    <button type="button" onclick="abrirTelaEsqueciSenha()" class="text-[11px] text-emerald-600 font-bold hover:underline">Esqueceu a senha?</button>
+                <div class="flex justify-between items-center mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Senha</label>
+                    <button type="button" onclick="abrirTelaEsqueciSenha()" class="text-[11px] text-emerald-600 font-bold hover:text-emerald-700 hover:underline">Esqueceu a senha?</button>
                 </div>
-                <input type="password" id="authSenha" placeholder="••••••••" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="password" id="authSenha" placeholder="••••••••" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition">
             </div>
 
-            <!-- CAMPOS DE DADOS PESSOAIS E DO FEIRANTE -->
             <div id="camposPessoaisCadastro" class="space-y-4 hide">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome Completo</label>
-                    <input type="text" id="authNomeCompleto" placeholder="Ex: João da Silva" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nome Completo</label>
+                    <input type="text" id="authNomeCompleto" placeholder="Ex: João da Silva" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Número de WhatsApp</label>
-                    <input type="tel" id="authWhatsapp" placeholder="Ex: 5521999999999" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Número de WhatsApp</label>
+                    <input type="tel" id="authWhatsapp" placeholder="Ex: 5521999999999" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                 </div>
                 
-                <!-- CAMPOS EXCLUSIVOS PARA BARRACA -->
-                <div id="camposExtrasFeirante" class="space-y-4 hide border-t border-slate-100 pt-3">
+                <div id="camposExtrasFeirante" class="space-y-4 hide border-t border-slate-100 pt-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome da Barraca</label>
-                        <input type="text" id="authNomeBarraca" placeholder="Ex: Barraca do Tomate Verde" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nome da Barraca</label>
+                        <input type="text" id="authNomeBarraca" placeholder="Ex: Barraca do Tomate Verde" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Categoria Principal</label>
-                        <select id="authCategoriaBarraca" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Categoria Principal</label>
+                        <select id="authCategoriaBarraca" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                             <option value="alimentos">🥗 Alimentos</option>
                             <option value="roupas">👕 Roupas</option>
                             <option value="artesanatos">🎨 Artesanatos</option>
@@ -104,33 +102,31 @@
                 </div>
             </div>
 
-            <!-- TIPO DE PERFIL -->
             <div id="blocoTipoPerfilAuth" class="hide">
-                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tipo de Perfil</label>
-                <select id="authTipo" onchange="atualizarCamposPerfilAuth()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tipo de Perfil</label>
+                <select id="authTipo" onchange="atualizarCamposPerfilAuth()" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                     <option value="cliente">Cliente (Quero comprar na feira) 🛒</option>
                     <option value="feirante">Feirante (Quero vender meus produtos) 🏪</option>
                 </select>
             </div>
 
-            <!-- FORMULÁRIO DE RECUPERAÇÃO DE SENHA -->
             <div id="blocoEsqueciSenhaForm" class="space-y-3 hide">
-                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800">
+                <div class="bg-emerald-50/80 border border-emerald-200/80 p-3.5 rounded-2xl text-xs text-emerald-800">
                     Digite seu <b>nome de usuário</b> ou o <b>WhatsApp</b> cadastrado para recuperar o acesso à sua conta.
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Usuário ou WhatsApp</label>
-                    <input type="text" id="recuperarUsuarioInput" placeholder="Seu usuário ou WhatsApp" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Usuário ou WhatsApp</label>
+                    <input type="text" id="recuperarUsuarioInput" placeholder="Seu usuário ou WhatsApp" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                 </div>
-                <button type="button" onclick="executarRecuperacaoSenha()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md">
+                <button type="button" onclick="executarRecuperacaoSenha()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 active:scale-[0.98]">
                     Enviar Instruções / Redefinir Senha
                 </button>
-                <button type="button" onclick="voltarDoEsqueciSenha()" class="w-full bg-slate-100 text-slate-600 font-semibold py-2.5 rounded-xl hover:bg-slate-200 transition text-xs">
+                <button type="button" onclick="voltarDoEsqueciSenha()" class="w-full bg-slate-100 text-slate-600 font-semibold py-2.5 rounded-2xl hover:bg-slate-200 transition text-xs">
                     Voltar para o Login
                 </button>
             </div>
 
-            <button type="submit" id="btnSubmitAuth" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 mt-2">
+            <button type="submit" id="btnSubmitAuth" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 active:scale-[0.98] mt-2">
                 Entrar
             </button>
         </form>
@@ -138,87 +134,78 @@
 
     <!-- ================= APLICATIVO PRINCIPAL ================= -->
     <div id="appPrincipal" class="hide">
-        <header class="bg-emerald-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <header class="bg-emerald-600/95 backdrop-blur-md text-white p-4 shadow-sm sticky top-0 z-50 transition-all">
             <div class="max-w-md mx-auto flex justify-between items-center">
-                <h1 class="text-xl font-bold tracking-wide"><i class="fa-solid fa-basket-shopping"></i> FeiraFácil</h1>
-                <div class="flex items-center gap-2">
-                    <button onclick="location.reload()" class="text-xs bg-emerald-700 px-3 py-1.5 rounded-full font-medium hover:bg-emerald-800 transition flex items-center gap-1" title="Atualizar Página">
-                        <i class="fa-solid fa-rotate"></i> Atualizar
+                <h1 class="text-lg font-extrabold tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-sm"><i class="fa-solid fa-basket-shopping"></i></span>
+                    FeiraFácil
+                </h1>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="location.reload()" class="text-xs bg-emerald-700/80 hover:bg-emerald-700 px-3 py-1.5 rounded-xl font-medium transition flex items-center gap-1" title="Atualizar Página">
+                        <i class="fa-solid fa-rotate text-[10px]"></i> Atualizar
                     </button>
-                    <button onclick="fazerLogout()" class="text-xs bg-emerald-700 px-3 py-1.5 rounded-full font-medium hover:bg-emerald-800 transition flex items-center gap-1">
-                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    <button onclick="fazerLogout()" class="text-xs bg-emerald-700/80 hover:bg-emerald-700 px-3 py-1.5 rounded-xl font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-right-from-bracket text-[10px]"></i> Sair
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-md mx-auto p-4 mb-16">
+        <main class="max-w-md mx-auto p-4 mb-20 space-y-4">
             <!-- TELA: INÍCIO & EXPLORAR UNIFICADA -->
             <div id="visãoUnificadaExplorar" class="space-y-4">
-                
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400"></i>
-                    <input type="text" id="buscaProduto" oninput="filtrarBuscaGeral()" placeholder="Buscar tomate, pastel, barracas..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                <div class="relative group">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 group-focus-within:text-emerald-600 transition"></i>
+                    <input type="text" id="buscaProduto" oninput="filtrarBuscaGeral()" placeholder="Buscar tomate, pastel, barracas..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200/80 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 shadow-sm transition">
                 </div>
 
                 <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-                    <button onclick="alternarFiltroSuperior('tudo')" id="filtroSuperiorTudo" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition">✨ Tudo</button>
-                    <button onclick="alternarFiltroSuperior('produtos')" id="filtroSuperiorProdutos" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🥕 Produtos</button>
-                    <button onclick="alternarFiltroSuperior('barracas')" id="filtroSuperiorBarracas" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition">🏪 Barracas</button>
+                    <button onclick="alternarFiltroSuperior('tudo')" id="filtroSuperiorTudo" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition flex items-center gap-1.5">✨ Tudo</button>
+                    <button onclick="alternarFiltroSuperior('produtos')" id="filtroSuperiorProdutos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🥕 Produtos</button>
+                    <button onclick="alternarFiltroSuperior('barracas')" id="filtroSuperiorBarracas" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🏪 Barracas</button>
                 </div>
 
-                <div id="bannerAnuncioContainer" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-sm relative overflow-hidden cursor-pointer transition transform hover:scale-[1.01]" onclick="interagirBannerAnuncio(event)">
-                    <button type="button" onclick="fecharBannerAnuncio(event)" class="absolute top-2 right-2 w-6 h-6 bg-black/20 hover:bg-black/40 text-white rounded-full flex items-center justify-center text-xs transition z-10" title="Fechar anúncio">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                    <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl"><i class="fa-solid fa-bullhorn"></i></div>
-                    <div class="flex items-center justify-between mb-1 pr-6">
-                        <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">📢 Anúncio Local (Toque para interagir)</span>
-                        <span id="anuncioIndicador" class="text-[10px] font-medium opacity-80">1/3</span>
-                    </div>
-                    <h3 id="tituloAnuncio" class="font-bold text-base mt-1">Feira de Orgânicos Especial neste Domingo!</h3>
-                    <p id="descAnuncio" class="text-xs text-amber-100 mt-1 leading-relaxed">Venha conferir as barracas com produtos 100% livres de agrotóxicos na Praça Central a partir das 07:00.</p>
-                </div>
-
-                <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-center mb-2">
+                <div class="bg-white p-3.5 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-center mb-2.5 px-1">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5">
                             <i class="fa-solid fa-fire text-amber-500 animate-pulse"></i> BARRACAS EM DESTAQUE
                         </h3>
-                        <span id="carrosselIndicador" class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">1 / 1</span>
+                        <span id="carrosselIndicador" class="text-[10px] bg-amber-50 text-amber-800 border border-amber-200/60 px-2.5 py-0.5 rounded-full font-bold">1 / 15</span>
                     </div>
-                    <div id="carrosselDestaquesContainer" class="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-50/60 via-white to-amber-50/60 border-2 border-amber-400/80 p-3.5 cursor-pointer transition-all duration-500 shadow-sm hover:shadow-md flex items-center" onclick="clicarLojaCarrossel()"></div>
+                    <div id="carrosselDestaquesContainer" class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-50/80 via-white to-amber-50/80 border-2 border-amber-400/80 p-3.5 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md flex items-center" onclick="clicarLojaCarrossel()"></div>
                 </div>
 
-                <div class="space-y-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-filter text-emerald-600"></i> Categorias da Feira</h3>
+                <div class="space-y-2.5 bg-white p-3.5 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center justify-between px-1">
+                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-filter text-emerald-600"></i> Categorias da Feira
+                        </h3>
                     </div>
                     <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar" id="containerCategoriasDinamicas">
                         <button onclick="selecionarCategoriaDinamica('todas')" id="catBtn_todas" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition flex items-center gap-1.5">✨ Todas</button>
-                        <button onclick="selecionarCategoriaDinamica('alimentos')" id="catBtn_alimentos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">🥗 Alimentos</button>
-                        <button onclick="selecionarCategoriaDinamica('roupas')" id="catBtn_roupas" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">👕 Roupas</button>
-                        <button onclick="selecionarCategoriaDinamica('artesanatos')" id="catBtn_artesanatos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">🎨 Artesanatos</button>
-                        <button onclick="selecionarCategoriaDinamica('plantas')" id="catBtn_plantas" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">🌱 Plantas</button>
-                        <button onclick="selecionarCategoriaDinamica('artes')" id="catBtn_artes" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">🖼️ Artes</button>
-                        <button onclick="selecionarCategoriaDinamica('decoracoes')" id="catBtn_decoracoes" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5">✨ Decorações</button>
+                        <button onclick="selecionarCategoriaDinamica('alimentos')" id="catBtn_alimentos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🥗 Alimentos</button>
+                        <button onclick="selecionarCategoriaDinamica('roupas')" id="catBtn_roupas" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">👕 Roupas</button>
+                        <button onclick="selecionarCategoriaDinamica('artesanatos')" id="catBtn_artesanatos" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🎨 Artesanatos</button>
+                        <button onclick="selecionarCategoriaDinamica('plantas')" id="catBtn_plantas" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🌱 Plantas</button>
+                        <button onclick="selecionarCategoriaDinamica('artes')" id="catBtn_artes" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">🖼️ Artes</button>
+                        <button onclick="selecionarCategoriaDinamica('decoracoes')" id="catBtn_decoracoes" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5">✨ Decorações</button>
                     </div>
 
-                    <div id="subcategoriasContainerWrapper" class="hide pt-2 border-t border-slate-100">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Subcategorias:</p>
+                    <div id="subcategoriasContainerWrapper" class="hide pt-2.5 border-t border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1.5">Subcategorias:</p>
                         <div class="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="listaSubcategoriasDinamicas"></div>
                     </div>
                 </div>
 
-                <div id="secaoBarracasExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                    <h3 id="tituloSecaoExplorar" class="font-bold text-slate-700 text-sm mb-3 flex items-center gap-1.5">
+                <div id="secaoBarracasExplorarWrapper" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
+                    <h3 id="tituloSecaoExplorar" class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1.5">
                         <i class="fa-solid fa-store text-emerald-600"></i> Barracas Patrocinadas e em Destaque
                     </h3>
                     <div id="listaExplorarFeirantes" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
-                <div id="secaoProdutosExplorarWrapper" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                    <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider flex items-center gap-1.5">
+                <div id="secaoProdutosExplorarWrapper" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
+                    <h2 class="font-bold text-slate-700 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-carrot text-emerald-600"></i> Produtos Disponíveis na Feira
                     </h2>
                     <div id="listaProdutosCliente" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
@@ -228,14 +215,14 @@
             <!-- TELA: PRODUTOS DA BARRACA -->
             <div id="telaProdutosFeira" class="hide space-y-4">
                 <div class="flex items-center justify-between">
-                    <button onclick="voltarParaExplorar()" class="text-xs bg-slate-200 text-slate-700 px-3 py-2 rounded-xl font-bold flex items-center gap-1">
+                    <button onclick="voltarParaExplorar()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl font-bold flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
                     <h2 id="tituloPaginaProdutos" class="font-bold text-slate-800 text-sm">Produtos da Barraca</h2>
                 </div>
 
-                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl font-bold overflow-hidden shrink-0">
+                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-4.5 rounded-3xl flex items-center gap-3.5 shadow-sm">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl font-bold overflow-hidden shrink-0 shadow-sm">
                         <i class="fa-solid fa-store" id="iconePadraoBarraca"></i>
                         <img id="fotoPerfilBarracaHeader" class="w-full h-full object-cover hide" src="" alt="">
                     </div>
@@ -244,11 +231,11 @@
                             <h3 id="detalheNomeBarraca" class="font-bold text-slate-800 text-sm">Nome da Barraca</h3>
                             <span id="detalheSeloDestaque" class="hide bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">⭐ DESTAQUE</span>
                         </div>
-                        <p class="text-xs text-slate-600 mt-0.5">Resp: <span id="detalheNomeDono" class="font-semibold"></span> | WhatsApp: <span id="detalheWhatsappDono" class="font-semibold"></span></p>
+                        <p class="text-xs text-slate-500 mt-0.5">Resp: <span id="detalheNomeDono" class="font-semibold text-slate-700"></span> | WhatsApp: <span id="detalheWhatsappDono" class="font-semibold text-slate-700"></span></p>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Produtos Disponíveis</h3>
                     <div id="listaProdutosDaBarracaSelecionada" class="space-y-3"></div>
                 </div>
@@ -256,118 +243,106 @@
 
             <!-- TELA FEIRANTE -->
             <div id="visãoFeirante" class="hide space-y-4">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                    <div class="flex bg-slate-100 p-1 rounded-xl mb-4">
-                        <button type="button" onclick="mudarAbaInternaFeirante('listar')" id="btnAbaFeiranteListar" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition">📦 Meus Itens</button>
-                        <button type="button" onclick="mudarAbaInternaFeirante('cadastrar')" id="btnAbaFeiranteCadastrar" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 transition">➕ Cadastrar Novo</button>
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex bg-slate-100 p-1 rounded-2xl mb-4">
+                        <button type="button" onclick="mudarAbaInternaFeirante('listar')" id="btnAbaFeiranteListar" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition">📦 Meus Itens</button>
+                        <button type="button" onclick="mudarAbaInternaFeirante('cadastrar')" id="btnAbaFeiranteCadastrar" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition">➕ Cadastrar Novo</button>
                     </div>
 
-                    <div id="painelInternoCadastrar" class="hide space-y-3">
-                        <h2 class="font-bold text-emerald-700 mb-2 text-sm"><i class="fa-solid fa-plus-circle"></i> Cadastrar Novo Produto</h2>
-                        <form id="formProduto" onsubmit="cadastrarproduto(event)" class="space-y-3">
-                            <input type="text" id="nomeProduto" placeholder="Nome do Produto (Ex: Tomate Orgânico)" required class="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <div class="flex gap-2">
-                                <input type="number" step="0.01" id="precoProduto" placeholder="Preço (R$) 0,00" required class="w-1/2 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <input type="text" id="unidadeProduto" placeholder="Unid. (Ex: kg, un)" required class="w-1/2 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <!-- SEÇÃO INTERNA: CADASTRAR -->
+                    <div id="painelInternoCadastrar" class="hide space-y-3.5">
+                        <h2 class="font-bold text-emerald-700 mb-2 text-xs uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Cadastrar Novo Produto</h2>
+                        <form id="formProduto" onsubmit="cadastrarproduto(event)" class="space-y-3.5">
+                            <input type="text" id="nomeProduto" placeholder="Nome do Produto (Ex: Tomate Orgânico)" required class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
+                            <div class="flex gap-2.5">
+                                <input type="number" step="0.01" id="precoProduto" placeholder="Preço (R$) 0,00" required class="w-1/2 p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
+                                <input type="text" id="unidadeProduto" placeholder="Unid. (Ex: kg, un)" required class="w-1/2 p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto do Produto (Link URL)</label>
-                                <input type="text" id="fotoProdutoInput" placeholder="https://exemplo.com/imagem.jpg" required class="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Foto do Produto (Arquivo do Dispositivo)</label>
+                                <input type="file" id="fotoProdutoInput" accept="image/*" required class="w-full p-2 border border-slate-200 rounded-2xl text-xs bg-slate-50/50 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition">
                             </div>
-                            <button type="submit" class="w-full bg-emerald-600 text-white font-semibold py-3 rounded-xl hover:bg-emerald-700 transition shadow-sm">Salvar na Barraca</button>
+                            <button type="submit" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 active:scale-[0.98]">Salvar na Barraca</button>
                         </form>
                     </div>
 
+                    <!-- SEÇÃO INTERNA: LISTAR -->
                     <div id="painelInternoListar" class="space-y-3">
-                        <h2 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wider">Meus Produtos Cadastrados</h2>
+                        <h2 class="font-bold text-slate-700 mb-2 text-xs uppercase tracking-wider">Meus Produtos Cadastrados</h2>
                         <div id="listaProdutosFeirante" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
 
             <!-- TELA ADMINISTRADOR -->
-            <div id="visãoAdmin" class="hide space-y-5">
-                <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-sm flex flex-col gap-3">
-                    <h2 class="font-bold text-lg"><i class="fa-solid fa-gear text-emerald-400"></i> Painel Master do Administrador</h2>
-                    <div class="grid grid-cols-4 gap-2 pt-1 border-t border-slate-700 text-center">
-                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statFeirantes" class="block font-bold text-sm text-emerald-400">0</span><span class="text-[9px] text-slate-400 uppercase">Barracas</span></div>
-                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statClientes" class="block font-bold text-sm text-sky-400">0</span><span class="text-[9px] text-slate-400 uppercase">Clientes</span></div>
-                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statProdutos" class="block font-bold text-sm text-amber-400">0</span><span class="text-[9px] text-slate-400 uppercase">Produtos</span></div>
-                        <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700"><span id="statAnuncios" class="block font-bold text-sm text-teal-400">0</span><span class="text-[9px] text-slate-400 uppercase">Anúncios</span></div>
+            <div id="visãoAdmin" class="hide space-y-4">
+                <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white p-5 rounded-3xl shadow-sm flex flex-col gap-3.5 border border-slate-700">
+                    <h2 class="font-bold text-sm tracking-wide flex items-center gap-2"><i class="fa-solid fa-gear text-emerald-400"></i> Painel Master do Administrador</h2>
+                    <div class="grid grid-cols-3 gap-2 pt-1 border-t border-slate-700/80 text-center">
+                        <div class="bg-slate-800/90 p-2.5 rounded-2xl border border-slate-700/50"><span id="statFeirantes" class="block font-bold text-sm text-emerald-400">0</span><span class="text-[9px] text-slate-400 uppercase tracking-wider">Barracas</span></div>
+                        <div class="bg-slate-800/90 p-2.5 rounded-2xl border border-slate-700/50"><span id="statClientes" class="block font-bold text-sm text-sky-400">0</span><span class="text-[9px] text-slate-400 uppercase tracking-wider">Clientes</span></div>
+                        <div class="bg-slate-800/90 p-2.5 rounded-2xl border border-slate-700/50"><span id="statProdutos" class="block font-bold text-sm text-amber-400">0</span><span class="text-[9px] text-slate-400 uppercase tracking-wider">Produtos</span></div>
                     </div>
                 </div>
 
-                <div class="flex bg-slate-200 p-1 rounded-xl overflow-x-auto no-scrollbar">
-                    <button type="button" onclick="mudarAbaAdminPainel('anuncios')" id="btnTabAdminAnuncios" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg bg-white text-slate-800 shadow-sm whitespace-nowrap">📢 Anúncios</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('barracas')" id="btnTabAdminBarracas" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🏪 Barracas</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('solicitacoesDestaque')" id="btnTabAdminDestaques" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">⭐ Destaques</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('clientes')" id="btnTabAdminClientes" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🛒 Clientes</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('produtos')" id="btnTabAdminProdutos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🥕 Produtos</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('usuarios')" id="btnTabAdminUsuarios" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">👤 Usuários</button>
-                    <button type="button" onclick="mudarAbaAdminPainel('banidos')" id="btnTabAdminBanidos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-lg text-slate-600 whitespace-nowrap">🚫 Bans</button>
+                <div class="flex bg-slate-200/80 p-1.5 rounded-2xl overflow-x-auto no-scrollbar gap-1">
+                    <button type="button" onclick="mudarAbaAdminPainel('barracas')" id="btnTabAdminBarracas" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition">🏪 Barracas</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('solicitacoesDestaque')" id="btnTabAdminDestaques" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition">⭐ Destaques</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('clientes')" id="btnTabAdminClientes" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition">🛒 Clientes</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('produtos')" id="btnTabAdminProdutos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition">🥕 Produtos</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('usuarios')" id="btnTabAdminUsuarios" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition">👤 Usuários</button>
+                    <button type="button" onclick="mudarAbaAdminPainel('banidos')" id="btnTabAdminBanidos" class="flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition">🚫 Bans</button>
                 </div>
 
-                <div id="secaoAdminAnuncios" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Anúncios e Avisos</h3>
-                    <form onsubmit="adicionarAnuncioAdmin(event)" class="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <input type="text" id="adminNovoTituloAnuncio" placeholder="Título do Anúncio" required class="w-full p-2.5 border border-slate-200 rounded-lg text-xs">
-                        <textarea id="adminNovoDescAnuncio" placeholder="Descrição detalhada..." required rows="2" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs"></textarea>
-                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg hover:bg-emerald-700 transition text-xs">Publicar Anúncio</button>
-                    </form>
-                    <div id="adminListaAnuncios" class="space-y-2 pt-1"></div>
-                </div>
-
-                <div id="secaoAdminBarracas" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
-                    <div class="flex justify-between items-center mb-1">
-                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Barracas e Feirantes</h3>
-                    </div>
+                <div id="secaoAdminBarracas" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-1">Gerenciar Barracas e Feirantes</h3>
                     <div class="relative mb-2">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
-                        <input type="text" id="buscaAdminFeirantesInput" oninput="renderizarAdminFeirantes()" placeholder="Buscar feirante ou barraca..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="text" id="buscaAdminFeirantesInput" oninput="renderizarAdminFeirantes()" placeholder="Buscar feirante ou barraca..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
                     </div>
                     <div id="adminListaFeirantes" class="space-y-3"></div>
                 </div>
 
-                <div id="secaoAdminSolicitacoesDestaque" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                <div id="secaoAdminSolicitacoesDestaque" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">⭐ Solicitações de Destaque Pendentes (R$ 6,99 / 24h)</h3>
                     <div id="adminListaSolicitacoesDestaque" class="space-y-3"></div>
                 </div>
 
-                <div id="secaoAdminClientes" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                <div id="secaoAdminClientes" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciar Contas de Clientes</h3>
                     <div id="adminListaClientes" class="space-y-3"></div>
                 </div>
 
-                <div id="secaoAdminProdutos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
+                <div id="secaoAdminProdutos" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3 hide">
                     <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Catálogo Global de Produtos</h3>
                     <div id="adminListaProdutos" class="space-y-2"></div>
                 </div>
 
-                <div id="secaoAdminUsuarios" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4 hide">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-user-plus text-emerald-600"></i> Criar Novo Usuário</h3>
-                    <form onsubmit="adminCriarUsuarioSimples(event)" class="space-y-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <input type="text" id="admNovoUsuarioNome" placeholder="Nome de Usuário de Acesso" required class="w-full p-2.5 border border-slate-200 rounded-lg text-xs">
-                        <input type="text" id="admNovoNomeCompleto" placeholder="Nome Completo" required class="w-full p-2.5 border border-slate-200 rounded-lg text-xs">
-                        <input type="password" id="admNovoUsuarioSenha" placeholder="Senha" required class="w-full p-2.5 border border-slate-200 rounded-lg text-xs">
-                        <select id="admNovoUsuarioTipo" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs bg-white">
+                <div id="secaoAdminUsuarios" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-4 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-emerald-600"></i> Criar Novo Usuário</h3>
+                    <form onsubmit="adminCriarUsuarioSimples(event)" class="space-y-3 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100">
+                        <input type="text" id="admNovoUsuarioNome" placeholder="Nome de Usuário de Acesso" required class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
+                        <input type="text" id="admNovoNomeCompleto" placeholder="Nome Completo" required class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
+                        <input type="password" id="admNovoUsuarioSenha" placeholder="Senha" required class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
+                        <select id="admNovoUsuarioTipo" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
                             <option value="cliente">Cliente</option>
                             <option value="feirante">Feirante</option>
                             <option value="admin">Administrador</option>
                         </select>
-                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg hover:bg-emerald-700 transition text-xs">Criar Usuário</button>
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl hover:bg-emerald-700 transition text-xs shadow-sm">Criar Usuário</button>
                     </form>
 
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider pt-2 border-t border-slate-100">Editar, Modificar e Gerenciar Contas Existentes</h3>
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider pt-2 border-t border-slate-100">Editar e Gerenciar Contas Existentes</h3>
                     <div id="adminListaAlterarUsuarios" class="space-y-2"></div>
                 </div>
 
-                <div id="secaoAdminBanidos" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciamento de Banimentos (Números e Nomes)</h3>
-                    <div class="bg-slate-50 p-3 rounded-xl border space-y-2">
+                <div id="secaoAdminBanidos" class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider">Gerenciamento de Banimentos</h3>
+                    <div class="bg-slate-50/80 p-3.5 rounded-2xl border space-y-2.5">
                         <p class="text-[11px] text-slate-500">Bloquear novos cadastros ou acessos por correspondência exata.</p>
                         <div class="flex gap-2">
-                            <input type="text" id="inputBanTermo" placeholder="Nome ou WhatsApp a banir..." class="flex-1 p-2 border rounded-lg text-xs">
-                            <button onclick="adicionarBanimento()" class="bg-rose-600 text-white px-3 py-2 rounded-lg text-xs font-bold">Banir</button>
+                            <input type="text" id="inputBanTermo" placeholder="Nome ou WhatsApp a banir..." class="flex-1 p-3 bg-white border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500/50">
+                            <button onclick="adicionarBanimento()" class="bg-rose-600 text-white px-4 py-3 rounded-xl text-xs font-bold hover:bg-rose-700 transition shadow-sm">Banir</button>
                         </div>
                     </div>
                     <div id="adminListaBanidos" class="space-y-2 pt-1"></div>
@@ -376,15 +351,15 @@
 
             <!-- TELA CARRINHO -->
             <div id="telaCarrinho" class="hide space-y-4">
-                <h2 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Seu Carrinho de Compras</h2>
+                <h2 class="font-bold text-slate-700 mb-3 text-xs uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-cart-shopping text-emerald-600"></i> Seu Carrinho de Compras</h2>
                 <div id="itensCarrinho" class="space-y-3 mb-4"></div>
-                <div id="checkoutArea" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 hide">
-                    <div class="flex justify-between font-bold text-lg mb-4 text-slate-800">
+                <div id="checkoutArea" class="bg-white p-4.5 rounded-3xl shadow-sm border border-slate-100 hide space-y-4">
+                    <div class="flex justify-between font-bold text-base text-slate-800 items-center border-b border-slate-100 pb-3">
                         <span>Total:</span>
-                        <span id="totalCarrinho" class="text-emerald-600">R$ 0,00</span>
+                        <span id="totalCarrinho" class="text-emerald-600 text-lg">R$ 0,00</span>
                     </div>
-                    <button onclick="abrirChatInterno()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-md flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-comments text-lg"></i> Iniciar Chat de Diálogo no App 💬
+                    <button onclick="abrirChatInterno()" class="w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 active:scale-[0.98]">
+                        <i class="fa-solid fa-comments text-base"></i> Iniciar Chat de Diálogo no App 💬
                     </button>
                 </div>
             </div>
@@ -392,71 +367,71 @@
             <!-- TELA: CHAT INTERNO DO APP -->
             <div id="telaChatInterno" class="hide space-y-4">
                 <div class="flex items-center justify-between">
-                    <button onclick="voltarDoChatInterno()" class="text-xs bg-slate-200 text-slate-700 px-3 py-2 rounded-xl font-bold flex items-center gap-1">
+                    <button onclick="voltarDoChatInterno()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl font-bold flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-arrow-left"></i> Voltar ao Carrinho
                     </button>
-                    <h2 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-comments text-emerald-600"></i> Diálogo da Compra</h2>
+                    <h2 class="font-bold text-slate-800 text-sm flex items-center gap-1.5"><i class="fa-solid fa-comments text-emerald-600"></i> Diálogo da Compra</h2>
                 </div>
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-[65vh]">
-                    <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100 mb-3 text-xs text-emerald-800">
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col h-[65vh]">
+                    <div class="bg-emerald-50/80 p-3 rounded-2xl border border-emerald-100 mb-3 text-xs text-emerald-800">
                         💬 Converse diretamente com o(s) feirante(s) ou suporte da feira por aqui. Envie dúvidas, confirme o endereço de entrega ou formas de pagamento!
                     </div>
-                    <div id="containerMensagensChat" class="flex-1 overflow-y-auto space-y-2 p-2 bg-slate-50 rounded-xl border border-slate-100"></div>
-                    <div class="flex gap-2 mt-3 pt-2 border-t border-slate-100">
-                        <input type="text" id="inputMensagemChat" placeholder="Digite sua mensagem..." class="flex-1 p-3 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500" onkeypress="if(event.key==='Enter') enviarMensagemChat()">
-                        <button onclick="enviarMensagemChat()" class="bg-emerald-600 text-white px-4 py-3 rounded-xl hover:bg-emerald-700 transition font-bold text-xs"><i class="fa-solid fa-paper-plane"></i></button>
+                    <div id="containerMensagensChat" class="flex-1 overflow-y-auto space-y-2 p-3 bg-slate-50/50 rounded-2xl border border-slate-100"></div>
+                    <div class="flex gap-2 mt-3 pt-3 border-t border-slate-100">
+                        <input type="text" id="inputMensagemChat" placeholder="Digite sua mensagem..." class="flex-1 p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50" onkeypress="if(event.key==='Enter') enviarMensagemChat()">
+                        <button onclick="enviarMensagemChat()" class="bg-emerald-600 text-white px-4.5 py-3.5 rounded-2xl hover:bg-emerald-700 transition font-bold text-xs shadow-sm"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- TELA PERFIL -->
             <div id="telaPerfil" class="hide space-y-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 text-center flex flex-col items-center relative">
-                    <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 overflow-hidden border-2 border-emerald-500 shadow-inner">
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 text-center flex flex-col items-center relative">
+                    <div class="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl mb-3 overflow-hidden border-2 border-emerald-500/80 shadow-sm">
                         <i class="fa-solid fa-user" id="perfilIconePadrao"></i>
                         <img id="perfilFotoExibicao" class="w-full h-full object-cover hide" src="" alt="Foto">
                     </div>
                     <h2 id="perfilTitulo" class="font-bold text-lg text-slate-800"></h2>
-                    <p id="perfilSubtitulo" class="text-xs text-slate-400 mb-1"></p>
-                    <span id="perfilTipo" class="mt-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"></span>
+                    <p id="perfilSubtitulo" class="text-xs text-slate-400 mb-1.5"></p>
+                    <span id="perfilTipo" class="mt-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider"></span>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3.5">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2.5">
                         <i class="fa-solid fa-id-card text-emerald-600"></i> Informações Pessoais
                     </h3>
-                    <form onsubmit="atualizarPerfilUsuario(event)" class="space-y-3">
+                    <form onsubmit="atualizarPerfilUsuario(event)" class="space-y-3.5">
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome Completo</label>
-                            <input type="text" id="editarNomeCompleto" class="w-full p-3 border border-slate-200 rounded-xl text-sm" required>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nome Completo</label>
+                            <input type="text" id="editarNomeCompleto" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">WhatsApp de Contato</label>
-                            <input type="tel" id="editarWhatsapp" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">WhatsApp de Contato</label>
+                            <input type="tel" id="editarWhatsapp" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Foto de Perfil (Link URL)</label>
-                            <input type="text" id="editarFotoPerfilInput" placeholder="https://exemplo.com/foto.jpg" class="w-full p-3 border border-slate-200 rounded-xl text-sm">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Foto de Perfil (Arquivo do Dispositivo)</label>
+                            <input type="file" id="editarFotoPerfilInput" accept="image/*" class="w-full p-2 border border-slate-200 rounded-2xl text-xs bg-slate-50/50 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
                         </div>
-                        <div class="flex gap-2 pt-1">
-                            <button type="submit" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-emerald-700 transition">Salvar Informações</button>
-                            <button type="button" onclick="deletarFotoPerfilAtual()" class="bg-amber-100 text-amber-800 px-3 py-2.5 rounded-xl text-xs font-bold" title="Remover Foto">Deletar Foto</button>
+                        <div class="flex gap-2.5 pt-1">
+                            <button type="submit" class="flex-1 bg-emerald-600 text-white font-semibold py-3 rounded-2xl text-xs hover:bg-emerald-700 transition shadow-sm">Salvar Informações</button>
+                            <button type="button" onclick="deletarFotoPerfilAtual()" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-4 py-3 rounded-2xl text-xs font-bold transition" title="Remover Foto">Deletar Foto</button>
                         </div>
                     </form>
                 </div>
 
-                <div id="campoEditarBarracaDiv" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3 hide">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
+                <div id="campoEditarBarracaDiv" class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3.5 hide">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2.5">
                         <i class="fa-solid fa-store text-emerald-600"></i> Dados da Barraca
                     </h3>
-                    <div class="space-y-3">
+                    <div class="space-y-3.5">
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome da Barraca</label>
-                            <input type="text" id="editarNomeBarraca" class="w-full p-3 border border-slate-200 rounded-xl text-sm" placeholder="Ex: Barraca do Tomate Verde">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nome da Barraca</label>
+                            <input type="text" id="editarNomeBarraca" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50" placeholder="Ex: Barraca do Tomate Verde">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Categoria Principal</label>
-                            <select id="editarCategoriaBarraca" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white">
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Categoria Principal</label>
+                            <select id="editarCategoriaBarraca" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
                                 <option value="alimentos">🥗 Alimentos</option>
                                 <option value="roupas">👕 Roupas</option>
                                 <option value="artesanatos">🎨 Artesanatos</option>
@@ -465,57 +440,54 @@
                                 <option value="decoracoes">✨ Decorações</option>
                             </select>
                         </div>
-                        <button type="button" onclick="cadastrarOuAtualizarBarracaPerfil(event)" class="w-full bg-emerald-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-emerald-700 transition shadow-sm">
+                        <button type="button" onclick="cadastrarOuAtualizarBarracaPerfil(event)" class="w-full bg-emerald-600 text-white font-semibold py-3 rounded-2xl text-xs hover:bg-emerald-700 transition shadow-sm">
                             Atualizar Dados da Barraca 🏪
                         </button>
-                        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between mt-2">
+                        <div class="bg-amber-50/80 border border-amber-200/80 p-3.5 rounded-2xl flex items-center justify-between mt-2">
                             <div>
                                 <span class="text-xs font-bold text-amber-900 block">🌟 Status de Destaque</span>
                                 <span id="statusDestaquePerfilLabel" class="text-[11px] text-amber-700">Aguardando ativação</span>
                             </div>
-                            <button type="button" onclick="solicitarDestaqueFeirante()" class="bg-amber-500 text-white text-xs font-bold px-3 py-2 rounded-lg hover:bg-amber-600 transition">Solicitar Destaque</button>
+                            <button type="button" onclick="solicitarDestaqueFeirante()" class="bg-amber-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl hover:bg-amber-600 transition shadow-sm">Solicitar Destaque</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3.5">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2.5">
                         <i class="fa-solid fa-shield-halved text-rose-600"></i> Ações da Conta
                     </h3>
-                    <button type="button" onclick="confirmarExclusaoConta()" class="w-full bg-rose-50 text-rose-600 font-semibold py-3 rounded-xl text-xs border border-rose-200 hover:bg-rose-100 transition flex items-center justify-center gap-2">
+                    <button type="button" onclick="confirmarExclusaoConta()" class="w-full bg-rose-50 text-rose-600 font-semibold py-3.5 rounded-2xl text-xs border border-rose-200 hover:bg-rose-100 transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-solid fa-triangle-exclamation"></i> Excluir conta permanentemente
                     </button>
                 </div>
             </div>
         </main>
 
-        <!-- NAV CLIENTE -->
-        <nav id="navCliente" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+        <nav id="navCliente" class="bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
             <div class="max-w-md mx-auto flex justify-around py-3">
-                <button onclick="mudarAbaCliente('explorar')" id="tabExplorarBtn" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
-                <button onclick="mudarAbaCliente('carrinho')" id="tabCarrinhoBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs relative"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho<span id="badgeCarrinho" class="absolute -top-1 right-2 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide">0</span></button>
-                <button onclick="mudarAbaCliente('perfil')" id="tabPerfilBtn" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+                <button onclick="mudarAbaCliente('explorar')" id="tabExplorarBtn" class="flex flex-col items-center text-emerald-600 font-medium text-xs transition"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
+                <button onclick="mudarAbaCliente('carrinho')" id="tabCarrinhoBtn" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs relative transition"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho<span id="badgeCarrinho" class="absolute -top-1 right-1.5 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide font-bold shadow-sm">0</span></button>
+                <button onclick="mudarAbaCliente('perfil')" id="tabPerfilBtn" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
             </div>
         </nav>
 
-        <!-- NAV FEIRANTE -->
-        <nav id="navFeirante" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+        <nav id="navFeirante" class="bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
             <div class="max-w-md mx-auto flex justify-around py-3">
-                <button onclick="mudarAbaFeirante('gerenciar')" id="tabFeiranteGerenciar" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-box-open text-lg mb-1"></i> Gerenciar</button>
-                <button onclick="mudarAbaFeirante('explorar')" id="tabFeiranteExplorar" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
-                <button onclick="mudarAbaFeirante('carrinho')" id="tabFeiranteCarrinho" class="flex flex-col items-center text-slate-400 font-medium text-xs relative"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho<span id="badgeCarrinhoFeirante" class="absolute -top-1 right-2 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide">0</span></button>
-                <button onclick="mudarAbaFeirante('perfil')" id="tabFeirantePerfil" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+                <button onclick="mudarAbaFeirante('gerenciar')" id="tabFeiranteGerenciar" class="flex flex-col items-center text-emerald-600 font-medium text-xs transition"><i class="fa-solid fa-box-open text-lg mb-1"></i> Gerenciar</button>
+                <button onclick="mudarAbaFeirante('explorar')" id="tabFeiranteExplorar" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
+                <button onclick="mudarAbaFeirante('carrinho')" id="tabFeiranteCarrinho" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs relative transition"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Carrinho<span id="badgeCarrinhoFeirante" class="absolute -top-1 right-1.5 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide font-bold shadow-sm">0</span></button>
+                <button onclick="mudarAbaFeirante('perfil')" id="tabFeirantePerfil" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
             </div>
         </nav>
 
-        <!-- NAV ADMIN -->
-        <nav id="navAdmin" class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
+        <nav id="navAdmin" class="bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-50 shadow-lg hide">
             <div class="max-w-md mx-auto flex justify-around py-3">
-                <button onclick="mudarAbaAdmin('admin')" id="tabAdminPainel" class="flex flex-col items-center text-emerald-600 font-medium text-xs"><i class="fa-solid fa-gear text-lg mb-1"></i> Painel</button>
-                <button onclick="mudarAbaAdmin('explorar')" id="tabAdminExplorar" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
-                <button onclick="mudarAbaAdmin('vender')" id="tabAdminVender" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-box-open text-lg mb-1"></i> Vender</button>
-                <button onclick="mudarAbaAdmin('carrinho')" id="tabAdminCarrinho" class="flex flex-col items-center text-slate-400 font-medium text-xs relative"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Comprar<span id="badgeCarrinhoAdmin" class="absolute -top-1 right-2 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide">0</span></button>
-                <button onclick="mudarAbaAdmin('perfil')" id="tabAdminPerfil" class="flex flex-col items-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
+                <button onclick="mudarAbaAdmin('admin')" id="tabAdminPainel" class="flex flex-col items-center text-emerald-600 font-medium text-xs transition"><i class="fa-solid fa-gear text-lg mb-1"></i> Painel</button>
+                <button onclick="mudarAbaAdmin('explorar')" id="tabAdminExplorar" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-compass text-lg mb-1"></i> Início</button>
+                <button onclick="mudarAbaAdmin('vender')" id="tabAdminVender" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-box-open text-lg mb-1"></i> Vender</button>
+                <button onclick="mudarAbaAdmin('carrinho')" id="tabAdminCarrinho" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs relative transition"><i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Comprar<span id="badgeCarrinhoAdmin" class="absolute -top-1 right-1.5 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hide font-bold shadow-sm">0</span></button>
+                <button onclick="mudarAbaAdmin('perfil')" id="tabAdminPerfil" class="flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition"><i class="fa-solid fa-user text-lg mb-1"></i> Perfil</button>
             </div>
         </nav>
     </div>
@@ -523,7 +495,7 @@
     <!-- SCRIPT DA APLICAÇÃO COM SUPABASE -->
     <script>
         const SUPABASE_URL = 'https://umifwecpgndqkcjomdrd.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_-kU8sQIkbJjZ_j1aaOXr7A_Tknxeg75';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtaWZ3ZWNwZ25kcWtjam9tZHJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNjU2NDQsImV4cCI6MjEwMzg0MTY0NH0.L0jh-uBoix0ev7TGQqTBDlC_GK5sgRYbZqh9Gl5p7zs';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: { persistSession: true },
             global: {
@@ -541,8 +513,6 @@
         let filtroSuperiorAtual = 'tudo';
         let indiceCarrosselAtual = 0;
         let timerCarrossel = null;
-        let indiceAnuncioAtual = 0;
-        let timerAnuncios = null;
 
         const subcategoriasPorCategoria = {
             'alimentos': ['Frutas', 'Verduras', 'Legumes', 'Pastelaria', 'Temperos', 'Queijos e Frios'],
@@ -553,7 +523,6 @@
             'decoracoes': ['Artesanato em Resina', 'Velas Aromáticas', 'Luminárias', 'Tapetes']
         };
 
-        let anunciosLocais = [];
         let solicitacoesDestaqueList = [];
         let adminsCadastrados = [
             { usuario: 'admin', senha: 'admin123', nomeCompleto: 'Administrador Geral', whatsapp: '', tipo: 'admin', fotoPerfil: '' }
@@ -567,9 +536,6 @@
 
         async function carregarDadosSupabase() {
             try {
-                const { data: anuncios } = await supabaseClient.from('anuncios').select('*');
-                if (anuncios) anunciosLocais = anuncios;
-
                 const { data: destaques } = await supabaseClient.from('solicitacoes_destaque').select('*');
                 if (destaques) solicitacoesDestaqueList = destaques;
 
@@ -590,57 +556,42 @@
             } catch (err) {
                 console.warn("Usando modo local/fallback, erro ao conectar ao Supabase:", err);
             }
+        }
 
+        // Inicialização automática ao carregar a página
+        window.addEventListener('DOMContentLoaded', async () => {
+            await carregarDadosSupabase();
             if (usuarioAtual) {
                 iniciarApp();
+            } else {
+                alternarModoAuth('login');
             }
-        }
+        });
 
-        carregarDadosSupabase();
-
-        function fecharBannerAnuncio(event) {
-            event.stopPropagation();
-            const banner = document.getElementById('bannerAnuncioContainer');
-            if (banner) banner.classList.add('hide');
-        }
-
-        function interagirBannerAnuncio(event) {
-            if (anunciosLocais.length > 0) {
-                const a = anunciosLocais[indiceAnuncioAtual];
-                alert(`📢 Detalhes do Anúncio:\n\n${a.titulo}\n\n${a.desc}`);
-            }
-        }
-
-        function iniciarAnunciosLocais() {
-            if (anunciosLocais.length === 0) return;
-            atualizarExibicaoAnuncio();
-            if (timerAnuncios) clearInterval(timerAnuncios);
-            timerAnuncios = setInterval(() => {
-                indiceAnuncioAtual = (indiceAnuncioAtual + 1) % anunciosLocais.length;
-                atualizarExibicaoAnuncio();
-            }, 6000);
-        }
-
-        function atualizarExibicaoAnuncio() {
-            if (anunciosLocais.length === 0) return;
-            const a = anunciosLocais[indiceAnuncioAtual];
-            const tituloEl = document.getElementById('tituloAnuncio');
-            const descEl = document.getElementById('descAnuncio');
-            const indEl = document.getElementById('anuncioIndicador');
-            if (tituloEl) tituloEl.innerText = a.titulo;
-            if (descEl) descEl.innerText = a.desc;
-            if (indEl) indEl.innerText = `${indiceAnuncioAtual + 1}/${anunciosLocais.length}`;
-        }
-
+        // --- Funções de Carrossel ---
         function iniciarCarrosselDestaques() {
+            if (timerCarrossel) clearInterval(timerCarrossel);
+            renderizarItemCarrossel();
+            timerCarrossel = setInterval(() => {
+                let destaqueList = feirantesCadastrados.filter(f => f.destacada);
+                if (destaqueList.length === 0) destaqueList = feirantesCadastrados;
+                if (destaqueList.length > 0) {
+                    indiceCarrosselAtual = (indiceCarrosselAtual + 1) % destaqueList.length;
+                    renderizarItemCarrossel();
+                }
+            }, 4000);
+        }
+
+        function renderizarItemCarrossel() {
+            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
+            if (destaqueList.length === 0) destaqueList = feirantesCadastrados;
             const container = document.getElementById('carrosselDestaquesContainer');
             const indicador = document.getElementById('carrosselIndicador');
-            if(!container) return;
+            if (!container) return;
 
-            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
             if (destaqueList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-2 w-full">Nenhuma barraca em destaque no momento. Seja um parceiro destaque!</p>`;
-                if (indicador) indicador.innerText = "0 / 0";
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-2 w-full">Nenhuma barraca cadastrada no momento.</p>`;
+                if (indicador) indicador.innerText = `0 / 0`;
                 return;
             }
 
@@ -650,41 +601,453 @@
 
             container.innerHTML = `
                 <div class="flex items-center gap-3 w-full">
-                    <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold overflow-hidden shrink-0">
-                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-lg"></i>'}
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold overflow-hidden shrink-0 shadow-sm border border-amber-200">
+                        ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-xl"></i>'}
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-1.5">
                             <h4 class="font-bold text-slate-800 text-sm truncate">${f.nomeBarraca}</h4>
-                            <span class="bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.2 rounded shrink-0">⭐ DESTAQUE</span>
+                            <span class="bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.2 rounded">⭐ Destaque</span>
                         </div>
-                        <p class="text-[11px] text-slate-500 truncate">Categoria: ${f.categoria || 'Geral'} • Resp: ${f.nomeCompleto}</p>
+                        <p class="text-[11px] text-slate-500 truncate">Resp: ${f.nomeCompleto} | Categoria: ${f.categoria || 'Geral'}</p>
+                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Clique para ver os produtos da barraca ➔</p>
                     </div>
-                    <span class="text-xs bg-amber-500 text-white font-bold px-2.5 py-1.5 rounded-xl shadow-sm shrink-0">Ver Loja</span>
                 </div>
             `;
-
-            if (timerCarrossel) clearInterval(timerCarrossel);
-            timerCarrossel = setInterval(() => {
-                let listaAtualizada = feirantesCadastrados.filter(x => x.destacada);
-                if (listaAtualizada.length > 0) {
-                    indiceCarrosselAtual = (indiceCarrosselAtual + 1) % listaAtualizada.length;
-                    iniciarCarrosselDestaques();
-                }
-            }, 4500);
+            container.dataset.usuarioFeirante = f.usuario;
         }
 
         function clicarLojaCarrossel() {
-            let destaqueList = feirantesCadastrados.filter(f => f.destacada);
-            if (destaqueList.length > 0) {
-                let f = destaqueList[indiceCarrosselAtual];
-                if (f) abrirPaginaProdutosBarraca(f.usuario);
+            const container = document.getElementById('carrosselDestaquesContainer');
+            if (container && container.dataset.usuarioFeirante) {
+                abrirPaginaProdutosBarraca(container.dataset.usuarioFeirante);
             }
+        }
+
+        // --- Visualização de Produtos da Barraca ---
+        function abrirPaginaProdutosBarraca(usuarioFeirante) {
+            let feirante = feirantesCadastrados.find(f => f.usuario === usuarioFeirante);
+            if (!feirante) return;
+
+            ['visãoUnificadaExplorar', 'telaCarrinho', 'visãoFeirante', 'visãoAdmin', 'telaChatInterno', 'telaPerfil'].forEach(id => {
+                let el = document.getElementById(id);
+                if (el) el.classList.add('hide');
+            });
+            document.getElementById('telaProdutosFeira').classList.remove('hide');
+
+            document.getElementById('detalheNomeBarraca').innerText = feirante.nomeBarraca;
+            document.getElementById('detalheNomeDono').innerText = feirante.nomeCompleto;
+            document.getElementById('detalheWhatsappDono').innerText = feirante.whatsapp || 'Não informado';
+            
+            const selo = document.getElementById('detalheSeloDestaque');
+            if (feirante.destacada) selo.classList.remove('hide');
+            else selo.classList.add('hide');
+
+            const iconePadrao = document.getElementById('iconePadraoBarraca');
+            const fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
+            if (feirante.fotoPerfil) {
+                fotoHeader.src = feirante.fotoPerfil;
+                fotoHeader.classList.remove('hide');
+                iconePadrao.classList.add('hide');
+            } else {
+                fotoHeader.classList.add('hide');
+                iconePadrao.classList.remove('hide');
+            }
+
+            const containerProdutos = document.getElementById('listaProdutosDaBarracaSelecionada');
+            let prodsBarraca = produtos.filter(p => p.feirante_usuario === usuarioFeirante);
+            containerProdutos.innerHTML = '';
+
+            if (prodsBarraca.length === 0) {
+                containerProdutos.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Esta barraca ainda não cadastrou produtos.</p>`;
+            } else {
+                prodsBarraca.forEach(p => {
+                    containerProdutos.innerHTML += `
+                        <div class="bg-slate-50/70 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
+                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0 shadow-sm">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
+                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-400">(${p.unidade})</span></p>
+                            </div>
+                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0 shadow-sm active:scale-95"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function voltarParaExplorar() {
+            document.getElementById('telaProdutosFeira').classList.add('hide');
+            if (usuarioAtual.tipo === 'admin') mudarAbaAdmin('explorar');
+            else if (usuarioAtual.tipo === 'feirante') mudarAbaFeirante('explorar');
+            else mudarAbaCliente('explorar');
+        }
+
+        // --- Carrinho e Pedidos ---
+        function adicionarAoCarrinho(produtoId) {
+            let p = produtos.find(item => item.id === produtoId);
+            if (!p) return;
+            let existente = carrinho.find(item => item.id === produtoId);
+            if (existente) {
+                existente.quantidade += 1;
+            } else {
+                carrinho.push({ ...p, quantidade: 1 });
+            }
+            atualizarBadgeCarrinho();
+            alert(`🛒 "${p.nome}" adicionado ao carrinho!`);
+        }
+
+        function atualizarBadgeCarrinho() {
+            let totalQtd = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+            ['badgeCarrinho', 'badgeCarrinhoFeirante', 'badgeCarrinhoAdmin'].forEach(id => {
+                let badge = document.getElementById(id);
+                if (badge) {
+                    if (totalQtd > 0) {
+                        badge.innerText = totalQtd;
+                        badge.classList.remove('hide');
+                    } else {
+                        badge.classList.add('hide');
+                    }
+                }
+            });
+        }
+
+        function renderizarCarrinho() {
+            const container = document.getElementById('itensCarrinho');
+            const checkoutArea = document.getElementById('checkoutArea');
+            const totalEl = document.getElementById('totalCarrinho');
+            container.innerHTML = '';
+
+            if (carrinho.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 bg-white p-6 rounded-3xl shadow-sm border border-slate-100"><i class="fa-solid fa-cart-shopping text-4xl text-slate-300 mb-3"></i><p class="text-xs text-slate-400">Seu carrinho está vazio.</p></div>`;
+                checkoutArea.classList.add('hide');
+                return;
+            }
+
+            checkoutArea.classList.remove('hide');
+            let totalGeral = 0;
+
+            carrinho.forEach((item, index) => {
+                let subtotal = item.preco * item.quantidade;
+                totalGeral += subtotal;
+                container.innerHTML += `
+                    <div class="bg-white p-3.5 rounded-2xl border border-slate-100 flex items-center justify-between gap-3 shadow-sm">
+                        <img src="${item.foto}" class="w-14 h-14 rounded-xl object-cover border border-slate-200 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-slate-800 text-xs truncate">${item.nome}</h4>
+                            <p class="text-emerald-600 font-bold text-xs mt-0.5">R$ ${item.preco.toFixed(2)} x ${item.quantidade}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="alterarQtdCarrinho(${index}, -1)" class="w-7 h-7 bg-slate-100 rounded-lg text-slate-600 font-bold hover:bg-slate-200 transition">-</button>
+                            <span class="text-xs font-bold">${item.quantidade}</span>
+                            <button onclick="alterarQtdCarrinho(${index}, 1)" class="w-7 h-7 bg-slate-100 rounded-lg text-slate-600 font-bold hover:bg-slate-200 transition">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            totalEl.innerText = `R$ ${totalGeral.toFixed(2)}`;
+        }
+
+        function alterarQtdCarrinho(index, delta) {
+            carrinho[index].quantidade += delta;
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+            atualizarBadgeCarrinho();
+            renderizarCarrinho();
+        }
+
+        function abrirChatInterno() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            document.getElementById('telaCarrinho').classList.add('hide');
+            document.getElementById('telaChatInterno').classList.remove('hide');
+            renderizarMensagensChat();
+        }
+
+        function voltarDoChatInterno() {
+            document.getElementById('telaChatInterno').classList.add('hide');
+            document.getElementById('telaCarrinho').classList.remove('hide');
+        }
+
+        function renderizarMensagensChat() {
+            const container = document.getElementById('containerMensagensChat');
+            container.innerHTML = '';
+            if (historicoChatInterno.length === 0) {
+                container.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs">Nenhuma mensagem ainda. Envie uma mensagem para iniciar o atendimento da sua compra!</div>`;
+                return;
+            }
+            historicoChatInterno.forEach(m => {
+                let alinhamento = m.remetente === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-800 border border-slate-200';
+                container.innerHTML += `
+                    <div class="max-w-[80%] p-3 rounded-2xl text-xs ${alinhamento} shadow-sm">
+                        <b class="block text-[10px] opacity-80 mb-0.5">${m.nomeRemetente}</b>
+                        ${m.texto}
+                    </div>
+                `;
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function enviarMensagemChat() {
+            const input = document.getElementById('inputMensagemChat');
+            const texto = input.value.trim();
+            if (!texto) return;
+
+            historicoChatInterno.push({
+                remetente: usuarioAtual.usuario,
+                nomeRemetente: usuarioAtual.nomeCompleto || usuarioAtual.usuario,
+                texto
+            });
+            input.value = '';
+            renderizarMensagensChat();
+        }
+
+        // --- Gestão de Produtos pelo Feirante ---
+        async function cadastrarproduto(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nomeProduto').value.trim();
+            const preco = parseFloat(document.getElementById('precoProduto').value);
+            const unidade = document.getElementById('unidadeProduto').value.trim();
+            const fileInput = document.getElementById('fotoProdutoInput');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert("Selecione uma imagem para o produto.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const fotoBase64 = e.target.result;
+                const novoProduto = {
+                    id: 'prod_' + Date.now(),
+                    feirante_usuario: usuarioAtual.usuario,
+                    nome,
+                    preco,
+                    unidade,
+                    foto: fotoBase64
+                };
+
+                await supabaseClient.from('produtos').insert([novoProduto]);
+                produtos.push(novoProduto);
+                document.getElementById('formProduto').reset();
+                mudarAbaInternaFeirante('listar');
+                alert("✅ Produto cadastrado com sucesso!");
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+
+        function renderizarProdutosFeirante() {
+            const container = document.getElementById('listaProdutosFeirante');
+            if (!container) return;
+            container.innerHTML = '';
+
+            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
+            if (meusProds.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou nenhum produto.</p>`;
+                return;
+            }
+
+            meusProds.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-slate-50/70 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
+                        <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
+                            <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-400">(${p.unidade})</span></p>
+                        </div>
+                        <button onclick="deletarProduto('${p.id}')" class="text-rose-500 p-2.5 hover:bg-rose-50 rounded-xl transition shrink-0"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        async function deletarProduto(id) {
+            if (confirm("Tem certeza que deseja excluir este produto?")) {
+                await supabaseClient.from('produtos').delete().eq('id', id);
+                produtos = produtos.filter(p => p.id !== id);
+                renderizarProdutosFeirante();
+            }
+        }
+
+        // --- Perfil ---
+        function preencherPerfil() {
+            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto || '';
+            document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
+            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto || usuarioAtual.usuario;
+            document.getElementById('perfilSubtitulo').innerText = `@${usuarioAtual.usuario}`;
+            document.getElementById('perfilTipo').innerText = usuarioAtual.tipo.toUpperCase();
+
+            const iconePadrao = document.getElementById('perfilIconePadrao');
+            const fotoExibicao = document.getElementById('perfilFotoExibicao');
+            if (usuarioAtual.fotoPerfil) {
+                fotoExibicao.src = usuarioAtual.fotoPerfil;
+                fotoExibicao.classList.remove('hide');
+                iconePadrao.classList.add('hide');
+            } else {
+                fotoExibicao.classList.add('hide');
+                iconePadrao.classList.remove('hide');
+            }
+
+            const blocoBarraca = document.getElementById('campoEditarBarracaDiv');
+            if (usuarioAtual.tipo === 'feirante') {
+                blocoBarraca.classList.remove('hide');
+                document.getElementById('editarNomeBarraca').value = usuarioAtual.nomeBarraca || '';
+                document.getElementById('editarCategoriaBarraca').value = usuarioAtual.categoria || 'alimentos';
+                const labelDestaque = document.getElementById('statusDestaquePerfilLabel');
+                if (usuarioAtual.destacada) {
+                    labelDestaque.innerText = "⭐ Sua barraca está em destaque!";
+                } else {
+                    labelDestaque.innerText = "Aguardando ativação (Taxa R$ 6,99 / 24h)";
+                }
+            } else {
+                blocoBarraca.classList.add('hide');
+            }
+        }
+
+        async function atualizarPerfilUsuario(event) {
+            event.preventDefault();
+            usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
+            usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
+
+            const fileInput = document.getElementById('editarFotoPerfilInput');
+            if (fileInput.files && fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    usuarioAtual.fotoPerfil = e.target.result;
+                    await salvarAtualizacaoPerfilNoBanco();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                await salvarAtualizacaoPerfilNoBanco();
+            }
+        }
+
+        async function salvarAtualizacaoPerfilNoBanco() {
+            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
+            await supabaseClient.from(tabela).update({
+                nomeCompleto: usuarioAtual.nomeCompleto,
+                whatsapp: usuarioAtual.whatsapp,
+                fotoPerfil: usuarioAtual.fotoPerfil || ''
+            }).eq('usuario', usuarioAtual.usuario);
+
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            preencherPerfil();
+            alert("✅ Perfil atualizado com sucesso!");
+        }
+
+        async function deletarFotoPerfilAtual() {
+            usuarioAtual.fotoPerfil = '';
+            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
+            await supabaseClient.from(tabela).update({ fotoPerfil: '' }).eq('usuario', usuarioAtual.usuario);
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            preencherPerfil();
+            alert("🗑️ Foto de perfil removida.");
+        }
+
+        async function cadastrarOuAtualizarBarracaPerfil(event) {
+            event.preventDefault();
+            if (usuarioAtual.tipo !== 'feirante') return;
+            usuarioAtual.nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
+            usuarioAtual.categoria = document.getElementById('editarCategoriaBarraca').value;
+
+            await supabaseClient.from('feirantes').update({
+                nomeBarraca: usuarioAtual.nomeBarraca,
+                categoria: usuarioAtual.categoria
+            }).eq('usuario', usuarioAtual.usuario);
+
+            let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
+            if (f) {
+                f.nomeBarraca = usuarioAtual.nomeBarraca;
+                f.categoria = usuarioAtual.categoria;
+            }
+
+            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+            alert("🏪 Dados da barraca atualizados com sucesso!");
+        }
+
+        async function solicitarDestaqueFeirante() {
+            if (usuarioAtual.tipo !== 'feirante') return;
+            let jaExiste = solicitacoesDestaqueList.some(s => s.usuario === usuarioAtual.usuario);
+            if (jaExiste) {
+                alert("⚠️ Você já possui uma solicitação de destaque pendente de aprovação.");
+                return;
+            }
+            let novaSol = {
+                usuario: usuarioAtual.usuario,
+                nomeBarraca: usuarioAtual.nomeBarraca
+            };
+            await supabaseClient.from('solicitacoes_destaque').insert([novaSol]);
+            solicitacoesDestaqueList.push(novaSol);
+            alert("🌟 Solicitação de destaque enviada ao administrador! Taxa de ativação: R$ 6,99 / 24h.");
+        }
+
+        // --- Admin Extras ---
+        function renderizarAdminProdutos() {
+            const container = document.getElementById('adminListaProdutos');
+            if (!container) return;
+            container.innerHTML = '';
+            if (produtos.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum produto cadastrado na plataforma.</p>`;
+                return;
+            }
+            produtos.forEach(p => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border text-xs">
+                        <div><b>${p.nome}</b> - R$ ${p.preco.toFixed(2)} (${p.unidade})<p class="text-[10px] text-slate-500">Feirante: ${p.feirante_usuario}</p></div>
+                        <button onclick="deletarProdutoAdmin('${p.id}')" class="text-rose-500 p-2 hover:bg-rose-50 rounded-xl"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        async function deletarProdutoAdmin(id) {
+            if (confirm("Apagar este produto do catálogo global?")) {
+                await supabaseClient.from('produtos').delete().eq('id', id);
+                produtos = produtos.filter(p => p.id !== id);
+                renderizarAdminProdutos();
+            }
+        }
+
+        function renderizarAdminBanidos() {
+            const container = document.getElementById('adminListaBanidos');
+            if (!container) return;
+            container.innerHTML = '';
+            if (listaBanidos.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum termo ou usuário banido.</p>`;
+                return;
+            }
+            listaBanidos.forEach(termo => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border text-xs">
+                        <span><b>${termo}</b></span>
+                        <button onclick="removerBanimento('${termo}')" class="text-emerald-600 font-bold hover:underline">Remover Ban</button>
+                    </div>
+                `;
+            });
+        }
+
+        async function adicionarBanimento() {
+            const termo = document.getElementById('inputBanTermo').value.trim();
+            if (!termo) return;
+            if (!listaBanidos.includes(termo)) {
+                listaBanidos.push(termo);
+                await supabaseClient.from('banidos').insert([{ termo }]);
+                document.getElementById('inputBanTermo').value = '';
+                renderizarAdminBanidos();
+            }
+        }
+
+        async function removerBanimento(termo) {
+            listaBanidos = listaBanidos.filter(t => t !== termo);
+            await supabaseClient.from('banidos').delete().eq('termo', termo);
+            renderizarAdminBanidos();
         }
 
         function filtrarBuscaGeral() {
             const termo = document.getElementById('buscaProduto').value.toLowerCase().trim();
-            
             const containerBarracas = document.getElementById('listaExplorarFeirantes');
             let barracasFiltradas = feirantesCadastrados.filter(f => 
                 f.nomeBarraca.toLowerCase().includes(termo) || 
@@ -699,11 +1062,11 @@
                 barracasFiltradas.forEach(f => {
                     const avaliacaoSimulada = (4.5 + (f.nomeBarraca.length % 5) * 0.1).toFixed(1);
                     const distanciaSimulada = ((f.nomeBarraca.length % 4) + 1) * 50;
-                    const classeCard = f.destacada ? 'store-card destacada' : 'bg-white border border-slate-100 hover:border-emerald-300';
+                    const classeCard = f.destacada ? 'store-card destacada' : 'bg-white border border-slate-100 hover:border-emerald-300 transition-all';
                     
                     containerBarracas.innerHTML += `
-                        <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="${classeCard} p-3 rounded-2xl shadow-sm cursor-pointer transition flex items-center gap-3">
-                            <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold overflow-hidden shrink-0">
+                        <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="${classeCard} p-3.5 rounded-2xl shadow-sm cursor-pointer transition flex items-center gap-3">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold overflow-hidden shrink-0 shadow-sm border border-emerald-100">
                                 ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-xl"></i>'}
                             </div>
                             <div class="flex-1 min-w-0">
@@ -737,14 +1100,14 @@
                     let feirante = feirantesCadastrados.find(f => f.usuario === p.feirante_usuario);
                     let nomeBarraca = feirante ? feirante.nomeBarraca : 'Feira Livre';
                     containerProdutos.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 hover:border-emerald-300 flex items-center justify-between gap-3 transition">
-                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
+                        <div class="bg-slate-50/70 p-3 rounded-2xl border border-slate-100 hover:border-emerald-300 flex items-center justify-between gap-3 transition">
+                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0 shadow-sm">
                             <div class="flex-1 min-w-0">
-                                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded truncate inline-block max-w-full">${nomeBarraca}</span>
-                                <h4 class="font-semibold text-slate-800 text-sm truncate mt-0.5">${p.nome}</h4>
-                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
+                                <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md truncate inline-block max-w-full border border-emerald-200/50">${nomeBarraca}</span>
+                                <h4 class="font-semibold text-slate-800 text-sm truncate mt-1">${p.nome}</h4>
+                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-400">(${p.unidade})</span></p>
                             </div>
-                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
+                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0 shadow-sm active:scale-95"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
                     `;
                 });
@@ -761,7 +1124,7 @@
                     if (cat === categoria) {
                         btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition flex items-center gap-1.5";
                     } else {
-                        btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 whitespace-nowrap transition flex items-center gap-1.5";
+                        btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200/80 hover:border-emerald-300 whitespace-nowrap transition flex items-center gap-1.5";
                     }
                 }
             });
@@ -774,10 +1137,10 @@
                 wrapperSub.classList.add('hide');
             } else {
                 wrapperSub.classList.remove('hide');
-                containerSub.innerHTML += `<button onclick="selecionarSubcategoriaDinamica('todas')" id="subBtn_todas" class="px-3 py-1.5 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition">Todas</button>`;
+                containerSub.innerHTML += `<button onclick="selecionarSubcategoriaDinamica('todas')" id="subBtn_todas" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition">Todas</button>`;
                 
                 subcategoriasPorCategoria[categoria].forEach(sub => {
-                    containerSub.innerHTML += `<button onclick="selecionarSubcategoriaDinamica('${sub}')" id="subBtn_${sub.replace(/\s+/g, '_')}" class="px-3 py-1.5 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200 whitespace-nowrap transition">${sub}</button>`;
+                    containerSub.innerHTML += `<button onclick="selecionarSubcategoriaDinamica('${sub}')" id="subBtn_${sub.replace(/\s+/g, '_')}" class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 whitespace-nowrap transition">${sub}</button>`;
                 });
             }
 
@@ -792,9 +1155,9 @@
                 let btn = document.getElementById(idBtn);
                 if (btn) {
                     if (s === subcategoria) {
-                        btn.className = "px-3 py-1.5 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition";
+                        btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-600 text-white shadow-sm whitespace-nowrap transition";
                     } else {
-                        btn.className = "px-3 py-1.5 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200 whitespace-nowrap transition";
+                        btn.className = "px-3.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200 whitespace-nowrap transition";
                     }
                 }
             });
@@ -817,11 +1180,11 @@
                 feirantesFiltrados.forEach(f => {
                     const avaliacaoSimulada = (4.5 + (f.nomeBarraca.length % 5) * 0.1).toFixed(1);
                     const distanciaSimulada = ((f.nomeBarraca.length % 4) + 1) * 50;
-                    const classeCard = f.destacada ? 'store-card destacada' : 'bg-white border border-slate-100 hover:border-emerald-300';
+                    const classeCard = f.destacada ? 'store-card destacada' : 'bg-white border border-slate-100 hover:border-emerald-300 transition-all';
 
                     containerFeirantes.innerHTML += `
-                        <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="${classeCard} p-3 rounded-2xl shadow-sm cursor-pointer transition flex items-center gap-3">
-                            <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold overflow-hidden shrink-0">
+                        <div onclick="abrirPaginaProdutosBarraca('${f.usuario}')" class="${classeCard} p-3.5 rounded-2xl shadow-sm cursor-pointer transition flex items-center gap-3">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold overflow-hidden shrink-0 shadow-sm border border-emerald-100">
                                 ${f.fotoPerfil ? `<img src="${f.fotoPerfil}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-store text-xl"></i>'}
                             </div>
                             <div class="flex-1 min-w-0">
@@ -861,360 +1224,567 @@
                     let feirante = feirantesCadastrados.find(f => f.usuario === p.feirante_usuario);
                     let nomeBarraca = feirante ? feirante.nomeBarraca : 'Feira Livre';
                     containerProdutos.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 hover:border-emerald-300 flex items-center justify-between gap-3 transition">
-                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
+                        <div class="bg-slate-50/70 p-3 rounded-2xl border border-slate-100 hover:border-emerald-300 flex items-center justify-between gap-3 transition">
+                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0 shadow-sm">
                             <div class="flex-1 min-w-0">
-                                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded truncate inline-block max-w-full">${nomeBarraca}</span>
-                                <h4 class="font-semibold text-slate-800 text-sm truncate mt-0.5">${p.nome}</h4>
-                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
+                                <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md truncate inline-block max-w-full border border-emerald-200/50">${nomeBarraca}</span>
+                                <h4 class="font-semibold text-slate-800 text-sm truncate mt-1">${p.nome}</h4>
+                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-400">(${p.unidade})</span></p>
                             </div>
-                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
+                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0 shadow-sm active:scale-95"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
                     `;
                 });
             }
         }
 
-        function abrirPaginaProdutosBarraca(usuarioFeirante) {
+        function mostrarErroAuth(mensagem) {
+            const caixaErro = document.getElementById('authMensagemErro');
+            const textoErro = document.getElementById('authTextoErro');
+            ocultarSucessoAuth();
+            if (mensagem) {
+                textoErro.innerText = mensagem;
+                caixaErro.classList.remove('hide');
+            } else {
+                caixaErro.classList.add('hide');
+            }
+        }
+
+        function mostrarSucessoAuth(mensagem) {
+            const caixaSucesso = document.getElementById('authMensagemSucesso');
+            const textoSucesso = document.getElementById('authTextoSucesso');
+            ocultarErroAuth();
+            if (mensagem) {
+                textoSucesso.innerText = mensagem;
+                caixaSucesso.classList.remove('hide');
+            } else {
+                caixaSucesso.classList.add('hide');
+            }
+        }
+
+        function ocultarErroAuth() {
+            document.getElementById('authMensagemErro').classList.add('hide');
+        }
+
+        function ocultarSucessoAuth() {
+            document.getElementById('authMensagemSucesso').classList.add('hide');
+        }
+
+        function alternarModoAuth(modo) {
+            modoAuthAtual = modo;
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+            
+            const btnLogin = document.getElementById('abaLoginBtn');
+            const btnCadastro = document.getElementById('abaCadastroBtn');
+            const btnSubmit = document.getElementById('btnSubmitAuth');
+            const camposPessoais = document.getElementById('camposPessoaisCadastro');
+            const blocoTipoPerfil = document.getElementById('blocoTipoPerfilAuth');
+            const abasContainer = document.getElementById('abasAuthContainer');
+            const blocoEsqueci = document.getElementById('blocoEsqueciSenhaForm');
+            const grupoSenha = document.getElementById('grupoSenhaAuth');
+            const inputUsuario = document.getElementById('authUsuario');
+            const inputSenha = document.getElementById('authSenha');
+
+            blocoEsqueci.classList.add('hide');
+            abasContainer.classList.remove('hide');
+            grupoSenha.classList.remove('hide');
+            inputUsuario.required = true;
+            inputSenha.required = true;
+
+            if (modo === 'login') {
+                btnLogin.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition";
+                btnCadastro.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+                btnSubmit.classList.remove('hide');
+                btnSubmit.innerText = "Entrar";
+                camposPessoais.classList.add('hide');
+                blocoTipoPerfil.classList.add('hide');
+            } else if (modo === 'cadastro') {
+                btnCadastro.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition";
+                btnLogin.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+                btnSubmit.classList.remove('hide');
+                btnSubmit.innerText = "Cadastrar";
+                camposPessoais.classList.remove('hide');
+                blocoTipoPerfil.classList.remove('hide');
+                atualizarCamposPerfilAuth();
+            }
+        }
+
+        function atualizarCamposPerfilAuth() {
+            const tipoPerfil = document.getElementById('authTipo').value;
+            const camposExtrasFeirante = document.getElementById('camposExtrasFeirante');
+            if (tipoPerfil === 'feirante') {
+                camposExtrasFeirante.classList.remove('hide');
+            } else {
+                camposExtrasFeirante.classList.add('hide');
+            }
+        }
+
+        function abrirTelaEsqueciSenha() {
+            modoAuthAtual = 'esqueci';
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+
+            document.getElementById('abasAuthContainer').classList.add('hide');
+            document.getElementById('grupoSenhaAuth').classList.add('hide');
+            document.getElementById('camposPessoaisCadastro').classList.add('hide');
+            document.getElementById('blocoTipoPerfilAuth').classList.add('hide');
+            document.getElementById('btnSubmitAuth').classList.add('hide');
+
+            document.getElementById('authUsuario').required = false;
+            document.getElementById('authSenha').required = false;
+
+            document.getElementById('blocoEsqueciSenhaForm').classList.remove('hide');
+        }
+
+        function voltarDoEsqueciSenha() {
+            alternarModoAuth('login');
+        }
+
+        async function executarRecuperacaoSenha() {
+            const termo = document.getElementById('recuperarUsuarioInput').value.trim();
+            if (!termo) {
+                mostrarErroAuth("⚠️ Por favor, digite seu nome de usuário ou WhatsApp para recuperar a senha.");
+                return;
+            }
+
+            let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
+            let encontrado = todosUsuarios.find(u => u.usuario.toLowerCase() === termo.toLowerCase() || u.whatsapp === termo);
+
+            if (!encontrado) {
+                mostrarErroAuth(`⚠️ Não encontramos nenhuma conta associada a "${termo}". Verifique os dados digitados.`);
+                return;
+            }
+
+            let novaSenhaTemp = prompt(`Conta encontrada (${encontrado.nomeCompleto}). Digite sua nova senha de acesso:`);
+            if (novaSenhaTemp !== null && novaSenhaTemp.trim() !== '') {
+                encontrado.senha = novaSenhaTemp.trim();
+
+                let tabela = encontrado.tipo === 'admin' ? 'admins' : (encontrado.tipo === 'feirante' ? 'feirantes' : 'clientes');
+                await supabaseClient.from(tabela).update({ senha: encontrado.senha }).eq('usuario', encontrado.usuario);
+
+                mostrarSucessoAuth("✅ Senha redefinida com sucesso! Agora você pode entrar com sua nova senha.");
+                document.getElementById('recuperarUsuarioInput').value = '';
+                voltarDoEsqueciSenha();
+                document.getElementById('authUsuario').value = encontrado.usuario;
+            } else if (novaSenhaTemp !== null) {
+                mostrarErroAuth("⚠️ A senha não pode estar em branco.");
+            }
+        }
+
+        async function processarAuth(event) {
+            event.preventDefault();
+            ocultarErroAuth();
+            ocultarSucessoAuth();
+            
+            const usuarioInput = document.getElementById('authUsuario').value.trim();
+            const senha = document.getElementById('authSenha').value.trim();
+
+            if (!usuarioInput) {
+                mostrarErroAuth("⚠️ O campo de usuário é obrigatório.");
+                document.getElementById('authUsuario').focus();
+                return;
+            }
+            if (!senha) {
+                mostrarErroAuth("⚠️ O campo de senha é obrigatório.");
+                document.getElementById('authSenha').focus();
+                return;
+            }
+
+            if (modoAuthAtual === 'login') {
+                let encontrado = null;
+                let tipoEncontrado = null;
+
+                for (let u of adminsCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'admin'; break; } }
+                if (!encontrado) { for (let u of feirantesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'feirante'; break; } } }
+                if (!encontrado) { for (let u of clientesCadastrados) { if (u.usuario === usuarioInput && u.senha === senha) { encontrado = u; tipoEncontrado = 'cliente'; break; } } }
+
+                if (encontrado) {
+                    if (listaBanidos.includes(encontrado.usuario) || (encontrado.whatsapp && listaBanidos.includes(encontrado.whatsapp))) {
+                        mostrarErroAuth("🚫 Esta conta foi banida do sistema.");
+                        return;
+                    }
+                    usuarioAtual = { ...encontrado, tipo: tipoEncontrado };
+                    localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+                    iniciarApp();
+                } else {
+                    mostrarErroAuth("⚠️ Usuário ou senha incorretos.");
+                }
+            } else if (modoAuthAtual === 'cadastro') {
+                let nomeCompleto = document.getElementById('authNomeCompleto').value.trim();
+                let whatsapp = document.getElementById('authWhatsapp').value.trim();
+                let tipo = document.getElementById('authTipo').value;
+
+                if (!nomeCompleto) {
+                    mostrarErroAuth("⚠️ O nome completo é obrigatório.");
+                    return;
+                }
+
+                let todosUsuarios = [...adminsCadastrados, ...feirantesCadastrados, ...clientesCadastrados];
+                if (todosUsuarios.some(u => u.usuario.toLowerCase() === usuarioInput.toLowerCase())) {
+                    mostrarErroAuth("⚠️ Este nome de usuário já está em uso.");
+                    return;
+                }
+
+                if (listaBanidos.includes(usuarioInput) || (whatsapp && listaBanidos.includes(whatsapp))) {
+                    mostrarErroAuth("🚫 Não é permitido criar contas com este usuário ou WhatsApp.");
+                    return;
+                }
+
+                let novoUsuario = {
+                    usuario: usuarioInput,
+                    senha,
+                    nomeCompleto,
+                    whatsapp,
+                    tipo,
+                    fotoPerfil: ''
+                };
+
+                if (tipo === 'feirante') {
+                    novoUsuario.nomeBarraca = document.getElementById('authNomeBarraca').value.trim() || `Barraca de ${nomeCompleto}`;
+                    novoUsuario.categoria = document.getElementById('authCategoriaBarraca').value;
+                    novoUsuario.destacada = false;
+                    await supabaseClient.from('feirantes').insert([novoUsuario]);
+                    feirantesCadastrados.push(novoUsuario);
+                } else {
+                    await supabaseClient.from('clientes').insert([novoUsuario]);
+                    clientesCadastrados.push(novoUsuario);
+                }
+
+                usuarioAtual = novoUsuario;
+                localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
+                iniciarApp();
+            }
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem('feira_usuario_logado');
+            location.reload();
+        }
+
+        function iniciarApp() {
+            document.getElementById('telaAuth').classList.add('hide');
+            document.getElementById('appPrincipal').classList.remove('hide');
+
+            if (usuarioAtual.tipo === 'admin') {
+                document.getElementById('navAdmin').classList.remove('hide');
+                mudarAbaAdmin('admin');
+            } else if (usuarioAtual.tipo === 'feirante') {
+                document.getElementById('navFeirante').classList.remove('hide');
+                mudarAbaFeirante('gerenciar');
+            } else {
+                document.getElementById('navCliente').classList.remove('hide');
+                mudarAbaCliente('explorar');
+            }
+            atualizarBadgeCarrinho();
+        }
+
+        function mudarAbaCliente(aba) {
+            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaPerfil', 'telaProdutosFeira'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
+            ['tabExplorarBtn', 'tabCarrinhoBtn', 'tabPerfilBtn'].forEach(id => {
+                let el = document.getElementById(id);
+                el.className = "flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition";
+            });
+
+            if (aba === 'explorar') {
+                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+                document.getElementById('tabExplorarBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                iniciarCarrosselDestaques();
+                filtrarExplorar(filtroExplorarAtual);
+            } else if (aba === 'carrinho') {
+                document.getElementById('telaCarrinho').classList.remove('hide');
+                document.getElementById('tabCarrinhoBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs relative transition";
+                renderizarCarrinho();
+            } else if (aba === 'perfil') {
+                document.getElementById('telaPerfil').classList.remove('hide');
+                document.getElementById('tabPerfilBtn').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                preencherPerfil();
+            }
+        }
+
+        function mudarAbaFeirante(aba) {
+            if (aba === 'gerenciar') {
+                ['visãoUnificadaExplorar', 'telaCarrinho', 'telaPerfil', 'telaProdutosFeira'].forEach(id => {
+                    document.getElementById(id).classList.add('hide');
+                });
+                document.getElementById('visãoFeirante').classList.remove('hide');
+                ['tabFeiranteGerenciar', 'tabFeiranteExplorar', 'tabFeiranteCarrinho', 'tabFeirantePerfil'].forEach(id => {
+                    document.getElementById(id).className = "flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition";
+                });
+                document.getElementById('tabFeiranteGerenciar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                mudarAbaInternaFeirante('listar');
+            } else if (aba === 'explorar') {
+                document.getElementById('visãoFeirante').classList.add('hide');
+                mudarAbaCliente('explorar');
+                document.getElementById('tabFeiranteExplorar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+            } else if (aba === 'carrinho') {
+                document.getElementById('visãoFeirante').classList.add('hide');
+                mudarAbaCliente('carrinho');
+                document.getElementById('tabFeiranteCarrinho').className = "flex flex-col items-center text-emerald-600 font-medium text-xs relative transition";
+            } else if (aba === 'perfil') {
+                document.getElementById('visãoFeirante').classList.add('hide');
+                mudarAbaCliente('perfil');
+                document.getElementById('tabFeirantePerfil').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+            }
+        }
+
+        function mudarAbaAdmin(aba) {
+            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaPerfil', 'visãoFeirante', 'visãoAdmin', 'telaProdutosFeira'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
+            ['tabAdminPainel', 'tabAdminExplorar', 'tabAdminVender', 'tabAdminCarrinho', 'tabAdminPerfil'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) el.className = "flex flex-col items-center text-slate-400 hover:text-slate-600 font-medium text-xs transition";
+            });
+
+            if (aba === 'admin') {
+                document.getElementById('visãoAdmin').classList.remove('hide');
+                document.getElementById('tabAdminPainel').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                atualizarEstatisticasAdmin();
+                mudarAbaAdminPainel('barracas');
+            } else if (aba === 'explorar') {
+                document.getElementById('visãoUnificadaExplorar').classList.remove('hide');
+                document.getElementById('tabAdminExplorar').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                iniciarCarrosselDestaques();
+                filtrarExplorar(filtroExplorarAtual);
+            } else if (aba === 'vender') {
+                document.getElementById('visãoFeirante').classList.remove('hide');
+                document.getElementById('tabAdminVender').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                mudarAbaInternaFeirante('listar');
+            } else if (aba === 'carrinho') {
+                document.getElementById('telaCarrinho').classList.remove('hide');
+                document.getElementById('tabAdminCarrinho').className = "flex flex-col items-center text-emerald-600 font-medium text-xs relative transition";
+                renderizarCarrinho();
+            } else if (aba === 'perfil') {
+                document.getElementById('telaPerfil').classList.remove('hide');
+                document.getElementById('tabAdminPerfil').className = "flex flex-col items-center text-emerald-600 font-medium text-xs transition";
+                preencherPerfil();
+            }
+        }
+
+        function mudarAbaAdminPainel(secao) {
+            ['secaoAdminBarracas', 'secaoAdminSolicitacoesDestaque', 'secaoAdminClientes', 'secaoAdminProdutos', 'secaoAdminUsuarios', 'secaoAdminBanidos'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
+            ['btnTabAdminBarracas', 'btnTabAdminDestaques', 'btnTabAdminClientes', 'btnTabAdminProdutos', 'btnTabAdminUsuarios', 'btnTabAdminBanidos'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) el.className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl text-slate-600 hover:text-slate-800 whitespace-nowrap transition";
+            });
+
+            if (secao === 'barracas') {
+                document.getElementById('secaoAdminBarracas').classList.remove('hide');
+                document.getElementById('btnTabAdminBarracas').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminFeirantes();
+            } else if (secao === 'solicitacoesDestaque') {
+                document.getElementById('secaoAdminSolicitacoesDestaque').classList.remove('hide');
+                document.getElementById('btnTabAdminDestaques').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminSolicitacoesDestaque();
+            } else if (secao === 'clientes') {
+                document.getElementById('secaoAdminClientes').classList.remove('hide');
+                document.getElementById('btnTabAdminClientes').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminClientes();
+            } else if (secao === 'produtos') {
+                document.getElementById('secaoAdminProdutos').classList.remove('hide');
+                document.getElementById('btnTabAdminProdutos').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminProdutos();
+            } else if (secao === 'usuarios') {
+                document.getElementById('secaoAdminUsuarios').classList.remove('hide');
+                document.getElementById('btnTabAdminUsuarios').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminAlterarUsuarios();
+            } else if (secao === 'banidos') {
+                document.getElementById('secaoAdminBanidos').classList.remove('hide');
+                document.getElementById('btnTabAdminBanidos').className = "flex-1 py-2 px-3 text-[11px] font-bold rounded-xl bg-white text-slate-800 shadow-sm whitespace-nowrap transition";
+                renderizarAdminBanidos();
+            }
+        }
+
+        function mudarAbaInternaFeirante(aba) {
+            if (aba === 'listar') {
+                document.getElementById('painelInternoListar').classList.remove('hide');
+                document.getElementById('painelInternoCadastrar').classList.add('hide');
+                document.getElementById('btnAbaFeiranteListar').className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition";
+                document.getElementById('btnAbaFeiranteCadastrar').className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+                renderizarProdutosFeirante();
+            } else {
+                document.getElementById('painelInternoCadastrar').classList.remove('hide');
+                document.getElementById('painelInternoListar').classList.add('hide');
+                document.getElementById('btnAbaFeiranteCadastrar').className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition";
+                document.getElementById('btnAbaFeiranteListar').className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+            }
+        }
+
+        function atualizarEstatisticasAdmin() {
+            document.getElementById('statFeirantes').innerText = feirantesCadastrados.length;
+            document.getElementById('statClientes').innerText = clientesCadastrados.length;
+            document.getElementById('statProdutos').innerText = produtos.length;
+        }
+
+        function renderizarAdminFeirantes() {
+            const container = document.getElementById('adminListaFeirantes');
+            const termo = document.getElementById('buscaAdminFeirantesInput').value.toLowerCase().trim();
+            container.innerHTML = '';
+            
+            let filtrados = feirantesCadastrados.filter(f => f.nomeBarraca.toLowerCase().includes(termo) || f.nomeCompleto.toLowerCase().includes(termo));
+            if (filtrados.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum feirante encontrado.</p>`;
+                return;
+            }
+
+            filtrados.forEach(f => {
+                let textoDestaque = f.destacada ? 'Remover Destaque' : 'Destacar Barraca';
+                let corDestaque = f.destacada ? 'bg-amber-100 text-amber-800' : 'bg-amber-500 text-white';
+                container.innerHTML += `
+                    <div class="bg-slate-50/80 p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs">
+                        <div>
+                            <b>${f.nomeBarraca}</b> (${f.nomeCompleto})<br>
+                            <span class="text-[10px] text-slate-500">Usuário: @${f.usuario} | Tel: ${f.whatsapp || 'N/A'}</span>
+                        </div>
+                        <div class="flex gap-1.5 shrink-0">
+                            <button onclick="alternarDestaqueFeiranteAdmin('${f.usuario}')" class="${corDestaque} px-3 py-2 rounded-xl font-bold transition">${textoDestaque}</button>
+                            <button onclick="deletarUsuarioAdmin('${f.usuario}', 'feirantes')" class="bg-rose-50 text-rose-600 p-2 rounded-xl hover:bg-rose-100 transition"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function alternarDestaqueFeiranteAdmin(usuarioFeirante) {
             let f = feirantesCadastrados.find(x => x.usuario === usuarioFeirante);
             if (!f) return;
-
-            ['visãoUnificadaExplorar', 'telaCarrinho', 'telaChatInterno', 'telaPerfil', 'visãoFeirante', 'visãoAdmin'].forEach(id => {
-                document.getElementById(id).classList.add('hide');
-            });
-            document.getElementById('telaProdutosFeira').classList.remove('hide');
-
-            document.getElementById('detalheNomeBarraca').innerText = f.nomeBarraca;
-            document.getElementById('detalheNomeDono').innerText = f.nomeCompleto;
-            document.getElementById('detalheWhatsappDono').innerText = f.whatsapp || 'Não informado';
-            
-            const selo = document.getElementById('detalheSeloDestaque');
-            if (f.destacada) selo.classList.remove('hide');
-            else selo.classList.add('hide');
-
-            const iconePadrao = document.getElementById('iconePadraoBarraca');
-            const fotoHeader = document.getElementById('fotoPerfilBarracaHeader');
-            if (f.fotoPerfil) {
-                fotoHeader.src = f.fotoPerfil;
-                fotoHeader.classList.remove('hide');
-                iconePadrao.classList.add('hide');
-            } else {
-                fotoHeader.classList.add('hide');
-                iconePadrao.classList.remove('hide');
-            }
-
-            const containerProds = document.getElementById('listaProdutosDaBarracaSelecionada');
-            containerProds.innerHTML = '';
-
-            let prodsDaBarraca = produtos.filter(p => p.feirante_usuario === usuarioFeirante);
-            if (prodsDaBarraca.length === 0) {
-                containerProds.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Esta barraca ainda não cadastrou produtos.</p>`;
-            } else {
-                prodsDaBarraca.forEach(p => {
-                    containerProds.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
-                            <img src="${p.foto}" class="w-16 h-16 rounded-xl object-cover border shrink-0">
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-semibold text-slate-800 text-sm truncate">${p.nome}</h4>
-                                <p class="text-emerald-600 font-bold text-sm">R$ ${p.preco.toFixed(2)} <span class="text-[11px] font-normal text-slate-500">(${p.unidade})</span></p>
-                            </div>
-                            <button onclick="adicionarAoCarrinho('${p.id}')" class="bg-emerald-600 text-white p-2.5 rounded-xl hover:bg-emerald-700 transition shrink-0"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    `;
-                });
-            }
+            f.destacada = !f.destacada;
+            await supabaseClient.from('feirantes').update({ destacada: f.destacada }).eq('usuario', usuarioFeirante);
+            renderizarAdminFeirantes();
+            alert(`✨ Status de destaque atualizado para ${f.nomeBarraca}!`);
         }
 
-        function voltarParaExplorar() {
-            document.getElementById('telaProdutosFeira').classList.add('hide');
-            if (usuarioAtual.tipo === 'cliente') mudarAbaCliente('explorar');
-            else if (usuarioAtual.tipo === 'feirante') mudarAbaFeirante('explorar');
-            else mudarAbaAdmin('explorar');
-        }
-
-        function adicionarAoCarrinho(idProduto) {
-            let p = produtos.find(x => x.id == idProduto);
-            if (!p) return;
-
-            let itemExistente = carrinho.find(i => i.id == idProduto);
-            if (itemExistente) {
-                itemExistente.qtd++;
-            } else {
-                carrinho.push({ ...p, qtd: 1 });
-            }
-            atualizarBadgeCarrinho();
-            alert(`✅ ${p.nome} adicionado ao carrinho!`);
-        }
-
-        function atualizarBadgeCarrinho() {
-            let totalQtd = carrinho.reduce((sum, item) => sum + item.qtd, 0);
-            ['badgeCarrinho', 'badgeCarrinhoFeirante', 'badgeCarrinhoAdmin'].forEach(id => {
-                let badge = document.getElementById(id);
-                if (badge) {
-                    if (totalQtd > 0) {
-                        badge.innerText = totalQtd;
-                        badge.classList.remove('hide');
-                    } else {
-                        badge.classList.add('hide');
-                    }
-                }
-            });
-        }
-
-        function renderizarCarrinho() {
-            const container = document.getElementById('itensCarrinho');
-            const checkoutArea = document.getElementById('checkoutArea');
-            const totalEl = document.getElementById('totalCarrinho');
+        function renderizarAdminSolicitacoesDestaque() {
+            const container = document.getElementById('adminListaSolicitacoesDestaque');
             container.innerHTML = '';
-
-            if (carrinho.length === 0) {
-                container.innerHTML = `<div class="bg-white p-6 rounded-2xl text-center border text-slate-400 text-xs">Seu carrinho está vazio.</div>`;
-                checkoutArea.classList.add('hide');
+            if (solicitacoesDestaqueList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhuma solicitação de destaque pendente.</p>`;
                 return;
             }
-
-            checkoutArea.classList.remove('hide');
-            let totalGeral = 0;
-
-            carrinho.forEach((item, index) => {
-                let subtotal = item.preco * item.qtd;
-                totalGeral += subtotal;
+            solicitacoesDestaqueList.forEach(s => {
                 container.innerHTML += `
-                    <div class="bg-white p-3 rounded-2xl border flex items-center justify-between gap-3 text-xs">
-                        <img src="${item.foto}" class="w-12 h-12 rounded-lg object-cover shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-slate-800 truncate">${item.nome}</h4>
-                            <p class="text-slate-500">R$ ${item.preco.toFixed(2)} x ${item.qtd}</p>
+                    <div class="bg-slate-50/80 p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs">
+                        <div>
+                            <b>Barraca: ${s.nomeBarraca}</b><br>
+                            <span class="text-[10px] text-slate-500">Usuário: @${s.usuario}</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-emerald-600">R$ ${subtotal.toFixed(2)}</span>
-                            <button onclick="removerItemCarrinho(${index})" class="text-rose-500 p-1"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex gap-2">
+                            <button onclick="aprovarDestaqueAdmin('${s.usuario}')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl font-bold hover:bg-emerald-700 transition">Aprovar ⭐</button>
+                            <button onclick="rejeitarDestaqueAdmin('${s.usuario}')" class="bg-rose-50 text-rose-600 px-3 py-2 rounded-xl font-bold hover:bg-rose-100 transition">Rejeitar</button>
                         </div>
-                    </div>
-                `;
-            });
-
-            totalEl.innerText = `R$ ${totalGeral.toFixed(2)}`;
-        }
-
-        function removerItemCarrinho(index) {
-            carrinho.splice(index, 1);
-            atualizarBadgeCarrinho();
-            renderizarCarrinho();
-        }
-
-        function abrirChatInterno() {
-            ['telaCarrinho', 'visãoUnificadaExplorar', 'telaProdutosFeira', 'visãoFeirante', 'visãoAdmin', 'telaPerfil'].forEach(id => {
-                document.getElementById(id).classList.add('hide');
-            });
-            document.getElementById('telaChatInterno').classList.remove('hide');
-            renderizarMensagensChat();
-        }
-
-        function voltarDoChatInterno() {
-            document.getElementById('telaChatInterno').classList.add('hide');
-            if (usuarioAtual.tipo === 'cliente') mudarAbaCliente('carrinho');
-            else if (usuarioAtual.tipo === 'feirante') mudarAbaFeirante('carrinho');
-            else mudarAbaAdmin('carrinho');
-        }
-
-        function renderizarMensagensChat() {
-            const container = document.getElementById('containerMensagensChat');
-            container.innerHTML = '';
-            if (historicoChatInterno.length === 0) {
-                container.innerHTML = `<p class="text-[11px] text-slate-400 text-center py-4">Nenhuma mensagem enviada ainda. Inicie a conversa!</p>`;
-                return;
-            }
-            historicoChatInterno.forEach(msg => {
-                let alinhamento = msg.autor === usuarioAtual.usuario ? 'ml-auto bg-emerald-600 text-white' : 'mr-auto bg-white text-slate-800 border';
-                container.innerHTML += `
-                    <div class="max-w-[80%] p-2.5 rounded-xl text-xs ${alinhamento}">
-                        <b class="text-[10px] opacity-80 block">${msg.autor}</b>
-                        <p class="mt-0.5">${msg.texto}</p>
-                    </div>
-                `;
-            });
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function enviarMensagemChat() {
-            const input = document.getElementById('inputMensagemChat');
-            const texto = input.value.trim();
-            if (!texto) return;
-
-            historicoChatInterno.push({ autor: usuarioAtual.usuario, texto });
-            input.value = '';
-            renderizarMensagensChat();
-        }
-
-        async function cadastrarproduto(event) {
-            event.preventDefault();
-            const nome = document.getElementById('nomeProduto').value.trim();
-            const preco = parseFloat(document.getElementById('precoProduto').value);
-            const unidade = document.getElementById('unidadeProduto').value.trim();
-            const foto = document.getElementById('fotoProdutoInput').value.trim();
-
-            if (!nome || isNaN(preco) || !unidade || !foto) {
-                alert("⚠️ Preencha todos os campos corretamente.");
-                return;
-            }
-
-            const novoProd = {
-                id: Date.now(),
-                feirante_usuario: usuarioAtual.usuario,
-                nome,
-                preco,
-                unidade,
-                foto
-            };
-
-            await supabaseClient.from('produtos').insert([novoProd]);
-            produtos.push(novoProd);
-
-            document.getElementById('formProduto').reset();
-            mudarAbaInternaFeirante('listar');
-            alert("✅ Produto cadastrado com sucesso!");
-        }
-
-        function renderizarProdutosFeirante() {
-            const container = document.getElementById('listaProdutosFeirante');
-            container.innerHTML = '';
-
-            let meusProds = produtos.filter(p => p.feirante_usuario === usuarioAtual.usuario);
-            if (meusProds.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Você ainda não cadastrou nenhum produto.</p>`;
-                return;
-            }
-
-            meusProds.forEach(p => {
-                container.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-2xl border flex items-center justify-between gap-3 text-xs">
-                        <img src="${p.foto}" class="w-14 h-14 rounded-xl object-cover shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-slate-800 truncate">${p.nome}</h4>
-                            <p class="text-emerald-600 font-bold">R$ ${p.preco.toFixed(2)} (${p.unidade})</p>
-                        </div>
-                        <button onclick="deletarProdutoFeirante(${p.id})" class="text-rose-500 p-2"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
             });
         }
 
-        async function deletarProdutoFeirante(id) {
-            if (confirm("Deseja apagar este produto?")) {
-                await supabaseClient.from('produtos').delete().eq('id', id);
-                produtos = produtos.filter(p => p.id !== id);
-                renderizarProdutosFeirante();
-            }
-        }
-
-        function preencherPerfil() {
-            document.getElementById('perfilTitulo').innerText = usuarioAtual.nomeCompleto;
-            document.getElementById('perfilSubtitulo').innerText = `@${usuarioAtual.usuario}`;
-            document.getElementById('perfilTipo').innerText = usuarioAtual.tipo.toUpperCase();
-
-            document.getElementById('editarNomeCompleto').value = usuarioAtual.nomeCompleto;
-            document.getElementById('editarWhatsapp').value = usuarioAtual.whatsapp || '';
-            document.getElementById('editarFotoPerfilInput').value = usuarioAtual.fotoPerfil || '';
-
-            const iconePadrao = document.getElementById('perfilIconePadrao');
-            const fotoExibicao = document.getElementById('perfilFotoExibicao');
-            if (usuarioAtual.fotoPerfil) {
-                fotoExibicao.src = usuarioAtual.fotoPerfil;
-                fotoExibicao.classList.remove('hide');
-                iconePadrao.classList.add('hide');
-            } else {
-                fotoExibicao.classList.add('hide');
-                iconePadrao.classList.remove('hide');
-            }
-
-            const blocoBarraca = document.getElementById('campoEditarBarracaDiv');
-            if (usuarioAtual.tipo === 'feirante') {
-                blocoBarraca.classList.remove('hide');
-                let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
-                if (f) {
-                    document.getElementById('editarNomeBarraca').value = f.nomeBarraca;
-                    document.getElementById('editarCategoriaBarraca').value = f.categoria || 'alimentos';
-                    const statusLabel = document.getElementById('statusDestaquePerfilLabel');
-                    if (f.destacada) statusLabel.innerText = "⭐ Ativo (Destaque Ativo)";
-                    else statusLabel.innerText = "Aguardando ativação";
-                }
-            } else {
-                blocoBarraca.classList.add('hide');
-            }
-        }
-
-        async function atualizarPerfilUsuario(event) {
-            event.preventDefault();
-            usuarioAtual.nomeCompleto = document.getElementById('editarNomeCompleto').value.trim();
-            usuarioAtual.whatsapp = document.getElementById('editarWhatsapp').value.trim();
-            usuarioAtual.fotoPerfil = document.getElementById('editarFotoPerfilInput').value.trim();
-
-            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
-            await supabaseClient.from(tabela).update({
-                nomeCompleto: usuarioAtual.nomeCompleto,
-                whatsapp: usuarioAtual.whatsapp,
-                fotoPerfil: usuarioAtual.fotoPerfil
-            }).eq('usuario', usuarioAtual.usuario);
-
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            preencherPerfil();
-            alert("✅ Perfil atualizado com sucesso!");
-        }
-
-        async function deletarFotoPerfilAtual() {
-            usuarioAtual.fotoPerfil = '';
-            let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
-            await supabaseClient.from(tabela).update({ fotoPerfil: '' }).eq('usuario', usuarioAtual.usuario);
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            preencherPerfil();
-            alert("🗑️ Foto de perfil removida.");
-        }
-
-        async function cadastrarOuAtualizarBarracaPerfil(event) {
-            event.preventDefault();
-            let nomeBarraca = document.getElementById('editarNomeBarraca').value.trim();
-            let categoria = document.getElementById('editarCategoriaBarraca').value;
-
-            if (!nomeBarraca) {
-                alert("⚠️ O nome da barraca é obrigatório.");
-                return;
-            }
-
-            usuarioAtual.nomeBarraca = nomeBarraca;
-            usuarioAtual.categoria = categoria;
-
-            let f = feirantesCadastrados.find(x => x.usuario === usuarioAtual.usuario);
+        async function aprovarDestaqueAdmin(usuarioFeirante) {
+            let f = feirantesCadastrados.find(x => x.usuario === usuarioFeirante);
             if (f) {
-                f.nomeBarraca = nomeBarraca;
-                f.categoria = categoria;
+                f.destacada = true;
+                await supabaseClient.from('feirantes').update({ destacada: true }).eq('usuario', usuarioFeirante);
             }
-
-            await supabaseClient.from('feirantes').update({ nomeBarraca, categoria }).eq('usuario', usuarioAtual.usuario);
-            localStorage.setItem('feira_usuario_logado', JSON.stringify(usuarioAtual));
-            alert("✅ Dados da barraca atualizados com sucesso!");
+            await rejeitarDestaqueAdmin(usuarioFeirante);
+            renderizarAdminSolicitacoesDestaque();
+            alert("🌟 Destaque ativado com sucesso!");
         }
 
-        async function solicitarDestaqueFeirante() {
-            let existente = solicitacoesDestaqueList.find(s => s.usuario === usuarioAtual.usuario);
-            if (existente) {
-                alert("⚠️ Você já possui uma solicitação de destaque pendente de aprovação.");
+        async function rejeitarDestaqueAdmin(usuarioFeirante) {
+            solicitacoesDestaqueList = solicitacoesDestaqueList.filter(s => s.usuario !== usuarioFeirante);
+            await supabaseClient.from('solicitacoes_destaque').delete().eq('usuario', usuarioFeirante);
+            renderizarAdminSolicitacoesDestaque();
+        }
+
+        function renderizarAdminClientes() {
+            const container = document.getElementById('adminListaClientes');
+            container.innerHTML = '';
+            if (clientesCadastrados.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">Nenhum cliente cadastrado.</p>`;
                 return;
             }
-
-            let novaSol = {
-                usuario: usuarioAtual.usuario,
-                nomeBarraca: usuarioAtual.nomeBarraca || 'Minha Barraca'
-            };
-
-            await supabaseClient.from('solicitacoes_destaque').insert([novaSol]);
-            solicitacoesDestaqueList.push(novaSol);
-            alert("🌟 Solicitação de destaque enviada ao administrador! Taxa de ativação: R$ 6,99 / 24h.");
+            clientesCadastrados.forEach(c => {
+                container.innerHTML += `
+                    <div class="bg-slate-50/80 p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs">
+                        <div>
+                            <b>${c.nomeCompleto}</b><br>
+                            <span class="text-[10px] text-slate-500">Usuário: @${c.usuario} | Tel: ${c.whatsapp || 'N/A'}</span>
+                        </div>
+                        <button onclick="deletarUsuarioAdmin('${c.usuario}', 'clientes')" class="bg-rose-50 text-rose-600 p-2 rounded-xl hover:bg-rose-100 transition"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
         }
 
-        function pararTimers() {
-            if (timerCarrossel) clearInterval(timerCarrossel);
-            if (timerAnuncios) clearInterval(timerAnuncios);
+        function renderizarAdminAlterarUsuarios() {
+            const container = document.getElementById('adminListaAlterarUsuarios');
+            container.innerHTML = '';
+            let todos = [
+                ...adminsCadastrados.map(x => ({ ...x, tipoConta: 'admins' })),
+                ...feirantesCadastrados.map(x => ({ ...x, tipoConta: 'feirantes' })),
+                ...clientesCadastrados.map(x => ({ ...x, tipoConta: 'clientes' }))
+            ];
+            todos.forEach(u => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border text-xs">
+                        <div><b>${u.nomeCompleto}</b> (@${u.usuario}) - <span class="uppercase text-[10px] font-bold text-emerald-600">${u.tipo || u.tipoConta}</span></div>
+                        <button onclick="deletarUsuarioAdmin('${u.usuario}', '${u.tipoConta || 'clientes'}')" class="text-rose-500 p-2 hover:bg-rose-50 rounded-xl"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        async function adminCriarUsuarioSimples(event) {
+            event.preventDefault();
+            let usuario = document.getElementById('admNovoUsuarioNome').value.trim();
+            let nomeCompleto = document.getElementById('admNovoNomeCompleto').value.trim();
+            let senha = document.getElementById('admNovoUsuarioSenha').value.trim();
+            let tipo = document.getElementById('admNovoUsuarioTipo').value;
+
+            let novo = { usuario, senha, nomeCompleto, whatsapp: '', tipo, fotoPerfil: '' };
+            if (tipo === 'admin') {
+                adminsCadastrados.push(novo);
+                await supabaseClient.from('admins').insert([novo]);
+            } else if (tipo === 'feirante') {
+                novo.nomeBarraca = `Barraca de ${nomeCompleto}`;
+                novo.categoria = 'alimentos';
+                novo.destacada = false;
+                feirantesCadastrados.push(novo);
+                await supabaseClient.from('feirantes').insert([novo]);
+            } else {
+                clientesCadastrados.push(novo);
+                await supabaseClient.from('clientes').insert([novo]);
+            }
+            alert("✅ Usuário criado com sucesso!");
+            renderizarAdminAlterarUsuarios();
+            atualizarEstatisticasAdmin();
+        }
+
+        async function deletarUsuarioAdmin(usuario, tabela) {
+            if (confirm(`Tem certeza que deseja excluir a conta de @${usuario}?`)) {
+                await supabaseClient.from(tabela).delete().eq('usuario', usuario);
+                feirantesCadastrados = feirantesCadastrados.filter(x => x.usuario !== usuario);
+                clientesCadastrados = clientesCadastrados.filter(x => x.usuario !== usuario);
+                adminsCadastrados = adminsCadastrados.filter(x => x.usuario !== usuario);
+                renderizarAdminFeirantes();
+                renderizarAdminClientes();
+                renderizarAdminAlterarUsuarios();
+                atualizarEstatisticasAdmin();
+                alert("🗑️ Conta excluída com sucesso.");
+            }
+        }
+
+        async function confirmarExclusaoConta() {
+            if (confirm("⚠️ ATENÇÃO: Deseja realmente excluir sua conta de forma permanente? Todos os seus dados serão apagados.")) {
+                let tabela = usuarioAtual.tipo === 'admin' ? 'admins' : (usuarioAtual.tipo === 'feirante' ? 'feirantes' : 'clientes');
+                await supabaseClient.from(tabela).delete().eq('usuario', usuarioAtual.usuario);
+                localStorage.removeItem('feira_usuario_logado');
+                alert("Conta excluída com sucesso.");
+                location.reload();
+            }
         }
     </script>
 </body>
